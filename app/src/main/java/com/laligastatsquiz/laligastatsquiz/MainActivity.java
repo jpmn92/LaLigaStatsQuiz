@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int randomP2 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
         player1 = laLigaPlayerArrayList.get(randomP1);
         player2 = laLigaPlayerArrayList.get(randomP2);
+        System.out.println("ERROR EN: " + player1.getName());
+
         showPlayers();
         String statName = "total_goals"; // Aqui habrá que crear un método que busque el nombre de la estadística deseada
         valueP1 = calculateValue(player1, statName);
@@ -90,10 +92,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showPlayers() {
+        // Toko ekambi y nolito no tienen foto y peta cuando salen
+        System.out.println("P1: " + player1.getName());
+        System.out.println("P2: " + player2.getName());
+
         Picasso.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).into(ivPlayer1);
         Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
+
         Picasso.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).into(ivPlayer2);
         Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+
         txtNameP1.setText(player1.getNickname());
         txtNameP2.setText(player2.getNickname());
     }
