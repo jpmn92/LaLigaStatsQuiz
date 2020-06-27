@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println("ERROR EN: " + player1.getName());
 
         showPlayers();
-        String statName = "total_goals"; // Aqui habrá que crear un método que busque el nombre de la estadística deseada
+        String statName = "total_goals"; // Aqui habrá que crear un método que devuelva un string con el nombre de la estadística deseada
         valueP1 = calculateValue(player1, statName);
         valueP2 = calculateValue(player2, statName);
 
