@@ -14,7 +14,7 @@ import com.laligastatsquiz.laligastatsquiz.R;
 
 public class FragmentoMenu extends AppCompatActivity implements View.OnClickListener {
     Button btComenzar, btPuntuaciones;
-    Spinner spinnerStats;
+    Spinner spinnerStats, spinnerLiga;
     ImageView ivSound;
     boolean sound;
 
@@ -32,6 +32,7 @@ public class FragmentoMenu extends AppCompatActivity implements View.OnClickList
         btComenzar.setOnClickListener(this);
         btPuntuaciones = findViewById(R.id.btnRecords);
         spinnerStats = findViewById(R.id.spinnerStats);
+        spinnerLiga = findViewById(R.id.spinnerLiga);
         ivSound = findViewById(R.id.ivSound);
         ivSound.setOnClickListener(new View.OnClickListener(){
 
@@ -57,6 +58,7 @@ public class FragmentoMenu extends AppCompatActivity implements View.OnClickList
                 //params.putString("stat", String.valueOf(spinnerStats.getSelectedItem()));
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
+                intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
                 intent.putExtra("sound", sound);
                 this.startActivity(intent);
                 break;

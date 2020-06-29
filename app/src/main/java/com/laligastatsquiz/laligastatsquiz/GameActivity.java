@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private LaLigaPlayer player1;
     private LaLigaPlayer player2;
     private boolean sound;
-    private String statName, stat;
+    private String statName, stat, liga;
     private int contadorAciertos, vidas, points, tiempo;
 
     @Override
@@ -53,8 +53,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initComponents();
         statName = this.getIntent().getStringExtra("stat");
         stat = traducirEstadistica(statName);
+        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
         txtPregunta.setText(statName);
         params.putString("StatCategory", stat);
+        params.putString("liga", liga);
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
         lstPlayersRankingPresenter.getPlayersRanking(params);
@@ -369,6 +371,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return stat;
+    }
+
+    private String traducirLiga(String ligaName){
+        String liga = "";
+        if(ligaName.equalsIgnoreCase(getString(R.string.liga_santander))){
+            liga = "laliga-santander-";
+        }
+        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_smartbank))){
+            liga = "laliga-smartbank-";
+        }
+        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_femenina))){
+            liga = "primera-division-femenina-";
+        }
+
+        return liga;
     }
 
 }

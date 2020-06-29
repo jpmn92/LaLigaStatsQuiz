@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
     private OnLstPlayersRankingListener onLstPlayersRankingListener;
-    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType;
+    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga;
     private JsonObject jsonObject;
     private ArrayList<LaLigaPlayer> laLigaPlayers;
     private Bundle params;
@@ -67,7 +67,9 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             String statsJson;
             season = "2019";
-            String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/laliga-santander-" + season + "/";
+            liga = params.getString("liga");
+
+            String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/" + liga + season + "/";
 
             // recogemos del bundle los parametros para el WS
 

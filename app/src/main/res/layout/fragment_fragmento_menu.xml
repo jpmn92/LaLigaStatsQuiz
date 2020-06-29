@@ -85,6 +85,26 @@
 <!--                    android:spinnerMode="dialog" />-->
 
                 <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="20dp"
+                    android:text="Categoría"
+                    android:textColor="#DCE775"
+                    android:textSize="18dp"
+
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerLiga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:entries="@array/LIGAS"
+                    android:spinnerMode="dialog" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -101,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:entries="@array/ESTADDISTICAS"
+                    android:entries="@array/ESTADISTICAS"
                     android:spinnerMode="dialog" />
 
 <!--                <TextView-->

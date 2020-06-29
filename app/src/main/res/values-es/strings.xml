@@ -14,4 +14,13 @@
     <string name="penaltis">Penaltis</string>
     <string name="goles_falta">Goles de falta</string>
     <string name="entradas_exitosas">Entradas con éxito</string>
+
+    <!--    Ligas-->
+    <string name="liga_santander">Liga Santander</string>
+    <string name="liga_smartbank">Liga Smartbank</string>
+    <string name="liga_femenina">Primera División Femenina</string>
+
+    <!--    Titulos menú-->
+    <string name="liga">Liga</string>
+    <string name="estadistica">Estadística</string>
 </resources>
