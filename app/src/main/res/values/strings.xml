@@ -10,9 +10,12 @@
     <string name="paradas">Saves</string>
     <string name="tarjetas_amarillas">Yellow cards</string>
     <string name="tarjetas_rojas">Red cards</string>
+    <string name="tarjetas">Cards</string>
     <string name="penaltis">Penalties</string>
+    <string name="minutos">Mins</string>
     <string name="goles_falta">Free kick goals</string>
     <string name="entradas_exitosas">Won tackles</string>
+    <string name="faltas">Fouls</string>
 
     <!--    Ligas-->
     <string name="liga_santander">Liga Santander</string>
@@ -23,16 +26,30 @@
     <string name="liga">League</string>
     <string name="estadistica">Stat</string>
 
+    <!--    General-->
+    <string name="seleccionar_avatar">Choose your avatar</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="play_again">PLAY AGAIN</string>
+    <string name="back_to_menu">BACK TO MENU</string>
+    <string name="game_finished">Game finished</string>
+    <string name="new_record">New Record!</string>
+    <string name="record">Record: </string>
+    <string name="puntuacion">Points: </string>
+    <string name="actualizar">UPDATE</string>
+
     <string-array name="ESTADISTICAS">
         <item>@string/goles_anotados</item>
         <item>@string/asistencias</item>
         <item>@string/pases_completados</item>
         <item>@string/goles_falta</item>
         <item>@string/penaltis</item>
-        <item>@string/entradas_exitosas</item>
+        <item>@string/minutos</item>
         <item>@string/paradas</item>
+        <item>@string/entradas_exitosas</item>
+        <item>@string/faltas</item>
         <item>@string/tarjetas_amarillas</item>
-        <item>@string/tarjetas_rojas</item>
+        <item>@string/tarjetas</item>
 
     </string-array>
 

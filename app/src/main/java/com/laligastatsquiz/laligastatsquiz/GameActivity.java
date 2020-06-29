@@ -2,7 +2,10 @@ package com.laligastatsquiz.laligastatsquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -123,6 +126,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Metodo para ver que jugadores no tienen foto
+     */
     private void comprobarSinFoto() {
         ArrayList<LaLigaPlayer> laLigaPlayersSinFoto = new ArrayList<>();
         for(LaLigaPlayer laLigaPlayer: laLigaPlayerArrayList){
@@ -197,12 +203,51 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         comprobarVidas();
 
         if (vidas <= 0) {
-            // finishGame();
+            finishGame();
         } else {
             selectPlayers();
         }
 
         //continueGame();
+
+
+    }
+
+    private void finishGame() {
+
+        if (checkInternetConnection() == true) {
+            String message = "";
+            //TODO: Cuando implementemos el logeo hay que descomentar estas lineas
+            boolean logeado = this.getIntent().getBooleanExtra("loged", false);
+            if (logeado) {
+//                FirebaseAuth mAuth;
+//                mAuth = FirebaseAuth.getInstance();
+//                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//                paramsIniciales.putString("userName", firebaseUser.getDisplayName());
+//                paramsIniciales.putInt("puntos", points);
+//                paramsIniciales.putString("image", String.valueOf(firebaseUser.getPhotoUrl()));
+//                paramsIniciales.putString("modoJuego", "Draft");
+//
+//
+//                firebaseMethods.createFbPuntuacion(paramsIniciales);
+//                if (points > record) {
+//                    record = points;
+//                    message = getString(R.string.new_record) + "\n" + getString(R.string.puntuacion) + points;
+//                } else {
+//                    message = getString(R.string.puntuacion) + points + "\n" + getString(R.string.record) + record;
+//                }
+            } else {
+                message = getString(R.string.puntuacion) + points;
+            }
+
+
+            myCountDownTimer.cancel();
+            showFinishedDialog(this, message);
+        } else {
+            myCountDownTimer.cancel();
+
+            showFinishedDialog(this, "Internet connection lost");
+        }
 
 
     }
@@ -369,6 +414,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         else if(statCategory.equalsIgnoreCase(getString(R.string.entradas_exitosas))){
             stat = "total_won_tackle";
         }
+        else if(statCategory.equalsIgnoreCase(getString(R.string.minutos))){
+            stat = "total_mins_played";
+        }
+        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas))){
+            stat = "total_card";
+        }
+        else if(statCategory.equalsIgnoreCase(getString(R.string.faltas))){
+            stat = "total_fouls";
+        }
 
         return stat;
     }
@@ -386,6 +440,38 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return liga;
+    }
+
+    public void showFinishedDialog(Activity activity, CharSequence message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.game_finished);
+
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.play_again, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                vidas = 3;
+                points = 0;
+                contadorAciertos = 0;
+                comprobarVidas();
+                selectPlayers();
+            }
+        });
+        builder.setNegativeButton(R.string.back_to_menu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+//                Intent menu = new Intent(GameActivity.this, NavigationDrawerActivity.class);
+//                GameActivity.this.startActivity(menu);
+//                GameActivity.this.finish();
+                onBackPressed();
+
+            }
+        });
+        builder.show();
     }
 
 }

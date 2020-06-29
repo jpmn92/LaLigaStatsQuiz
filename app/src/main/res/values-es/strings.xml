@@ -11,9 +11,12 @@
     <string name="paradas">Paradas</string>
     <string name="tarjetas_amarillas">Tarjetas amarillas</string>
     <string name="tarjetas_rojas">Tarjetas rojas</string>
+    <string name="tarjetas">Tarjetas</string>
     <string name="penaltis">Penaltis</string>
+    <string name="minutos">Minutos</string>
     <string name="goles_falta">Goles de falta</string>
     <string name="entradas_exitosas">Entradas con éxito</string>
+    <string name="faltas">Faltas</string>
 
     <!--    Ligas-->
     <string name="liga_santander">Liga Santander</string>
@@ -23,4 +26,16 @@
     <!--    Titulos menú-->
     <string name="liga">Liga</string>
     <string name="estadistica">Estadística</string>
+
+    <!--    General-->
+    <string name="seleccionar_avatar">Selecciona tu avatar</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="back_to_menu">VOLVER AL MENÚ</string>
+    <string name="play_again">JUGAR DE NUEVO</string>
+    <string name="game_finished">La partida ha terminado</string>
+    <string name="new_record">¡Nuevo Récord Conseguido!</string>
+    <string name="record">Record: </string>
+    <string name="puntuacion">Puntuación: </string>
+    <string name="actualizar">ACTUALIZAR</string>
 </resources>
