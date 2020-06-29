@@ -29,7 +29,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
     private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType;
     private JsonObject jsonObject;
     private ArrayList<LaLigaPlayer> laLigaPlayers;
-    private Bundle bundle;
+    private Bundle params;
     private LaLigaPlayerCall laLigaPlayerCall;
 
 
@@ -45,7 +45,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
         this.roundPick = roundPick;
         this.teamID = teamID;
         this.topX = topX;
-        this.bundle = params;
+        this.params = params;
 
         new PeticionGetLaLigaPlayers().execute();
 
@@ -66,7 +66,8 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
 
             String statsJson;
-            String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/laliga-santander-2019/players/";
+            season = "2019";
+            String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/laliga-santander-" + season + "/";
 
             // recogemos del bundle los parametros para el WS
 
@@ -81,8 +82,8 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             limit = "100";
             offset = "0";
-            orderField = "stat.total_goals_ranking";
-            orderType = "ASC";
+            orderField = "stat." + params.getString("StatCategory");
+            orderType = "DES";
 
             //Creando el okhttpclient pasamos los headers necesarios y funciona la peticion
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -132,9 +133,6 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
                 for(LaLigaPlayer laLigaPlayer: laLigaPlayerCall.getPlayer_rankings()){
                     laLigaPlayers.add(laLigaPlayer);
                 }
-
-                System.out.println("");
-
 
             } catch (IOException e) {
                 e.printStackTrace();

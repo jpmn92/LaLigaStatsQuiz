@@ -1,5 +1,7 @@
 package com.laligastatsquiz.laligastatsquiz.beans;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class LaLigaPlayer {
@@ -10,8 +12,10 @@ public class LaLigaPlayer {
     private LaLigaTeam team;
     private ArrayList<LaLigaStat> stats;
     private LaLigaPhoto photos;
+    @SerializedName("opta_id")
+    private String optaId;
 
-    public LaLigaPlayer(String id, String name, String nickname, LaLigaPosition position, LaLigaTeam team, ArrayList<LaLigaStat> stats, LaLigaPhoto photos) {
+    public LaLigaPlayer(String id, String name, String nickname, LaLigaPosition position, LaLigaTeam team, ArrayList<LaLigaStat> stats, LaLigaPhoto photos, String optaId) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
@@ -19,6 +23,7 @@ public class LaLigaPlayer {
         this.team = team;
         this.stats = stats;
         this.photos = photos;
+        this.optaId = optaId;
     }
 
     public LaLigaPlayer() {
@@ -78,5 +83,13 @@ public class LaLigaPlayer {
 
     public void setPhotos(LaLigaPhoto photos) {
         this.photos = photos;
+    }
+
+    public String getOptaId() {
+        return optaId;
+    }
+
+    public void setOptaId(String optaId) {
+        this.optaId = optaId;
     }
 }

@@ -20,7 +20,7 @@ public interface wsLaLiga {
 //            "x-nba-stats-origin: stats"
 //    })
 
-    @GET("rankings")
+    @GET("players/rankings")
     Call<JsonObject> getPlayersRanking(
             @Query("limit") String limit,
             @Query("offset") String offset,

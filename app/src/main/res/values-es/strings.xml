@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La Liga Stats Quiz</string>
+    <!--    Botones-->
+    <string name="btnComenzar">COMENZAR</string>
+    <string name="btnRecords">MEJORES PUNTUACIONES</string>
+    <!--    Estadisticas-->
+    <string name="goles_anotados">Goles anotados</string>
+    <string name="asistencias">Asistencias</string>
+    <string name="pases_completados">Pases completados</string>
+    <string name="paradas">Paradas</string>
+    <string name="tarjetas_amarillas">Tarjetas amarillas</string>
+    <string name="tarjetas_rojas">Tarjetas rojas</string>
+    <string name="penaltis">Penaltis</string>
+    <string name="goles_falta">Goles de falta</string>
+    <string name="entradas_exitosas">Entradas con éxito</string>
+</resources>
