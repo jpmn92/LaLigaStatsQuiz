@@ -25,6 +25,7 @@
     <!--    Titulos menú-->
     <string name="liga">League</string>
     <string name="estadistica">Stat</string>
+    <string name="temporada">Season</string>
 
     <!--    General-->
     <string name="seleccionar_avatar">Choose your avatar</string>
@@ -57,6 +58,11 @@
         <item>@string/liga_santander</item>
         <item>@string/liga_smartbank</item>
         <item>@string/liga_femenina</item>
+    </string-array>
+
+    <string-array name="TEMPORADAS">
+        <item>2019</item>
+        <item>2018</item>
     </string-array>
 
 </resources>

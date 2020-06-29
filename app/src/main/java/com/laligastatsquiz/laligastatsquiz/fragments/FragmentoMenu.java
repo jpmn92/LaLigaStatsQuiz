@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -14,7 +15,7 @@ import com.laligastatsquiz.laligastatsquiz.R;
 
 public class FragmentoMenu extends AppCompatActivity implements View.OnClickListener {
     Button btComenzar, btPuntuaciones;
-    Spinner spinnerStats, spinnerLiga;
+    Spinner spinnerStats, spinnerLiga, spinnerTemporada;
     ImageView ivSound;
     boolean sound;
 
@@ -33,6 +34,24 @@ public class FragmentoMenu extends AppCompatActivity implements View.OnClickList
         btPuntuaciones = findViewById(R.id.btnRecords);
         spinnerStats = findViewById(R.id.spinnerStats);
         spinnerLiga = findViewById(R.id.spinnerLiga);
+        spinnerTemporada = findViewById(R.id.spinnerTemporada);
+        spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0){
+                    spinnerLiga.setEnabled(true);
+                }
+                else{
+                    spinnerLiga.setSelection(0);
+                    spinnerLiga.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         ivSound = findViewById(R.id.ivSound);
         ivSound.setOnClickListener(new View.OnClickListener(){
 
@@ -59,6 +78,7 @@ public class FragmentoMenu extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
                 intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 intent.putExtra("sound", sound);
                 this.startActivity(intent);
                 break;

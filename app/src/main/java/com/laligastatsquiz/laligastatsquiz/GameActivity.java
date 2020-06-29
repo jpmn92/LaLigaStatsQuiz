@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         txtPregunta.setText(statName);
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
+        params.putString("season", this.getIntent().getStringExtra("season"));
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
         lstPlayersRankingPresenter.getPlayersRanking(params);

@@ -66,7 +66,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
 
             String statsJson;
-            season = "2019";
+            season = params.getString("season");
             liga = params.getString("liga");
 
             String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/" + liga + season + "/";

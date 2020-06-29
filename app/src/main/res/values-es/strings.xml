@@ -26,6 +26,7 @@
     <!--    Titulos menú-->
     <string name="liga">Liga</string>
     <string name="estadistica">Estadística</string>
+    <string name="temporada">Temporada</string>
 
     <!--    General-->
     <string name="seleccionar_avatar">Selecciona tu avatar</string>
