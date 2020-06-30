@@ -56,12 +56,12 @@
     <string name="nav_logout">Cerrar sesión</string>
     <string name="nav_account">Mi Perfil</string>
     <string name="home_item">Inicio</string>
-    <string name="about_us">Para cualquier problema, duda o sugerencia puedes contactar con nosotros a traves del siguiente correo electrónico:\nnbastatsquiz@gmail.com</string>
+    <string name="about_us">Para cualquier problema, duda o sugerencia puedes contactar con nosotros a traves del siguiente correo electrónico:\bowlofricedev@gmail.com</string>
     <string name="sign_up_google">Registrarse con Google</string>
     <string name="login">Inicia Sesión</string>
     <string name="no_puntuaciones">No hay puntuaciones</string>
     <string name="enviar_mail">Enviar correo</string>
-    <string name="contact_mail">Puedes contactar con nosotros enviando un mail a nbastatsquiz@gmail.com</string>
+    <string name="contact_mail">Puedes contactar con nosotros enviando un mail a bowlofricedev@gmail.com</string>
     <string name="name">Nombre</string>
     <string name="logInGoogle">Inicia sesión con Google</string>
 
@@ -111,6 +111,6 @@
     <string name="glossary_paragraph">En la parte superior de la pantalla de partida podrás encontrar la pregunta indicada por la abreviatura de la categoría estadística en cuestión</string>
 
     <!--    Textos about us-->
-    <string name="aboutUs_paragraph">Todas las estadísticas, nombres e imágenes pertenecen a stats.nba.com</string>
+    <string name="aboutUs_paragraph">Todas las estadísticas, nombres e imágenes pertenecen a www.laliga.com/</string>
 
 </resources>
