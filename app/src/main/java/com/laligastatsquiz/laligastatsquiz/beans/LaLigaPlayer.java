@@ -92,4 +92,9 @@ public class LaLigaPlayer {
     public void setOptaId(String optaId) {
         this.optaId = optaId;
     }
+
+    @Override
+    public String toString() {
+        return nickname;
+    }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_home" />
+
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="@string/nav_help" />
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:checked="false"
+            android:icon="@android:drawable/ic_dialog_email"
+            android:title="@string/nav_contact_with_us" />
+
+
+        <!-- Sección de configuración -->
+        <item
+            android:id="@+id/configuration_section"
+            android:title="Other">
+<!--            android:title="Settings">-->
+
+            <menu>
+                <item
+                    android:id="@+id/nav_myAccount"
+                    android:icon="@drawable/ic_account_circle_black_24dp"
+                    android:title="@string/nav_account" />
+
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_account_circle_black_48dp"
+                    android:title="@string/nav_login" />
+                <item
+                    android:id="@+id/nav_register"
+                    android:icon="@drawable/ic_person_add_black_24dp"
+                    android:title="@string/nav_register" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:title="@string/nav_logout" />
+
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_log_out"-->
+<!--                    android:icon="@android:drawable/ic_lock_power_off"-->
+<!--                    android:title="Logout" />-->
+
+            </menu>
+        </item>
+    </group>
+
+</menu>

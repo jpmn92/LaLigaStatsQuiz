@@ -44,7 +44,7 @@
                 android:id="@+id/imageViewPrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/doncic"
+                android:src="@drawable/logo_ligero"
                 android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -91,7 +91,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/temporada"
-                    android:textColor="#DCE775"
+                    android:textColor="@color/material_black"
                     android:textSize="18dp"
 
                     android:textStyle="bold" />
@@ -111,7 +111,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/liga"
-                    android:textColor="#DCE775"
+                    android:textColor="@color/material_black"
                     android:textSize="18dp"
 
                     android:textStyle="bold" />
@@ -130,7 +130,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/estadistica"
-                    android:textColor="#DCE775"
+                    android:textColor="@color/material_black"
                     android:textSize="18dp"
                     android:textStyle="bold"
 

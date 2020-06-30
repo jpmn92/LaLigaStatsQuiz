@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.auth.FragmentoLogin"
+    android:background="@drawable/grassbg">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+<!--        <ImageView-->
+<!--            android:layout_width="250dp"-->
+<!--            android:layout_height="230dp"-->
+<!--            android:src="@drawable/logo_ligero"-->
+<!--            android:layout_gravity="center"/>-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatarRegister"
+            android:layout_width="105dp"
+            android:layout_height="105dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo_ligero"
+            app:civ_border_width="4dp"
+            app:civ_fill_color="@color/colorPrimary"
+            app:civ_border_color="@color/material_black"/>
+
+        <EditText
+            android:paddingLeft="15dp"
+            android:id="@+id/txtRegisterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textColor="@color/material_black"
+            android:inputType="textPersonName"
+            android:hint="@string/introduce_email"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:paddingLeft="15dp"
+            android:id="@+id/txtRegisterUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textColor="@color/material_black"
+            android:inputType="textPersonName"
+            android:hint="@string/introduce_user_name"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:paddingLeft="15dp"
+
+            android:id="@+id/txtRegisterPasswd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textColor="@color/material_black"
+            android:inputType="textPassword"
+            android:hint="@string/introduce_passwd"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:paddingLeft="15dp"
+
+            android:id="@+id/txtRegisterConfirmPasswd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textColor="@color/material_black"
+            android:inputType="textPassword"
+            android:hint="@string/introduce_passwd2"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:paddingLeft="15dp"
+            android:id="@+id/txtRegisterAvatar"
+            android:textColor="@color/material_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccionar_avatar"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <Spinner
+            android:paddingLeft="15dp"
+
+            android:id="@+id/spinnerRegisterAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            />
+
+        <TextView
+            android:id="@+id/txtErrorRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#9E0808"
+            android:visibility="invisible" />
+
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_register"
+            android:background="@color/colorPrimary"/>
+
+        <Button
+            android:id="@+id/btnLogInGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F4F4"
+            android:drawableStart="@drawable/googleg_standard_color_18"
+
+            android:paddingLeft="20dp"
+            android:text="@string/sign_up_google" />
+            <TextView
+                android:layout_marginTop="5dp"
+
+                android:id="@+id/txtGoToLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/material_black"
+                android:textStyle="bold"
+                android:text="@string/goToLogin" />
+
+    </LinearLayout>
+
+</FrameLayout>

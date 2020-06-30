@@ -28,7 +28,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener, LstPlayersRankingContract.View {
+public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
 
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private LaLigaPlayer player2;
     private boolean sound;
     private String statName, stat, liga;
-    private int contadorAciertos, vidas, points, tiempo;
+    private int contadorAciertos, vidas, points, tiempo, record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,7 +387,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private String traducirEstadistica(String statCategory){
         String stat = "";
-        String as = getString(R.string.goles_anotados);
         if(statCategory.equalsIgnoreCase(getString(R.string.goles_anotados))){
             stat = "total_goals";
         }
@@ -475,4 +474,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
+    }
 }

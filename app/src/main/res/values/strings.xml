@@ -3,6 +3,11 @@
     <!--    Botones-->
     <string name="btnComenzar">START GAME</string>
     <string name="btnRecords">BEST SCORES</string>
+    <string name="options">OPCIONES</string>
+    <string name="goToRegister">Aún no estoy registrado</string>
+    <string name="goToLogin">Ya tengo una cuenta</string>
+    <string name="reset_filters">Reiniciar filtros</string>
+
     <!--    Estadisticas-->
     <string name="goles_anotados">Goals</string>
     <string name="asistencias">Assists</string>
@@ -38,6 +43,77 @@
     <string name="record">Record: </string>
     <string name="puntuacion">Points: </string>
     <string name="actualizar">UPDATE</string>
+
+    <!--    Textos Menu Lateral-->
+    <string name="home_item">Home</string>
+    <string name="nav_about_us">About us</string>
+    <string name="nav_contact_with_us">Contact us</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_account">My Profile</string>
+
+    <string name="nav_help">Help</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_register">Sign in</string>
+    <string name="nav_logout">Logout</string>
+    <string name="about_us">Para cualquier problema, duda o sugerencia puedes contactar con nosotros a traves del siguiente correo electrónico:\nnbastatsquiz@gmail.com</string>
+    <string name="sign_up_google">Registrarse con Google</string>
+    <string name="login">Inicia Sesión</string>
+    <string name="no_puntuaciones">No hay puntuaciones</string>
+    <string name="enviar_mail">Enviar correo</string>
+    <string name="contact_mail">Puedes contactar con nosotros enviando un mail a nbastatsquiz@gmail.com</string>
+    <string name="name">Name</string>
+    <string name="logInGoogle">Log in with Google</string>
+
+    <!--    Textos Toasts-->
+    <string name="config_updated">CONFIG UPDATED</string>
+    <string name="press_back">Press back again to exit</string>
+    <string name="sin_conexion">Check your internet connection and try again</string>
+    <string name="login_correcto">Welcome again </string>
+    <string name="login_incorrecto">Log in error</string>
+    <string name="registro_correcto">Sign Up Succesful</string>
+
+    <!--    Registro-->
+    <string name="user_registred">user registred</string>
+
+    <!--    Errores al registrarse-->
+    <string name="already_registred">email already registred</string>
+    <string name="invalid_email">invalid email</string>
+    <string name="passwords_not_match">passwords not match</string>
+    <string name="password_characters">password must have six characters at least</string>
+    <string name="error_ocurred">error</string>
+
+    <!--Textos Dialogs-->
+    <string name="introduce_user_name">Type your username here</string>
+    <string name="introduce_email">Type your email here</string>
+    <string name="introduce_passwd">Type your password here</string>
+    <string name="introduce_passwd2">Confirm your password here</string>
+
+
+    <string name="empezar_partida">Start Game</string>
+    <string name="registrarse">Sign Up</string>
+    <string name="sugerencia_registro">You need to be signed in to save your game records ☹️</string>
+
+    <!--    Textos tabs-->
+    <string name="tab_reglas">GAME RULES</string>
+    <string name="tab_glosario">GLOSSARY</string>
+    <string name="tab_aboutUs">ABOUT US</string>
+
+    <!--    Textos help-->
+    <string name="help_paragraph">In the main menu you can choose the game parameters you want among:</string>
+    <string name="help_league">1 - League: NBA / WNBA / GLEAGUE</string>
+    <string name="help_season">2 - Season</string>
+    <string name="help_season_type">3 - Regular Season / Playoffs</string>
+    <string name="help_stat">4 - Stat Category</string>
+    <string name="help_stat_type">5 - Per Game / Totals</string>
+    <string name="help_paragraph2">Once the game is started, you have to click on the player who had a better stat in the selected season. The stat and season are indicated on the top of the screen.</string>
+    <string name="help_paragraph3">You have three lives, if you click on the wrong player, you\'ll lose a live. If you make ten hits in a row, you will get a new live up to three</string>
+
+    <!--    Textos glosario-->
+    <string name="glossary_paragraph">On the top of the game screen you will find the abbreviated stat category asked. \nThe abbreviations are the following:</string>
+
+    <!--    Textos about us-->
+    <string name="aboutUs_paragraph">All the statistics, names and images are retrieved from stats.nba.com</string>
 
     <string-array name="ESTADISTICAS">
         <item>@string/goles_anotados</item>

@@ -4,6 +4,11 @@
     <!--    Botones-->
     <string name="btnComenzar">COMENZAR</string>
     <string name="btnRecords">MEJORES PUNTUACIONES</string>
+    <string name="options">OPCIONES</string>
+    <string name="goToRegister">Aún no estoy registrado</string>
+    <string name="goToLogin">Ya tengo una cuenta</string>
+    <string name="reset_filters">Reiniciar filtros</string>
+
     <!--    Estadisticas-->
     <string name="goles_anotados">Goles anotados</string>
     <string name="asistencias">Asistencias</string>
@@ -39,4 +44,73 @@
     <string name="record">Record: </string>
     <string name="puntuacion">Puntuación: </string>
     <string name="actualizar">ACTUALIZAR</string>
+
+    <!--    Textos Menu Lateral-->
+    <string name="nav_about_us">Acerca de</string>
+    <string name="nav_contact_with_us">Contacto</string>
+    <string name="nav_settings">Configuración</string>
+    <string name="nav_help">Ayuda</string>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_login">Iniciar Sesión</string>
+    <string name="nav_register">Registrarse</string>
+    <string name="nav_logout">Cerrar sesión</string>
+    <string name="nav_account">Mi Perfil</string>
+    <string name="home_item">Inicio</string>
+    <string name="about_us">Para cualquier problema, duda o sugerencia puedes contactar con nosotros a traves del siguiente correo electrónico:\nnbastatsquiz@gmail.com</string>
+    <string name="sign_up_google">Registrarse con Google</string>
+    <string name="login">Inicia Sesión</string>
+    <string name="no_puntuaciones">No hay puntuaciones</string>
+    <string name="enviar_mail">Enviar correo</string>
+    <string name="contact_mail">Puedes contactar con nosotros enviando un mail a nbastatsquiz@gmail.com</string>
+    <string name="name">Nombre</string>
+    <string name="logInGoogle">Inicia sesión con Google</string>
+
+    <!--    Textos Toasts-->
+    <string name="config_updated">CONFIGURACIÓN ACTUALIZADA</string>
+    <string name="press_back">Pulsa de nuevo para salir</string>
+    <string name="sin_conexion">Comprueba tu conexión a internet y vuelva a intentarlo</string>
+    <string name="login_correcto">Bienvenido de nuevo </string>
+    <string name="login_incorrecto">Error en el inicio de sesión</string>
+    <string name="registro_correcto">Registro exitoso  </string>
+
+    <!--    Registro-->
+    <string name="user_registred">usuario registrado correctamente</string>
+    <!--    Errores al registrarse-->
+    <string name="already_registred">dirección de correo ya registrada</string>
+    <string name="invalid_email">dirección de correo no válida</string>
+    <string name="passwords_not_match">las contraseñas no coinciden</string>
+    <string name="password_characters">la contraseña debe tener al menos seis carácteres</string>
+    <string name="error_ocurred">error</string>
+
+    <!--Textos Dialogs-->
+    <string name="introduce_user_name">Introduce Nombre de Usuario:</string>
+    <string name="introduce_email">Introduce tu email</string>
+    <string name="introduce_passwd">Introduce tu contraseña</string>
+    <string name="introduce_passwd2">Confirma tu contraseña</string>
+
+    <string name="empezar_partida">Jugar</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="sugerencia_registro">Si no te registras no se guardarán tus puntuaciones ☹️</string>
+
+    <!--    Textos tabs-->
+    <string name="tab_reglas">REGLAS</string>
+    <string name="tab_glosario">GLOSARIO</string>
+    <string name="tab_aboutUs">SOBRE NOSOTROS</string>
+
+    <!--    Textos help-->
+    <string name="help_paragraph">En el menú principal puedes escoger los parámetros de juego que desees, entre los que se encuentran los 5 siguientes:</string>
+    <string name="help_league">1 - Liga: NBA / WNBA / GLEAGUE</string>
+    <string name="help_season">2 - Temporada</string>
+    <string name="help_season_type">3 - Temporada Regular / Playoffs</string>
+    <string name="help_stat">4 - Categoría estadística</string>
+    <string name="help_stat_type">5 - Por Partido / Totales</string>
+    <string name="help_paragraph2">Una vez inicias el juego, tendrás que pulsar sobre el jugador que mejor estadística tenga en la temporada correspondiente.  La estadística y temporada se indican en la parte superior de la pantalla</string>
+    <string name="help_paragraph3">Tienes tres vidas, si eliges al jugador incorrecto, perderás una vida. Si eliges correctamente diez veces seguidas, puedes obtener una nueva vida, con un máximo de tres</string>
+
+    <!--    Textos glosario-->
+    <string name="glossary_paragraph">En la parte superior de la pantalla de partida podrás encontrar la pregunta indicada por la abreviatura de la categoría estadística en cuestión</string>
+
+    <!--    Textos about us-->
+    <string name="aboutUs_paragraph">Todas las estadísticas, nombres e imágenes pertenecen a stats.nba.com</string>
+
 </resources>

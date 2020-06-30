@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.laligastatsquiz.laligastatsquiz.fragments.help.FragmentoHelpGlosario">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/grassbg"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="20dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/tab_glosario"
+                android:textColor="@color/material_black"
+                android:textSize="26dp"
+                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_ligero"
+
+                />
+
+
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/material_black"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="40dp"
+
+            android:text="@string/glossary_paragraph"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_PTS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="PTS"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_REB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="REB"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_DREB"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="DREB"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/glossary_OREB"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="OREB"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_AST"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="AST"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_STL"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="STL"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_BLK"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="BLK"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_TOV"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="TOV"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_MIN"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="MIN"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_FG3_PCT"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="FG3_PCT"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_FG3M"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="FG3M"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_FT_PCT"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="FT_PCT"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/glossary_FTM"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="FTM"
+            android:textAlignment="inherit"
+            android:textColor="@color/material_black"
+            android:textSize="18dp"
+
+
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>
