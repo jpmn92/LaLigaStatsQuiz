@@ -50,6 +50,12 @@ public class FirebaseMethods {
         this.fragment = fragment;
     }
 
+    public FirebaseMethods(GameActivity gameActivity, Bundle bundlePartida) {
+        this.gameActivity = gameActivity;
+        this.bundlePartida = bundlePartida;
+        this.puntuacion = 0;
+    }
+
     public void createFbPuntuacion(Bundle bundle) {
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -65,42 +71,12 @@ public class FirebaseMethods {
 
             fbPuntuacion.setPoints(bundle.getInt("puntos"));
             fbPuntuacion.setDate(currentDate);
-            fbPuntuacion.setPerMode(bundle.getString("PerMode"));
-            fbPuntuacion.setSeason(bundle.getString("Season"));
-            fbPuntuacion.setSeasonType(bundle.getString("SeasonType"));
-            fbPuntuacion.setStatCategory(bundle.getString("StatCategory"));
+            fbPuntuacion.setLiga(bundle.getString("liga"));
+            fbPuntuacion.setSeason(bundle.getString("season"));
+            fbPuntuacion.setStatCategory(String.valueOf(bundle.getInt("statId")));
             fbPuntuacion.setImage(bundle.getString("image"));
             fbPuntuacion.setUid(uid);
             fbPuntuacion.setUsername(bundle.getString("userName"));
-            fbPuntuacion.setLiga(bundle.getString("liga"));
-
-
-
-        //draft
-
-//        if(bundle.getString("draftTeam").equals("") || bundle.getString("draftTeam") == null){
-//            String draftTeam = "0";
-//            fbPuntuacion.setDraftTeam(draftTeam);
-//        }else{
-//            fbPuntuacion.setDraftTeam(bundle.getString("draftTeam"));
-//        }
-//
-//        if(bundle.getString("draftCollege").equals("") || bundle.getString("draftCollege") == null){
-//            String draftCollege = "0";
-//            fbPuntuacion.setDraftCollege(draftCollege);
-//        }else{
-//            fbPuntuacion.setDraftCollege(bundle.getString("draftCollege"));
-//        }
-//
-//        if(bundle.getString("Season").equals("") || bundle.getString("Season") == null){
-//            String season = "0";
-//            fbPuntuacion.setSeason(season);
-//        }else{
-//            fbPuntuacion.setSeason(bundle.getString("Season"));
-//        }
-//
-//
-//        fbPuntuacion.setModoJuego(bundle.getString("modoJuego"));
 
 
         reference.push().setValue(fbPuntuacion);
@@ -109,7 +85,6 @@ public class FirebaseMethods {
 
     public void getRecord() {
 
-        String modoJuego = bundlePartida.getString("modoJuego");
 
         ArrayList<FirebasePuntuacion> fbPuntuacionList = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
@@ -131,11 +106,13 @@ public class FirebaseMethods {
                     } else {
 
                         for (FirebasePuntuacion firebasePuntuacion : fbPuntuacionList) {
-                            boolean datosIguales = firebasePuntuacion.getPerMode().equalsIgnoreCase(bundlePartida.getString("PerMode"))
-                                    && firebasePuntuacion.getSeason().equalsIgnoreCase(bundlePartida.getString("Season"))
-                                    && firebasePuntuacion.getStatCategory().equalsIgnoreCase(bundlePartida.getString("StatCategory"))
-                                    && firebasePuntuacion.getSeasonType().equalsIgnoreCase(bundlePartida.getString("SeasonType"))
-                                    && firebasePuntuacion.getUsername().equalsIgnoreCase(bundlePartida.getString("userName"))
+                            String season = bundlePartida.getString("season");
+                            String uid = bundlePartida.getString("uid");
+                            int stat = bundlePartida.getInt("statId");
+                            String liga = bundlePartida.getString("liga");
+                            boolean datosIguales = firebasePuntuacion.getSeason().equalsIgnoreCase(bundlePartida.getString("season"))
+                                    && firebasePuntuacion.getUid().equalsIgnoreCase(bundlePartida.getString("uid"))
+                                    && firebasePuntuacion.getStatCategory().equalsIgnoreCase(String.valueOf(bundlePartida.getInt("statId")))
                                     && firebasePuntuacion.getLiga().equalsIgnoreCase(bundlePartida.getString("liga"));
 
                             if (datosIguales && firebasePuntuacion.getPoints() > puntuacion) {
@@ -164,8 +141,6 @@ public class FirebaseMethods {
 
         processDone = false;
 
-        String modoJuego = paramsPartida.getString("modoJuego");
-
         ArrayList<FirebasePuntuacion> fbPuntuacionList = new ArrayList<>();
         listadoFinal = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
@@ -186,10 +161,8 @@ public class FirebaseMethods {
 
                     for (FirebasePuntuacion firebasePuntuacion : fbPuntuacionList) {
                         if (
-                                firebasePuntuacion.getPerMode().equalsIgnoreCase(paramsPartida.getString("PerMode"))
-                                        && firebasePuntuacion.getSeason().equalsIgnoreCase(paramsPartida.getString("Season"))
-                                        && firebasePuntuacion.getStatCategory().equalsIgnoreCase(paramsPartida.getString("StatCategory"))
-                                        && firebasePuntuacion.getSeasonType().equalsIgnoreCase(paramsPartida.getString("SeasonType"))
+                                firebasePuntuacion.getSeason().equalsIgnoreCase(paramsPartida.getString("season"))
+                                        && firebasePuntuacion.getStatCategory().equalsIgnoreCase(String.valueOf(paramsPartida.getInt("statId")))
                                         && firebasePuntuacion.getLiga().equalsIgnoreCase(paramsPartida.getString("liga")))
                         {
 
@@ -204,7 +177,7 @@ public class FirebaseMethods {
 
                     FragmentoMenu fragmentoMenu = (FragmentoMenu) fragment;
                     fragmentoMenu.setPuntuaciones(listadoFinal);
-                    // fragmentoMenu.goToPuntuaciones();
+                    fragmentoMenu.goToPuntuaciones();
 
 
 

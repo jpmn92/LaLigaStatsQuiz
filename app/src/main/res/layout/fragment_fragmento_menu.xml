@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/textura_cesped"
+    android:background="@drawable/grassbg"
     android:orientation="vertical"
     android:weightSum="100">
 
@@ -44,8 +44,8 @@
                 android:id="@+id/imageViewPrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo_laliga_transparente"
                 android:layout_gravity="center"
+                android:src="@drawable/logo_laliga_transparente"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,24 +65,24 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:paddingLeft="5dp"-->
-<!--                    android:paddingRight="20dp"-->
-<!--                    android:text="@string/season"-->
-<!--                    android:textColor="@color/material_black"-->
-<!--                    android:textSize="18dp"-->
-<!--                    android:textStyle="bold"-->
+                <!--                <TextView-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:paddingLeft="5dp"-->
+                <!--                    android:paddingRight="20dp"-->
+                <!--                    android:text="@string/season"-->
+                <!--                    android:textColor="@color/material_black"-->
+                <!--                    android:textSize="18dp"-->
+                <!--                    android:textStyle="bold"-->
 
-<!--                    />-->
+                <!--                    />-->
 
-<!--                <Spinner-->
-<!--                    android:id="@+id/spinnerSeasonsDraft"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:entries="@array/DraftYears"-->
-<!--                    android:spinnerMode="dialog" />-->
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/spinnerSeasonsDraft"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:entries="@array/DraftYears"-->
+                <!--                    android:spinnerMode="dialog" />-->
 
                 <TextView
                     android:id="@+id/textView2"
@@ -144,57 +144,57 @@
                     android:entries="@array/ESTADISTICAS"
                     android:spinnerMode="dialog" />
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
+                <!--                <TextView-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
 
-<!--                    android:paddingLeft="5dp"-->
-<!--                    android:paddingRight="20dp"-->
-<!--                    android:text="@string/team"-->
-<!--                    android:textColor="@color/material_black"-->
-<!--                    android:textSize="18dp"-->
-<!--                    android:textStyle="bold"-->
+                <!--                    android:paddingLeft="5dp"-->
+                <!--                    android:paddingRight="20dp"-->
+                <!--                    android:text="@string/team"-->
+                <!--                    android:textColor="@color/material_black"-->
+                <!--                    android:textSize="18dp"-->
+                <!--                    android:textStyle="bold"-->
 
-<!--                    />-->
+                <!--                    />-->
 
-<!--                <Spinner-->
-<!--                    android:id="@+id/spinnerTeamDraft"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/spinnerTeamDraft"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
 
-<!--                    android:entries="@array/NBA_Teams"-->
-<!--                    android:spinnerMode="dialog" />-->
+                <!--                    android:entries="@array/NBA_Teams"-->
+                <!--                    android:spinnerMode="dialog" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/btnResetFilters"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="#00689F38"-->
-<!--                    android:drawableLeft="@drawable/reset"-->
-<!--                    android:text="@string/reset_filters">-->
+                <!--                <Button-->
+                <!--                    android:id="@+id/btnResetFilters"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:background="#00689F38"-->
+                <!--                    android:drawableLeft="@drawable/reset"-->
+                <!--                    android:text="@string/reset_filters">-->
 
-<!--                </Button>-->
+                <!--                </Button>-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
+                <!--                <TextView-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
 
-<!--                    android:paddingLeft="5dp"-->
-<!--                    android:paddingRight="20dp"-->
-<!--                    android:text="@string/stat_type"-->
-<!--                    android:textColor="@color/material_black"-->
-<!--                    android:textSize="18dp"-->
-<!--                    android:textStyle="bold"-->
+                <!--                    android:paddingLeft="5dp"-->
+                <!--                    android:paddingRight="20dp"-->
+                <!--                    android:text="@string/stat_type"-->
+                <!--                    android:textColor="@color/material_black"-->
+                <!--                    android:textSize="18dp"-->
+                <!--                    android:textStyle="bold"-->
 
-<!--                    />-->
+                <!--                    />-->
 
-<!--                <Spinner-->
-<!--                    android:id="@+id/spinnerDataTypeDraft"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="0dp"-->
-<!--                    android:entries="@array/TipoDatos"-->
-<!--                    android:spinnerMode="dialog" />-->
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/spinnerDataTypeDraft"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="0dp"-->
+                <!--                    android:entries="@array/TipoDatos"-->
+                <!--                    android:spinnerMode="dialog" />-->
 
 
             </LinearLayout>

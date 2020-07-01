@@ -19,17 +19,21 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaStat;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingContract;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
 import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
+import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
 
+    FirebaseMethods firebaseMethods;
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
     private ArrayList<LaLigaPlayer> laLigaPlayerArrayList;
@@ -45,7 +49,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private LaLigaPlayer player2;
     private boolean sound;
     private String statName, stat, liga;
-    private int contadorAciertos, vidas, points, tiempo, record;
+    private int contadorAciertos, vidas, points, tiempo, record, statId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,11 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         setContentView(R.layout.activity_game);
         Bundle params = new Bundle();
         lstPlayersRankingPresenter = new LstPlayersRankingPresenter(this);
-        initComponents();
         statName = this.getIntent().getStringExtra("stat");
         stat = traducirEstadistica(statName);
+        this.getIntent().putExtra("statId", statId);
         liga = traducirLiga(this.getIntent().getStringExtra("liga"));
+        initComponents();
         txtPregunta.setText(statName);
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
@@ -67,6 +72,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void initComponents() {
+        firebaseMethods = new FirebaseMethods(this, this.getIntent().getExtras());
         sound = this.getIntent().getBooleanExtra("sound", true); // se tendrá que pasar por parametro
         ivTeam1 = findViewById(R.id.ivTeam1);
         ivTeam2 = findViewById(R.id.ivTeam2);
@@ -91,6 +97,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
+        buscarRecord();
         final ProgressDialog progressDialog = new ProgressDialog(GameActivity.this, R.style.Theme_AppCompat_DayNight_Dialog); //TODO: RECIEN CAMBIADO 16/06
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Cargando...");
@@ -221,22 +228,21 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             //TODO: Cuando implementemos el logeo hay que descomentar estas lineas
             boolean logeado = this.getIntent().getBooleanExtra("loged", false);
             if (logeado) {
-//                FirebaseAuth mAuth;
-//                mAuth = FirebaseAuth.getInstance();
-//                FirebaseUser firebaseUser = mAuth.getCurrentUser();
-//                paramsIniciales.putString("userName", firebaseUser.getDisplayName());
-//                paramsIniciales.putInt("puntos", points);
-//                paramsIniciales.putString("image", String.valueOf(firebaseUser.getPhotoUrl()));
-//                paramsIniciales.putString("modoJuego", "Draft");
-//
-//
-//                firebaseMethods.createFbPuntuacion(paramsIniciales);
-//                if (points > record) {
-//                    record = points;
-//                    message = getString(R.string.new_record) + "\n" + getString(R.string.puntuacion) + points;
-//                } else {
-//                    message = getString(R.string.puntuacion) + points + "\n" + getString(R.string.record) + record;
-//                }
+                FirebaseAuth mAuth;
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                this.getIntent().putExtra("userName", firebaseUser.getDisplayName());
+                this.getIntent().putExtra("puntos", points);
+                this.getIntent().putExtra("statId", statId);
+                this.getIntent().putExtra("image", String.valueOf(firebaseUser.getPhotoUrl()));
+
+                firebaseMethods.createFbPuntuacion(this.getIntent().getExtras());
+                if (points > record) {
+                    record = points;
+                    message = getString(R.string.new_record) + "\n" + getString(R.string.puntuacion) + points;
+                } else {
+                    message = getString(R.string.puntuacion) + points + "\n" + getString(R.string.record) + record;
+                }
             } else {
                 message = getString(R.string.puntuacion) + points;
             }
@@ -283,6 +289,13 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             }
         }, 1000);
     }
+    private void buscarRecord() {
+        if (this.getIntent().getBooleanExtra("loged", false)) {
+            firebaseMethods.getRecord();
+        }
+
+    }
+
 
     @Override
     public void successListPlayersRanking(ArrayList<LaLigaPlayer> laLigaPlayers) {
@@ -389,39 +402,51 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         String stat = "";
         if(statCategory.equalsIgnoreCase(getString(R.string.goles_anotados))){
             stat = "total_goals";
+            statId = R.string.goles_anotados;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.asistencias))){
             stat = "total_assists";
+            statId = R.string.asistencias;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.pases_completados))){
             stat = "total_accurate_pass";
+            statId = R.string.pases_completados;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.paradas))){
             stat = "total_saves";
+            statId = R.string.paradas;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_amarillas))){
             stat = "total_yellow_card";
+            statId = R.string.tarjetas_amarillas;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_rojas))){
             stat = "total_red_card";
+            statId = R.string.tarjetas_rojas;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.penaltis))){
             stat = "total_att_pen_goal";
+            statId = R.string.penaltis;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.goles_falta))){
             stat = "total_att_freekick_goal";
+            statId = R.string.goles_falta;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.entradas_exitosas))){
             stat = "total_won_tackle";
+            statId = R.string.entradas_exitosas;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.minutos))){
             stat = "total_mins_played";
+            statId = R.string.minutos;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas))){
             stat = "total_card";
+            statId = R.string.tarjetas;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.faltas))){
             stat = "total_fouls";
+            statId = R.string.faltas;
         }
 
         return stat;

@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_laliga"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.LALIGAQUIZ">
         <activity android:name=".NavigationDrawerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

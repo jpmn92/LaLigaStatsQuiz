@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +36,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     ImageView ivSound;
     Resources res;
     FirebaseMethods firebaseMethods;
+    Bundle params;
     boolean sound;
     ArrayList<FirebasePuntuacion> puntuaciones;
     String userName;
@@ -69,6 +71,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         btComenzar = view.findViewById(R.id.btnStart);
         btComenzar.setOnClickListener(this);
         btPuntuaciones = view.findViewById(R.id.btnRecords);
+        btPuntuaciones.setOnClickListener(this);
         spinnerStats = view.findViewById(R.id.spinnerStats);
         spinnerLiga = view.findViewById(R.id.spinnerLiga);
         spinnerTemporada = view.findViewById(R.id.spinnerTemporada);
@@ -104,19 +107,27 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
+        params = new Bundle();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnStart:
-                Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
-                intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
-                intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
-                intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
-                intent.putExtra("sound", sound);
-                this.startActivity(intent);
+                checkSession();
+                break;
+            case R.id.btnRecords:
+                FirebaseAuth mAuth;
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                if(firebaseUser != null){
+                    params.putString("uid", mAuth.getUid());
+                }
+                params.putString("stat", String.valueOf(spinnerStats.getSelectedItem()));
+                params.putInt("statId", getStatId());
+                params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+                firebaseMethods.getTopPuntuaciones(params);
                 break;
         }
     }
@@ -130,6 +141,11 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         if (firebaseUser != null) {
             userName = firebaseUser.getDisplayName();
             Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
+            intent.putExtra("uid", mAuth.getUid());
+            intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
+            intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+            intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+            intent.putExtra("sound", sound);
             intent.putExtra("loged", true);
             getActivity().startActivity(intent);
         } else {
@@ -183,6 +199,80 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
     }
 
+    public void goToPuntuaciones() {
+        // puntuaciones.sort();
+
+        //params.putString("userName", getUserName());
+
+        Collections.sort(puntuaciones, Collections.reverseOrder());
+
+        params.putParcelableArrayList("puntuaciones", puntuaciones);
+
+        FragmentoPuntuaciones fragmentoPuntuaciones = FragmentoPuntuaciones.newInstance(params);
+
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_content, fragmentoPuntuaciones, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+
+
+
+    }
+
+    private String getUserName() {
+//        int userID = sessionManagement.getSession();
+//
+//        if (userID != -1) {
+//            userName = sessionManagement.getSessionUserName();
+//
+//        } else {
+//            userName = "";
+//
+//        }
+        return userName;
+    }
+
+    private int getStatId(){
+        int statId = 0;
+        if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.goles_anotados))){
+            statId = R.string.goles_anotados;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.asistencias))){
+            statId = R.string.asistencias;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.pases_completados))){
+            statId = R.string.pases_completados;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.paradas))){
+            statId = R.string.paradas;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_amarillas))){
+            statId = R.string.tarjetas_amarillas;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_rojas))){
+            statId = R.string.tarjetas_rojas;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.penaltis))){
+            statId = R.string.penaltis;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.goles_falta))){
+            statId = R.string.goles_falta;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.entradas_exitosas))){
+            statId = R.string.entradas_exitosas;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.minutos))){
+            statId = R.string.minutos;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas))){
+            statId = R.string.tarjetas;
+        }
+        else if(String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.faltas))){
+            statId = R.string.faltas;
+        }
+        return statId;
+    }
 
 
     public ArrayList<FirebasePuntuacion> getPuntuaciones() {
