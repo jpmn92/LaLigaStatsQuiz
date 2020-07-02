@@ -87,7 +87,7 @@ public class FragmentoTabsAyuda extends Fragment {
         AdaptadorSecciones adapter = new AdaptadorSecciones(getChildFragmentManager());
 
         adapter.addFragment(FragmentoHelpReglas.newInstance(null), getString(R.string.tab_reglas));
-        adapter.addFragment(FragmentoHelpGlosario.newInstance(null), getString(R.string.tab_glosario));
+        //adapter.addFragment(FragmentoHelpGlosario.newInstance(null), getString(R.string.tab_glosario));
         adapter.addFragment(FragmentoHelpAboutUs.newInstance(null), getString(R.string.tab_aboutUs));
 
 

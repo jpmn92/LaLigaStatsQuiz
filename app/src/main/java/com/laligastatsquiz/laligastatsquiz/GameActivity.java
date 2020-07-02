@@ -65,7 +65,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         txtPregunta.setText(statName);
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
-        params.putString("season", this.getIntent().getStringExtra("season"));
+        params.putString("season", "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/')));
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
         lstPlayersRankingPresenter.getPlayersRanking(params);
@@ -93,7 +93,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         vidas = 3;
         points = 0;
         tiempo = 10000;
-        myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
+        //myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
@@ -106,10 +106,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             public void run() {
                 linLoad.setVisibility(View.GONE);
                 progressDialog.dismiss();
-
+                myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
+                myCountDownTimer.start();
             }
-        }, 3000);
-
+        }, 5000);
     }
 
     private void selectPlayers() {
@@ -301,6 +301,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     public void successListPlayersRanking(ArrayList<LaLigaPlayer> laLigaPlayers) {
         //PRUEBA PARA MOSTRAR JUGADORES
         setLaLigaPlayerArrayList(laLigaPlayers);
+        generarJugadorConSuImagen(laLigaPlayers);
         selectPlayers();
 
     }
@@ -505,5 +506,12 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
     public void setRecord(int record) {
         this.record = record;
+    }
+
+    private void generarJugadorConSuImagen(ArrayList<LaLigaPlayer> laLigaPlayers){
+        for(LaLigaPlayer laLigaPlayer1: laLigaPlayers){
+            System.out.println("laLigaPlayer = generatePlayer(\"" + laLigaPlayer1.getNickname() + "\", \"" + laLigaPlayer1.getPhotos().getPhoto().getMedium() + "\");\n" +
+                    "laLigaPlayers.add(laLigaPlayer);\n\n");
+        }
     }
 }

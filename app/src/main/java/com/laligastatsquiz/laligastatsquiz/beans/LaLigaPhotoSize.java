@@ -3,7 +3,7 @@ package com.laligastatsquiz.laligastatsquiz.beans;
 import com.google.gson.annotations.SerializedName;
 
 public class LaLigaPhotoSize {
-    @SerializedName("64x70")
+    @SerializedName("128x139")
     String small;
     @SerializedName("256x278")
     String medium;
