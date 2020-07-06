@@ -162,6 +162,10 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     //userName = input.getText().toString();
                     Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
                     intent.putExtra("loged", false);
+                    intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
+                    intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                    intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+                    intent.putExtra("sound", sound);
                     getActivity().startActivity(intent);
 
                 }
