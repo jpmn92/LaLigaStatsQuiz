@@ -512,7 +512,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int random = (int) (Math.random() * 2) + 1;
-                System.out.println("");
                 if (mInterstitialAd.isLoaded() && random % 2 == 0) {
                     mInterstitialAd.show();
                 }
@@ -531,7 +530,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //                GameActivity.this.startActivity(menu);
 //                GameActivity.this.finish();
                 int random = (int) (Math.random() * 2) + 1;
-                System.out.println("");
                 if (mInterstitialAd.isLoaded() && random % 2 == 0) {
                     mInterstitialAd.show();
                 }
