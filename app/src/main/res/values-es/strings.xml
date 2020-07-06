@@ -34,6 +34,7 @@
     <string name="temporada">Temporada</string>
 
     <!--    General-->
+    <string name="misc">Mezcla</string>
     <string name="seleccionar_avatar">Selecciona tu avatar</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCELAR</string>

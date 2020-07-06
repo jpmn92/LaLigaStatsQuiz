@@ -1,11 +1,15 @@
 package com.laligastatsquiz.laligastatsquiz.beans;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LaLigaTeam {
     private String id;
     private String name;
     private String nickname;
     private String shortname;
     private LaLigaShield shield;
+    @SerializedName("opta_id")
+    private String optaId;
 
     public String getId() {
         return id;
@@ -45,5 +49,13 @@ public class LaLigaTeam {
 
     public void setShield(LaLigaShield shield) {
         this.shield = shield;
+    }
+
+    public String getOptaId() {
+        return optaId;
+    }
+
+    public void setOptaId(String optaId) {
+        this.optaId = optaId;
     }
 }

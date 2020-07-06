@@ -48,7 +48,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private LaLigaPlayer player1;
     private LaLigaPlayer player2;
     private boolean sound;
-    private String statName, stat, liga;
+    private String statName, stat, liga, season;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
 
     @Override
@@ -62,10 +62,11 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         this.getIntent().putExtra("statId", statId);
         liga = traducirLiga(this.getIntent().getStringExtra("liga"));
         initComponents();
-        txtPregunta.setText(statName);
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
-        params.putString("season", "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/')));
+        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
+        params.putString("season", season);
+        txtPregunta.setText(statName + " " + this.getIntent().getStringExtra("season"));
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
         lstPlayersRankingPresenter.getPlayersRanking(params);
@@ -116,14 +117,13 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         // comprobarSinFoto(); // Metodo de momento para buscar jugadores sin foto
         int randomP1;
         int randomP2;
-        do{
-            randomP1 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
-            player1 = laLigaPlayerArrayList.get(randomP1);
-        } while (player1.getPhotos() == null);
+
+        randomP1 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
+        player1 = laLigaPlayerArrayList.get(randomP1);
         do{
             randomP2 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
             player2 = laLigaPlayerArrayList.get(randomP2);
-        } while (randomP2 == randomP1 || player2.getPhotos() == null);
+        } while (randomP2 == randomP1);
 
 
         showPlayers();
@@ -131,7 +131,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         valueP1 = calculateValue(player1, stat);
         valueP2 = calculateValue(player2, stat);
-
+        myCountDownTimer.start();
     }
 
     /**
@@ -156,7 +156,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
                 statValue = Integer.valueOf(laLigaStat.getStat());
             }
         }
-        myCountDownTimer.start();
+
         return statValue;
     }
 
@@ -167,13 +167,25 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
 //        String url = "https://e00-marca.uecdn.es/iconos/escudos/opta/jugadores/" + player1.getOptaId().substring(1) + ".jpg";
 //        Picasso.with(this).load(url).into(ivPlayer1);
-        Picasso.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).into(ivPlayer1);
-        Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
+        if(player1.getPhotos() != null){
+            Picasso.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).into(ivPlayer1);
+            Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
 
 //        url = "https://e00-marca.uecdn.es/iconos/escudos/opta/jugadores/" + player2.getOptaId().substring(1) + ".jpg";
 //        Picasso.with(this).load(url).into(ivPlayer2);
-        Picasso.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).into(ivPlayer2);
-        Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+            Picasso.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).into(ivPlayer2);
+            Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+        }
+        else {
+            String imageP1 = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
+            Picasso.with(this).load(imageP1).into(ivPlayer1);
+            Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
+
+            String imageP2 = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
+            Picasso.with(this).load(imageP2).into(ivPlayer2);
+            Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+        }
+
 
         txtNameP1.setText(player1.getNickname());
         txtNameP2.setText(player2.getNickname());
@@ -190,7 +202,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         contadorAciertos++;
         if (contadorAciertos >= 10 && vidas < 3) {
             vidas++;
-            comprobarVidas();
             contadorAciertos = 0;
         }
         comprobarVidas();
@@ -301,7 +312,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     public void successListPlayersRanking(ArrayList<LaLigaPlayer> laLigaPlayers) {
         //PRUEBA PARA MOSTRAR JUGADORES
         setLaLigaPlayerArrayList(laLigaPlayers);
-        generarJugadorConSuImagen(laLigaPlayers);
+        // generarJugadorConSuImagen(laLigaPlayers);
         selectPlayers();
 
     }
@@ -481,6 +492,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
                 vidas = 3;
                 points = 0;
                 contadorAciertos = 0;
+                txtPoints.setText(String.valueOf(points));
                 comprobarVidas();
                 selectPlayers();
             }
@@ -508,6 +520,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         this.record = record;
     }
 
+    /**
+     * Metodo para generar en consola un texto con los jugadores y sus imagenes
+     * @param laLigaPlayers
+     */
     private void generarJugadorConSuImagen(ArrayList<LaLigaPlayer> laLigaPlayers){
         for(LaLigaPlayer laLigaPlayer1: laLigaPlayers){
             System.out.println("laLigaPlayer = generatePlayer(\"" + laLigaPlayer1.getNickname() + "\", \"" + laLigaPlayer1.getPhotos().getPhoto().getMedium() + "\");\n" +

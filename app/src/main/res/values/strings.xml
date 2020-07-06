@@ -33,6 +33,7 @@
     <string name="temporada">Season</string>
 
     <!--    General-->
+    <string name="misc">Mix</string>
     <string name="seleccionar_avatar">Choose your avatar</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
@@ -137,6 +138,10 @@
     <string-array name="TEMPORADAS">
         <item>19/20</item>
         <item>18/19</item>
+        <item>17/18</item>
+        <item>16/17</item>
+        <item>15/16</item>
+        <item>14/15</item>
     </string-array>
 
 </resources>
