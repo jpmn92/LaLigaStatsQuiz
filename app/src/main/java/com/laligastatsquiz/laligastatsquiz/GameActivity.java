@@ -172,17 +172,16 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
 
 //        url = "https://e00-marca.uecdn.es/iconos/escudos/opta/jugadores/" + player2.getOptaId().substring(1) + ".jpg";
-//        Picasso.with(this).load(url).into(ivPlayer2);
             Picasso.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).into(ivPlayer2);
             Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
         }
         else {
-            String imageP1 = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
-            Picasso.with(this).load(imageP1).into(ivPlayer1);
+            String imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
+            Picasso.with(this).load(imageP1Default).into(ivPlayer1);
             Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
 
-            String imageP2 = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
-            Picasso.with(this).load(imageP2).into(ivPlayer2);
+            String imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
+            Picasso.with(this).load(imageP2Default).into(ivPlayer2);
             Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
         }
 
