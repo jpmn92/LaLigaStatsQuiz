@@ -91,7 +91,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/temporada"
-                    android:textColor="@color/material_black"
+                    android:textColor="#ffffff"
                     android:textSize="18dp"
 
                     android:textStyle="bold" />
@@ -111,7 +111,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/liga"
-                    android:textColor="@color/material_black"
+                    android:textColor="#ffffff"
                     android:textSize="18dp"
 
                     android:textStyle="bold" />
@@ -130,7 +130,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:text="@string/estadistica"
-                    android:textColor="@color/material_black"
+                    android:textColor="#ffffff"
                     android:textSize="18dp"
                     android:textStyle="bold"
 
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_weight="50"
-                    android:background="#E48C0E"
+                    android:background="#C8E6C9"
                     android:text="@string/btnComenzar"
 
                     />
@@ -224,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
                     android:layout_weight="50"
-                    android:background="#2196F3"
+                    android:background="#388E3C"
                     android:paddingBottom="5dp"
                     android:text="@string/btnRecords" />
 
