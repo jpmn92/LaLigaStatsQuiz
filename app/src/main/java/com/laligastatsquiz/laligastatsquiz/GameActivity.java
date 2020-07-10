@@ -500,7 +500,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             liga = "primera-division-femenina-";
         }
         else if(ligaName.equalsIgnoreCase(getString(R.string.liga_1_2_3))){
-            liga = "laliga1-2-3-";
+            liga = "laliga-1-2-3-";
         }
 
         return liga;
