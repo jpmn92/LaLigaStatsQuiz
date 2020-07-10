@@ -25,6 +25,7 @@
     <!--    Ligas-->
     <string name="liga_santander">Liga Santander</string>
     <string name="liga_smartbank">Liga Smartbank</string>
+    <string name="liga_1_2_3">Liga 1-2-3</string>
     <string name="liga_femenina">Primera División Femenina</string>
 
     <!--    Titulos menú-->
@@ -134,6 +135,13 @@
         <item>@string/liga_smartbank</item>
         <item>@string/liga_femenina</item>
     </string-array>
+
+    <string-array name="LIGAS_OLD">
+        <item>@string/liga_santander</item>
+        <item>@string/liga_1_2_3</item>
+    </string-array>
+
+
 
     <string-array name="TEMPORADAS">
         <item>19/20</item>

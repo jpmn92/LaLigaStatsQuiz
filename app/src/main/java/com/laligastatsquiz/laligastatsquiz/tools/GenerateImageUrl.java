@@ -20,6 +20,9 @@ public class GenerateImageUrl {
         laLigaPlayer = generatePlayer("Leo Messi", "https://assets.laliga.com/squad/2019/t178/p19054/128x139/p19054_t178_2019_1_001_000.png");
         laLigaPlayers.add(laLigaPlayer);
 
+        laLigaPlayer = generatePlayer("Vinicius Jr", "https://assets.laliga.com/squad/2019/t186/p246333/256x278/p246333_t186_2019_1_001_000.png");
+        laLigaPlayers.add(laLigaPlayer);
+
         laLigaPlayer = generatePlayer("Martin Ødegaard", "https://assets.laliga.com/squad/2019/t188/p184029/128x139/p184029_t188_2019_1_001_000.png");
         laLigaPlayers.add(laLigaPlayer);
 

@@ -27,6 +27,8 @@
     <string name="liga_santander">Liga Santander</string>
     <string name="liga_smartbank">Liga Smartbank</string>
     <string name="liga_femenina">Primera División Femenina</string>
+    <string name="liga_1_2_3">Liga 1-2-3</string>
+
 
     <!--    Titulos menú-->
     <string name="liga">Liga</string>

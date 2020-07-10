@@ -68,6 +68,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         stat = traducirEstadistica(statName);
         this.getIntent().putExtra("statId", statId);
         liga = traducirLiga(this.getIntent().getStringExtra("liga"));
+        sound = true;
         initComponents();
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
@@ -497,6 +498,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
         else if(ligaName.equalsIgnoreCase(getString(R.string.liga_femenina))){
             liga = "primera-division-femenina-";
+        }
+        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_1_2_3))){
+            liga = "laliga1-2-3-";
         }
 
         return liga;
