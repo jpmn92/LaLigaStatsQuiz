@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -130,7 +131,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
             nameHeader.setText(userName);
             emailHeader.setText(email);
-            Picasso.with(this).load(firebaseUser.getPhotoUrl()).into(imageHeader);
+            Glide.with(this).load(firebaseUser.getPhotoUrl()).into(imageHeader);
 
             showLoggedMenu();
 
@@ -173,7 +174,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
 //        OLD GENERAMOS AVATAR RANDOM
 //        GenerateImageUrl generateImageUrl = new GenerateImageUrl();
-//        Picasso.with(this).load(generateImageUrl.getRandomAvatar()).into(imageHeader);
+//        Glide.with(this).load(generateImageUrl.getRandomAvatar()).into(imageHeader);
 
         if (navigationView != null) {
             // Añadir caracteristicas

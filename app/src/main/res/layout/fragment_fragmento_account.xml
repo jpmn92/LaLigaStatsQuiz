@@ -22,7 +22,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:src="@drawable/doncic"
-            app:civ_border_color="@color/material_black"
+            app:civ_border_color="#ffffff"
             app:civ_border_width="4dp"
             app:civ_fill_color="@color/colorPrimary" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:text="@string/introduce_user_name"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
             android:inputType="textPersonName"
             android:paddingLeft="15dp"
             android:text="@string/name"
-            android:textColor="@color/material_black" />
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/txtSeleccionaAvatar"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:text="@string/seleccionar_avatar"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -70,7 +70,8 @@
             android:id="@+id/btnSetOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FF9800"
+            android:background="@color/colorAccent"
+            android:textColor="#ffffff"
             android:text="@string/actualizar" />
 
 

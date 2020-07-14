@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -190,25 +192,25 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         System.out.println("P2: " + player2.getName());
 
 //        String url = "https://e00-marca.uecdn.es/iconos/escudos/opta/jugadores/" + player1.getOptaId().substring(1) + ".jpg";
-//        Picasso.with(this).load(url).into(ivPlayer1);
+//        Glide.with(this).load(url).transition(DrawableTransitionOptions.withCrossFade()).into(ivPlayer1);
         if(player1.getPhotos() != null){
-            Picasso.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).into(ivPlayer1);
-            Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
+            Glide.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
+            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
         else{
             String imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
-            Picasso.with(this).load(imageP1Default).into(ivPlayer1);
-            Picasso.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).into(ivTeam1);
+            Glide.with(this).load(imageP1Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
+            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
 
         if(player2.getPhotos() != null){
-            Picasso.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).into(ivPlayer2);
-            Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+            Glide.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
+            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         }
         else{
             String imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
-            Picasso.with(this).load(imageP2Default).into(ivPlayer2);
-            Picasso.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).into(ivTeam2);
+            Glide.with(this).load(imageP2Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
+            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         }
 
         txtNameP1.setText(player1.getNickname());

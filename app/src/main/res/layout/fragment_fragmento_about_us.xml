@@ -19,10 +19,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/material_black"
-            android:text="@string/about_us"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@string/about_us"
+            android:textColor="#ffffff"
             android:textSize="16dp">
 
 

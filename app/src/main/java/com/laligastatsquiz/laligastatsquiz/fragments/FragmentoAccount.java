@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.NavigationDrawerActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
@@ -148,7 +149,7 @@ public class FragmentoAccount extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinnerProfile.getSelectedItem();
-                Picasso.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
+                Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
             }
 
             @Override
@@ -169,7 +170,7 @@ public class FragmentoAccount extends Fragment {
         spinnerProfile = view.findViewById(R.id.spinnerProfilePicture);
 //        ivAvatar = view.findViewById(R.id.ivAvatar);
         circleImageView = view.findViewById(R.id.ivAvatar);
-        Picasso.with(getContext()).load(sm.getSesionImage()).into(circleImageView);
+        Glide.with(getContext()).load(sm.getSesionImage()).into(circleImageView);
 
     }
 

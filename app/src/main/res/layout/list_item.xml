@@ -36,14 +36,17 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
+        android:layout_gravity="center"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="75dp"
         android:layout_weight="20"
         android:layout_marginRight="16dp"
         android:transitionName="avatar"
+        android:src="@mipmap/ic_launcher_laliga_round"
         app:civ_border_color="@color/material_black"
         app:civ_border_width="2dp"
-        app:civ_fill_color="@color/colorPrimary" />
+        app:civ_fill_color="@color/colorPrimary"
+/>
 
     <LinearLayout
         android:layout_width="0dp"

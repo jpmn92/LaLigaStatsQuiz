@@ -107,6 +107,7 @@
     <string name="help_stat">3 - Estadística</string>
     <string name="help_paragraph2">Una vez inicias el juego, tendrás que pulsar sobre el jugador que mejor estadística tenga en la temporada correspondiente.  La estadística y temporada se indican en la parte superior de la pantalla</string>
     <string name="help_paragraph3">Tienes tres vidas, si eliges al jugador incorrecto, perderás una vida. Si eliges correctamente diez veces seguidas, puedes obtener una nueva vida, con un máximo de tres</string>
+    <string name="help_forMoreInfo">Para más información puede visitar:</string>
 
     <!--    Textos glosario-->
     <string name="glossary_paragraph">En la parte superior de la pantalla de partida podrás encontrar la pregunta indicada por la abreviatura de la categoría estadística en cuestión</string>

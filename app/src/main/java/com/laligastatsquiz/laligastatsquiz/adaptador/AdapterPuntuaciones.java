@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
@@ -72,15 +73,21 @@ public class AdapterPuntuaciones extends RecyclerView.Adapter<AdapterPuntuacione
         GenerateImageUrl generateImageUrl = new GenerateImageUrl();
         FirebasePuntuacion firebasePuntuacion = listadoPuntuaciones.get(i);
 
+//        int size = Math.min(viewHolder.circleImageView.getWidth(), viewHolder.circleImageView.getHeight());
+//        int x = (viewHolder.circleImageView.getWidth() - size) / 4;
+//        int y = (viewHolder.circleImageView.getHeight() - size) / 4;
+
+
         if (firebasePuntuacion.getImage() == null || firebasePuntuacion.getImage().equalsIgnoreCase("")) {
-            Picasso.with(viewHolder.circleImageView.getContext()).load(generateImageUrl.getRandomAvatar()).into(viewHolder.circleImageView);
+            Glide.with(viewHolder.circleImageView.getContext()).load(generateImageUrl.getRandomAvatar()).circleCrop().into(viewHolder.circleImageView);
 
         } else {
-            Picasso.with(viewHolder.circleImageView.getContext())
+            Glide.with(viewHolder.circleImageView.getContext())
 
                     .load(firebasePuntuacion.getImage())
 //                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
 //                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                    .circleCrop()
                     .into(viewHolder.circleImageView);
 
         }

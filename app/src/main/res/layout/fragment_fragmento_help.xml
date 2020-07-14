@@ -27,7 +27,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/tab_reglas"
-                android:textColor="@color/material_black"
+                android:textColor="#ffffff"
                 android:textSize="26dp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/material_black" />
+            android:background="#ffffff" />
 
 
         <TextView
@@ -58,7 +58,7 @@
 
             android:text="@string/help_paragraph"
             android:textAlignment="inherit"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18dp"
 
 
@@ -72,7 +72,7 @@
             android:paddingBottom="10dp"
             android:text="@string/help_season"
             android:textAlignment="inherit"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
 
 
             android:textSize="18dp" />
@@ -85,7 +85,7 @@
             android:paddingBottom="10dp"
             android:text="@string/help_league"
             android:textAlignment="inherit"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18dp"
 
 
@@ -99,7 +99,7 @@
             android:paddingBottom="10dp"
             android:text="@string/help_stat"
             android:textAlignment="inherit"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18dp"
 
 
@@ -113,7 +113,7 @@
             android:paddingBottom="10dp"
             android:text="@string/help_paragraph2"
             android:textAlignment="inherit"
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
 
 
             android:textSize="18dp" />
@@ -129,7 +129,7 @@
             android:textAlignment="inherit"
 
 
-            android:textColor="@color/material_black"
+            android:textColor="#ffffff"
             android:textSize="18dp" />
 
     </LinearLayout>

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
@@ -147,7 +148,7 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinner.getSelectedItem();
-                Picasso.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
+                Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
             }
 
             @Override
