@@ -74,15 +74,16 @@
             android:inputType="textPassword"
             android:hint="@string/introduce_passwd2"
             android:layout_marginBottom="10dp"/>
-        <TextView
-            android:paddingLeft="15dp"
-            android:id="@+id/txtRegisterAvatar"
-            android:textColor="@color/material_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/seleccionar_avatar"
-            android:textStyle="bold"
-            android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtRegisterAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="@string/seleccionar_avatar"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         <Spinner
             android:paddingLeft="15dp"
 

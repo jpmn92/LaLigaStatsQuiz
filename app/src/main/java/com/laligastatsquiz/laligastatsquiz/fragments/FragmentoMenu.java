@@ -45,7 +45,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old;
+    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat;
 
 
 
@@ -83,10 +83,18 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
 
-        stringArrayAdapter1920 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.LIGAS));
+        stringArrayAdapter1920 = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS));
         stringArrayAdapter1920.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stringArrayAdapter_old = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.LIGAS_OLD));
+        stringArrayAdapter_old = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS_OLD));
         stringArrayAdapter_old.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
+        adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapterStat = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.ESTADISTICAS));
+        adapterStat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
 
         //dependiendo de si es true pintamos una imagen u otra
 
@@ -106,6 +114,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerStats = view.findViewById(R.id.spinnerStats);
         spinnerLiga = view.findViewById(R.id.spinnerLiga);
         spinnerTemporada = view.findViewById(R.id.spinnerTemporada);
+        spinnerTemporada.setAdapter(adapterSeason);
+        spinnerStats.setAdapter(adapterStat);
 
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

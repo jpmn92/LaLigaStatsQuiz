@@ -175,7 +175,8 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             });
         }
 
-        ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.support_simple_spinner_dropdown_item, laLigaPlayers);
+        ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.list_spinner, laLigaPlayers);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
 
