@@ -107,7 +107,7 @@ public class FragmentoRegister extends FragmentoAutentificacion {
                             new android.os.Handler().postDelayed(
                                     new Runnable() {
                                         public void run() {
-                                            firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), "https://assets.laliga.com/squad/2019/t186/p19927/1024x1113/p19927_t186_2019_1_001_000.png", getContext());
+                                            firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
                                             // firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
                                             progressDialog.dismiss();
                                         }
