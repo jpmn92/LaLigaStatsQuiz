@@ -30,7 +30,7 @@
         android:layout_weight="15"
         android:text="1"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="21dp"
         android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/puntuaciones_puntos"
             android:layout_alignParentTop="true"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="16dp"
             android:textStyle="bold"
 
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/puntuaciones_username"
             android:layout_alignParentTop="true"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="15dp"
 
             />
