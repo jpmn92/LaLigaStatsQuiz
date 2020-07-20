@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.adaptador.AdapterPuntuaciones;
@@ -28,6 +32,7 @@ public class FragmentoPuntuaciones extends Fragment {
     TextView txtPuntuacion;
     String tipoTemporada;
     String draftTeam, draftCollege, draftSeason, liga;
+    private AdView mAdView;
 
     private static FragmentoPuntuaciones fragmentoPuntuaciones;
     Bundle bundle;
@@ -62,6 +67,7 @@ public class FragmentoPuntuaciones extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_fragmento_puntuaciones, container, false);
 
+        inicializarPublicidad(view);
 
         bundle = fragmentoPuntuaciones.getArguments();
         tipoTemporada = "";
@@ -99,6 +105,20 @@ public class FragmentoPuntuaciones extends Fragment {
         myrv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         return view;
+    }
+
+    private void inicializarPublicidad( View view) {
+        MobileAds.initialize(getContext());
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener(){
+            @Override
+            public void onAdClosed() {
+                System.out.println("PUBLI CERRADA");
+                mAdView.loadAd(new AdRequest.Builder().build());
+            }
+        });
     }
 
     private void getTop50() {

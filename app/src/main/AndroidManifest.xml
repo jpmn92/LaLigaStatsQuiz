@@ -14,19 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_laliga_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LALIGAQUIZ">
-        <activity android:name=".NavigationDrawerActivity">
+        <activity android:name=".NavigationDrawerActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity">
+        <activity android:name=".GameActivity" android:screenOrientation="portrait">
             <intent-filter>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:theme="@android:style/Theme.Translucent"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5187656956047852~2888557728"/>

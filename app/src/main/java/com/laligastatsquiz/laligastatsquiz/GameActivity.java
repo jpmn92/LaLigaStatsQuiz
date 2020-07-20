@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,6 +36,9 @@ import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
@@ -146,6 +150,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         randomP1 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
         player1 = laLigaPlayerArrayList.get(randomP1);
+
         do{
             randomP2 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
             player2 = laLigaPlayerArrayList.get(randomP2);
@@ -198,7 +203,14 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
         else{
-            String imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
+            String imageP1Default = "";
+            if(image2B(player1.getTeam().getId())){
+                imageP1Default = imagePlayer(player1.getTeam().getId());
+            }
+            else{
+                imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
+            }
+
             Glide.with(this).load(imageP1Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
@@ -208,7 +220,14 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         }
         else{
-            String imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
+            String imageP2Default = "";
+            if(image2B(player2.getTeam().getId())){
+                imageP2Default = imagePlayer(player2.getTeam().getId());
+            }
+            else{
+                imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
+            }
+
             Glide.with(this).load(imageP2Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         }
@@ -563,5 +582,52 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             System.out.println("laLigaPlayer = generatePlayer(\"" + laLigaPlayer1.getNickname() + "\", \"" + laLigaPlayer1.getPhotos().getPhoto().getMedium() + "\");\n" +
                     "laLigaPlayers.add(laLigaPlayer);\n\n");
         }
+    }
+
+    private boolean image2B(String teamID){
+        return teamID.equalsIgnoreCase("219") || teamID.equalsIgnoreCase("166")
+                || teamID.equalsIgnoreCase("23") || teamID.equalsIgnoreCase("37")
+                || teamID.equalsIgnoreCase("38") || teamID.equalsIgnoreCase("304")
+                || teamID.equalsIgnoreCase("9") || teamID.equalsIgnoreCase("290")
+                || teamID.equalsIgnoreCase("288") || teamID.equalsIgnoreCase("284");
+    }
+
+    private String imagePlayer(String teamID){
+        String imageUrl = "";
+        switch (teamID){
+            case "219": // Athletic
+                imageUrl = "https://assets.laliga.com/squad/2019/" + "t174" + "/default/1024x1024/default_" + "t174" + "_2019_1_003_000.png";
+                break;
+            case "166": //Llagostera
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/llagostera.png";
+                break;
+            case "23": // Barça
+                imageUrl = "https://assets.laliga.com/squad/2019/" + "t178" + "/default/1024x1024/default_" + "t178" + "_2019_1_003_000.png";
+                break;
+            case "37": // Recre
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/recre.png";
+                break;
+            case "38": // Sabadell
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/sabadell.png";
+                break;
+            case "304": // Murcia
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/murcia.png";
+                break;
+            case "9": // Getafe
+                imageUrl = "https://assets.laliga.com/squad/2019/" + "t1450" + "/default/1024x1024/default_" + "t1450" + "_2019_1_003_000.png";
+                break;
+            case "290": //Sevilla
+                imageUrl = "https://assets.laliga.com/squad/2019/" + "t179" + "/default/1024x1024/default_" + "t179" + "_2019_1_003_000.png";
+                break;
+            case "288": //Llora
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/lorca.png";
+                break;
+            case "284": //Cultural
+                imageUrl = "https://bowlofricedev.jdevcloud.com/wp-content/uploads/2020/07/cultural.png";
+                break;
+        }
+
+
+        return imageUrl;
     }
 }

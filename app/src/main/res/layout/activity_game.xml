@@ -26,6 +26,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/goles_anotados"
 
+                android:textColor="#FFFFFF"
                 android:textSize="30dp" />
 
         </LinearLayout>
@@ -60,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="100"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/doncic" />
+                        android:src="@drawable/laliga" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -72,10 +73,10 @@
 
                     <ImageView
                         android:id="@+id/ivPlayer1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="25"
-                        android:src="@drawable/doncic" />
+                        android:src="@drawable/person" />
 
                     <TextView
                         android:id="@+id/txtNameP1"
@@ -116,10 +117,10 @@
 
                     <ImageView
                         android:id="@+id/ivPlayer2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="25"
-                        android:src="@drawable/doncic" />
+                        android:src="@drawable/person" />
 
                     <TextView
                         android:id="@+id/txtNameP2"
@@ -146,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="100"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/doncic" />
+                        android:src="@drawable/laliga" />
                 </LinearLayout>
 
             </LinearLayout>
