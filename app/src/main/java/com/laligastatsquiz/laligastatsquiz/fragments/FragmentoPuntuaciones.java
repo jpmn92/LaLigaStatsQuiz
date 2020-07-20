@@ -31,7 +31,6 @@ public class FragmentoPuntuaciones extends Fragment {
     private ArrayList<FirebasePuntuacion> listadoPuntuaciones, listadoPuntuacionesTop50, listadoRecordPersonal; // listadoRecordPersonal es de un único elemento
     TextView txtPuntuacion;
     String tipoTemporada;
-    String draftTeam, draftCollege, draftSeason, liga;
     private AdView mAdView;
 
     private static FragmentoPuntuaciones fragmentoPuntuaciones;
@@ -71,9 +70,7 @@ public class FragmentoPuntuaciones extends Fragment {
 
         bundle = fragmentoPuntuaciones.getArguments();
         tipoTemporada = "";
-//        listadoPuntuaciones = new ArrayList<>();
         listadoPuntuaciones = bundle.getParcelableArrayList("puntuaciones");
-        // listadoRecordPersonal = bundle.getParcelableArrayList("puntuaciones");
 
         rvPuntuacionPersonal = view.findViewById(R.id.recycler_view_puntuacion_personal);
         myrv = view.findViewById(R.id.recycler_view_puntuaciones);
@@ -98,7 +95,6 @@ public class FragmentoPuntuaciones extends Fragment {
         adapterPersonal = new AdapterPuntuaciones(listadoRecordPersonal);
         rvPuntuacionPersonal.setLayoutManager(lManagerPersonal);
         rvPuntuacionPersonal.setAdapter(adapterPersonal);
-        //rvPuntuacionPersonal.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         myrv.setLayoutManager(lManager);
         myrv.setAdapter(adapter);
@@ -126,11 +122,6 @@ public class FragmentoPuntuaciones extends Fragment {
         FirebasePuntuacion puntuacionActualTop;
         if (listadoPuntuaciones.size() < 49) {
 
-
-//            for(FirebasePuntuacion firebasePuntuacion: listadoPuntuaciones){
-//                listadoPuntuacionesTop50.add(firebasePuntuacion);
-//            }
-
             for (int i = 0; i < listadoPuntuaciones.size(); i++) {
 
                 puntuacionActualTop = listadoPuntuaciones.get(i);
@@ -138,7 +129,6 @@ public class FragmentoPuntuaciones extends Fragment {
                 listadoPuntuacionesTop50.add(puntuacionActualTop);
 
             }
-
 
         } else {
             for (int i = 0; i <= 49; i++) {
@@ -155,7 +145,6 @@ public class FragmentoPuntuaciones extends Fragment {
         FirebaseAuth mAuth;
         FirebasePuntuacion puntuacionActual;
         mAuth = FirebaseAuth.getInstance();
-        String myUid = mAuth.getUid();
         if (mAuth.getUid() != null) {
             String uid = mAuth.getUid();
             if (listadoPuntuaciones.size() > 0) {
@@ -171,12 +160,6 @@ public class FragmentoPuntuaciones extends Fragment {
                     }
 
                 }
-
-//                for(FirebasePuntuacion firebasePuntuacion: listadoPuntuaciones){
-//                    if(firebasePuntuacion.getUid().equals(uid)){
-//                        listadoRecordPersonal.add(firebasePuntuacion);
-//                    }
-//                }
 
                 if (listadoRecordPersonal.size() > 0) {
                     FirebasePuntuacion record = listadoRecordPersonal.get(0);

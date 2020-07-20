@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

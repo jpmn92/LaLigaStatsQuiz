@@ -48,7 +48,6 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private TextView emailHeader;
     private TextView nameHeader;
     private ImageView imageHeader;
-    private SessionManagement sessionManagement;
     private String userName, email;
     private long backPressedTime;
     Toast backToast;
@@ -60,17 +59,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
-//            getSupportFragmentManager().executePendingTransactions();
-//            loadFragment(FragmentoMenu.newInstance(null));
 
             this.finish();
-
-//            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//                getSupportFragmentManager().popBackStackImmediate();
-//            } else {
-//                super.onBackPressed();
-//
-//            }
 
             return;
 
@@ -172,21 +162,14 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         nameHeader = (TextView) headerView.findViewById(R.id.usernameHeader);
         imageHeader = (ImageView) headerView.findViewById(R.id.circle_image);
 
-//        OLD GENERAMOS AVATAR RANDOM
-//        GenerateImageUrl generateImageUrl = new GenerateImageUrl();
-//        Glide.with(this).load(generateImageUrl.getRandomAvatar()).into(imageHeader);
-
         if (navigationView != null) {
             // Añadir caracteristicas
             setupDrawerContent(navigationView);
-
         }
         drawerTitle = getResources().getString(R.string.home_item);
         if (savedInstanceState == null) {
             // Seleccionar item
             selectItem(navigationView.getMenu().getItem(0));
-
-
         }
 
 
@@ -248,8 +231,6 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_help:
-
-//                fragmentoGenerico = FragmentoHelp.newInstance(null);
                 fragmentoGenerico = FragmentoTabsAyuda.newInstance(null);
 
                 break;

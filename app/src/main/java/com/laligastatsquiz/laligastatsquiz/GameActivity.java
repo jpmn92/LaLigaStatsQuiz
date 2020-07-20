@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -34,16 +33,11 @@ import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRanking
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
 import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
 
-    FirebaseMethods firebaseMethods;
+    private FirebaseMethods firebaseMethods;
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
     private ArrayList<LaLigaPlayer> laLigaPlayerArrayList;
@@ -124,7 +118,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         vidas = 3;
         points = 0;
         tiempo = 10000;
-        //myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
@@ -192,17 +185,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void showPlayers() {
-        // En trello estan los jugadores sin foto
-        System.out.println("P1: " + player1.getName());
-        System.out.println("P2: " + player2.getName());
-
-//        String url = "https://e00-marca.uecdn.es/iconos/escudos/opta/jugadores/" + player1.getOptaId().substring(1) + ".jpg";
-//        Glide.with(this).load(url).transition(DrawableTransitionOptions.withCrossFade()).into(ivPlayer1);
         if(player1.getPhotos() != null){
             Glide.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
-        }
-        else{
+        } else{
             String imageP1Default = "";
             if(image2B(player1.getTeam().getId())){
                 imageP1Default = imagePlayer(player1.getTeam().getId());
@@ -218,8 +204,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if(player2.getPhotos() != null){
             Glide.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
-        }
-        else{
+        } else{
             String imageP2Default = "";
             if(image2B(player2.getTeam().getId())){
                 imageP2Default = imagePlayer(player2.getTeam().getId());
@@ -271,10 +256,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         } else {
             selectPlayers();
         }
-
-        //continueGame();
-
-
     }
 
     private void finishGame() {
@@ -302,8 +283,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             } else {
                 message = getString(R.string.puntuacion) + points;
             }
-
-
             myCountDownTimer.cancel();
             showFinishedDialog(this, message);
         } else {
@@ -316,8 +295,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void comprobarVidas() {
-
-
         switch (vidas) {
             case 0:
                 ivVidas.setImageResource(R.drawable.vidas0);
@@ -355,9 +332,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
     @Override
     public void successListPlayersRanking(ArrayList<LaLigaPlayer> laLigaPlayers) {
-        //PRUEBA PARA MOSTRAR JUGADORES
         setLaLigaPlayerArrayList(laLigaPlayers);
-        // generarJugadorConSuImagen(laLigaPlayers);
         selectPlayers();
 
     }
@@ -565,14 +540,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         builder.show();
     }
 
-    public int getRecord() {
-        return record;
-    }
-
-    public void setRecord(int record) {
-        this.record = record;
-    }
-
     /**
      * Metodo para generar en consola un texto con los jugadores y sus imagenes
      * @param laLigaPlayers
@@ -629,5 +596,13 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
 
         return imageUrl;
+    }
+    //GETTERS Y SETTERS
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
     }
 }
