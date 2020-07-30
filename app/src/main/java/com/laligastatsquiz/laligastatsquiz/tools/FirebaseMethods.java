@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.laligastatsquiz.laligastatsquiz.GameActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
+import com.laligastatsquiz.laligastatsquiz.beans.Codigo;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
 import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoMenu;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoAutentificacion;
@@ -541,6 +542,32 @@ public class FirebaseMethods {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
 
+
+        });
+    }
+
+    public void readCode(String codigo){
+        final String[] url = {""};
+        reference = FirebaseDatabase.getInstance().getReference().child("Codigo");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    Object object = snapshot.getValue(Object.class);
+                    String json = new Gson().toJson(object);
+                    Codigo fbCodigo = new Gson().fromJson(json, Codigo.class);
+
+                    if(fbCodigo.getCodigo().equals(codigo)){
+                        url[0] = fbCodigo.getUrl();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
 
         });
     }

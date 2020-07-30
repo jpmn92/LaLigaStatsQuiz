@@ -174,6 +174,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 firebaseMethods.getTopPuntuaciones(params);
+                firebaseMethods.readCode("forocoches");
                 break;
         }
     }

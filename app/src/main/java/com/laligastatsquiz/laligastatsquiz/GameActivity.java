@@ -89,7 +89,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         mInterstitialAd.setAdListener(new AdListener(){
             @Override
             public void onAdClosed() {
-                System.out.println("PUBLI CERRADA");
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
                 myCountDownTimer.start();
             }
@@ -512,7 +511,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int random = (int) (Math.random() * 2) + 1;
-                if (mInterstitialAd.isLoaded() && random % 2 == 0) {
+                if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 }
                 vidas = 3;
