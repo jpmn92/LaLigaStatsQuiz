@@ -63,7 +63,8 @@
                 android:hint="@string/codigo"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp"
-                android:textColor="@color/material_black" />
+                android:textColor="#ffffff"
+                android:textColorHint="#8CFFFFFF" />
 
         </LinearLayout>
 
