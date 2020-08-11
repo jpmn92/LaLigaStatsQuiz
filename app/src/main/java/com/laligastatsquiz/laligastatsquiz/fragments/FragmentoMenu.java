@@ -40,7 +40,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     FirebaseMethods firebaseMethods;
     Bundle params;
     boolean sound;
-    ArrayList<FirebasePuntuacion> puntuaciones;
+    ArrayList<FirebasePuntuacion> puntuaciones, puntuacionPersonal;
     String userName;
     SessionManagement sessionManagement;
 
@@ -174,7 +174,6 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 firebaseMethods.getTopPuntuaciones(params);
-                firebaseMethods.readCode("forocoches");
                 break;
         }
     }
@@ -264,6 +263,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
         params.putParcelableArrayList("puntuaciones", puntuaciones);
 
+        params.putParcelableArrayList("puntuacionPersonal", puntuacionPersonal);
+
         FragmentoPuntuaciones fragmentoPuntuaciones = FragmentoPuntuaciones.newInstance(params);
 
 
@@ -325,5 +326,13 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
     public void setPuntuaciones(ArrayList<FirebasePuntuacion> puntuaciones) {
         this.puntuaciones = puntuaciones;
+    }
+
+    public ArrayList<FirebasePuntuacion> getPuntuacionPersonal() {
+        return puntuacionPersonal;
+    }
+
+    public void setPuntuacionPersonal(ArrayList<FirebasePuntuacion> puntuacionPersonal) {
+        this.puntuacionPersonal = puntuacionPersonal;
     }
 }

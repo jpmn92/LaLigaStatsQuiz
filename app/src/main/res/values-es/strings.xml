@@ -67,6 +67,7 @@
     <string name="contact_mail">Puedes contactar con nosotros enviando un mail a bowlofricedev@gmail.com</string>
     <string name="name">Nombre</string>
     <string name="logInGoogle">Inicia sesión con Google</string>
+    <string name="codigo">INTRODUCE TU CODIGO</string>
 
     <!--    Textos Toasts-->
     <string name="config_updated">CONFIGURACIÓN ACTUALIZADA</string>

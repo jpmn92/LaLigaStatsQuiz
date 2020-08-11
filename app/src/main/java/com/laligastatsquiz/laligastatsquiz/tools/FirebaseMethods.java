@@ -3,13 +3,17 @@ package com.laligastatsquiz.laligastatsquiz.tools;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,24 +23,36 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.laligastatsquiz.laligastatsquiz.GameActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.Codigo;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
+import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoAccount;
 import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoMenu;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoAutentificacion;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoLogin;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoRegister;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class FirebaseMethods {
+
+    private final int LIMITE_PUNTUACIONES = 100;
+
     Fragment fragment;
     GameActivity gameActivity;
     Context context;
@@ -58,9 +74,21 @@ public class FirebaseMethods {
     }
 
     public void createFbPuntuacion(Bundle bundle) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        String hour = "";
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDateTime currentHour = LocalDateTime.now();
+            hour = currentHour.getHour() + ":" + currentHour.getMinute() + ":" + currentHour.getSecond();
+        }
+
+        //NUEVO FORMATO DE FECHA
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        String formatedDate = simpleDateFormat.format(new Date());
+
+        // Map<String, String> timestamp = ServerValue.TIMESTAMP;
+        Timestamp timestamp = new Timestamp(new Date());
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
@@ -69,132 +97,165 @@ public class FirebaseMethods {
 
         fbPuntuacion = new FirebasePuntuacion();
 
+        fbPuntuacion.setPoints(bundle.getInt("puntos"));
+        fbPuntuacion.setDate(currentDate);
+        fbPuntuacion.setHour(hour);
+        fbPuntuacion.setLiga(bundle.getString("liga"));
+        fbPuntuacion.setSeason(bundle.getString("season"));
+        fbPuntuacion.setStatCategory(String.valueOf(bundle.getInt("statId")));
+        fbPuntuacion.setImage(bundle.getString("image"));
+        fbPuntuacion.setUid(uid);
+        fbPuntuacion.setUsername(bundle.getString("userName"));
+        fbPuntuacion.setTimestamp(timestamp);
 
-            fbPuntuacion.setPoints(bundle.getInt("puntos"));
-            fbPuntuacion.setDate(currentDate);
-            fbPuntuacion.setLiga(bundle.getString("liga"));
-            fbPuntuacion.setSeason(bundle.getString("season"));
-            fbPuntuacion.setStatCategory(String.valueOf(bundle.getInt("statId")));
-            fbPuntuacion.setImage(bundle.getString("image"));
-            fbPuntuacion.setUid(uid);
-            fbPuntuacion.setUsername(bundle.getString("userName"));
-
-
-        reference.push().setValue(fbPuntuacion);
+        db.collection("Puntuacion")
+                .add(fbPuntuacion)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                    }
+                });
 
     }
 
     public void getRecord() {
-
+        ArrayList<FirebasePuntuacion> mArrayList = new ArrayList<>();
 
         ArrayList<FirebasePuntuacion> fbPuntuacionList = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
-        reference.addValueEventListener(new ValueEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        CollectionReference puntuacionesRef = db.collection("Puntuacion");
+
+        String stat =  String.valueOf(bundlePartida.getInt("statId"));
+
+        puntuacionesRef.whereEqualTo("season", bundlePartida.getString("season"))
+                .whereEqualTo("liga", bundlePartida.getString("liga"))
+                .whereEqualTo("statCategory", stat)
+                .whereEqualTo("uid", mAuth.getUid()).whereGreaterThan("points", -1)
+                .orderBy("points", Query.Direction.DESCENDING).limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Convert the whole Query Snapshot to a list
+                // of objects directly! No need to fetch each
+                // document.
+                List<FirebasePuntuacion> fbPuntuaciones = queryDocumentSnapshots.toObjects(FirebasePuntuacion.class);
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                mArrayList.addAll(fbPuntuaciones);
+                // Add all to your list
+                Log.d("TAG", "onSuccess: " + mArrayList);
 
-                    Object object = snapshot.getValue(Object.class);
-                    String json = new Gson().toJson(object);
-                    FirebasePuntuacion fbPuntuacion = new Gson().fromJson(json, FirebasePuntuacion.class);
-                    fbPuntuacionList.add(fbPuntuacion);
-
-                    if (fbPuntuacionList.size() == 0 || fbPuntuacionList == null) {
-
-                        puntuacion = 0;
-
-                    } else {
-
-                        for (FirebasePuntuacion firebasePuntuacion : fbPuntuacionList) {
-                            String season = bundlePartida.getString("season");
-                            String uid = bundlePartida.getString("uid");
-                            int stat = bundlePartida.getInt("statId");
-                            String liga = bundlePartida.getString("liga");
-                            boolean datosIguales = firebasePuntuacion.getSeason().equalsIgnoreCase(bundlePartida.getString("season"))
-                                    && firebasePuntuacion.getUid().equalsIgnoreCase(bundlePartida.getString("uid"))
-                                    && firebasePuntuacion.getStatCategory().equalsIgnoreCase(String.valueOf(bundlePartida.getInt("statId")))
-                                    && firebasePuntuacion.getLiga().equalsIgnoreCase(bundlePartida.getString("liga"));
-
-                            if (datosIguales && firebasePuntuacion.getPoints() > puntuacion) {
-                                puntuacion = firebasePuntuacion.getPoints();
-                            }
-                        }
-
-                    }
+                if(fbPuntuaciones.size() > 0 ) {
+                    puntuacion = fbPuntuaciones.get(0).getPoints();
                 }
-
                 gameActivity.setRecord(puntuacion);
-
-
-
             }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-
-        });
+                        System.out.println("");//Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     //SI LO HACEMOS ARRAYLIST NO VA
     public void getTopPuntuaciones(Bundle paramsPartida) {
 
-        processDone = false;
+        ArrayList<FirebasePuntuacion> mArrayList = new ArrayList<>();
 
-        ArrayList<FirebasePuntuacion> fbPuntuacionList = new ArrayList<>();
-        listadoFinal = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
-        reference.addValueEventListener(new ValueEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        String stat = String.valueOf(paramsPartida.getInt("statId"));
+        String liga = paramsPartida.getString("liga");
+        String season = paramsPartida.getString("season");
+
+        CollectionReference puntuacionesRef = db.collection("Puntuacion");
+
+        puntuacionesRef.whereEqualTo("season", paramsPartida.getString("season"))
+                .whereEqualTo("liga", paramsPartida.getString("liga"))
+                .whereEqualTo("statCategory", stat)
+                .whereGreaterThan("points", -1)
+                .orderBy("points", Query.Direction.DESCENDING).limit(LIMITE_PUNTUACIONES).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                // Convert the whole Query Snapshot to a list
+                // of objects directly! No need to fetch each
+                // document.
+                List<FirebasePuntuacion> fbPuntuaciones = queryDocumentSnapshots.toObjects(FirebasePuntuacion.class);
 
-                if (!processDone) {
+                // Add all to your list
+                mArrayList.addAll(fbPuntuaciones);
+                Log.d("TAG", "onSuccess: " + mArrayList);
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                FragmentoMenu fragmentoMenu = (FragmentoMenu) fragment;
+                fragmentoMenu.setPuntuaciones(mArrayList);
 
-                        Object object = snapshot.getValue(Object.class);
-                        String json = new Gson().toJson(object);
-                        FirebasePuntuacion fbPuntuacion = new Gson().fromJson(json, FirebasePuntuacion.class);
-                        fbPuntuacionList.add(fbPuntuacion);
-                    }
-
-                    for (FirebasePuntuacion firebasePuntuacion : fbPuntuacionList) {
-                        if (
-                                firebasePuntuacion.getSeason().equalsIgnoreCase(paramsPartida.getString("season"))
-                                        && firebasePuntuacion.getStatCategory().equalsIgnoreCase(String.valueOf(paramsPartida.getInt("statId")))
-                                        && firebasePuntuacion.getLiga().equalsIgnoreCase(paramsPartida.getString("liga")))
-                        {
-
-                            listadoFinal.add(firebasePuntuacion);
-
-
-                        }
-                    }
-                    processDone = true;
-//                    menu.setPuntuaciones(listadoFinal);
-//                    menu.goToPuntuaciones();
-
-                    FragmentoMenu fragmentoMenu = (FragmentoMenu) fragment;
-                    fragmentoMenu.setPuntuaciones(listadoFinal);
-                    fragmentoMenu.goToPuntuaciones();
-
-
-
-                }
-
+                getPersonalRecordFS(paramsPartida);
 
             }
-
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
+                System.out.println("");
             }
-
-
         });
+    }
 
+    public void getPersonalRecordFS(Bundle bundle) {
+
+        ArrayList<FirebasePuntuacion> mArrayList = new ArrayList<>();
+//        reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        String stat = String.valueOf(bundle.getInt("statId"));
+
+        CollectionReference puntuacionesRef = db.collection("Puntuacion");
+
+        puntuacionesRef.whereEqualTo("season", bundle.getString("season"))
+                .whereEqualTo("liga", bundle.getString("liga"))
+                .whereEqualTo("statCategory", stat)
+                .whereEqualTo("uid", mAuth.getUid()).whereGreaterThan("points", -1)
+                .orderBy("points", Query.Direction.DESCENDING).limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Convert the whole Query Snapshot to a list
+                // of objects directly! No need to fetch each
+                // document.
+                List<FirebasePuntuacion> fbPuntuaciones = queryDocumentSnapshots.toObjects(FirebasePuntuacion.class);
+
+                // Add all to your list
+                mArrayList.addAll(fbPuntuaciones);
+                Log.d("TAG", "onSuccess: " + mArrayList);
+
+                FragmentoMenu fragmentoMenu = (FragmentoMenu) fragment;
+
+                fragmentoMenu.setPuntuacionPersonal(mArrayList);
+                fragmentoMenu.goToPuntuaciones();
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("");
+                        //Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
+                    }
+                });
 
     }
 
@@ -213,49 +274,7 @@ public class FirebaseMethods {
                     map.put("uid", id);
                     map.put("email", email);
                     map.put("name", username);
-
-
-                    reference.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task2) {
-                            if (task2.isSuccessful()) {
-
-
-                                //Una vez creado el usuario, le ponemos displayName
-                                FirebaseUser myUser = mAuth.getCurrentUser();
-
-//                                myUser.sendEmailVerification();
-
-
-                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(username).setPhotoUri(Uri.parse(urlImage)).build();
-
-                                myUser.updateProfile(profileUpdates)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task3) {
-                                                if (task3.isSuccessful()) {
-                                                    //USERNAME ACTUALIZADO
-                                                    String OK = "OK";
-                                                    //TODO: loguear de otra manera mas limpia
-                                                    logIn(myUser, RegisterContext);
-
-
-                                                } else {
-                                                    //no se le ha asignado el username
-                                                    String NOOK = "NOOK";
-                                                }
-                                            }
-                                        });
-
-
-                            } else {
-                                //no se ha creado correctamente
-                                fragmentoRegister.setMensaje(fragmentoRegister.getString(R.string.error_ocurred));
-                            }
-
-                        }
-                    });
+                    logIn(mAuth.getCurrentUser(), RegisterContext);
 
                 } else {
 
@@ -349,7 +368,7 @@ public class FirebaseMethods {
 //        }
     }
 
-    public void updateAvatar(String urlImage, Context avatarContext) {
+    public void updateUser(String userName, String urlImage, Context avatarContext) {
         FirebaseAuth mAuth;
         sessionManagement = new SessionManagement(avatarContext);
         mAuth = FirebaseAuth.getInstance();
@@ -357,7 +376,7 @@ public class FirebaseMethods {
 
 
         UserProfileChangeRequest avatarUpdates = new UserProfileChangeRequest.Builder().
-                setPhotoUri(Uri.parse(urlImage)).build();
+                setPhotoUri(Uri.parse(urlImage)).setDisplayName(userName).build();
 
         avatarUser.updateProfile(avatarUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -365,7 +384,7 @@ public class FirebaseMethods {
                     public void onComplete(@NonNull Task<Void> task3) {
                         if (task3.isSuccessful()) {
                             //AVATAR ACTUALIZADO
-                            Toast.makeText(fragment.getContext(), R.string.config_updated, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, R.string.config_updated, Toast.LENGTH_SHORT).show();
                             changeImageRecord(avatarUser);
 
 
@@ -380,87 +399,36 @@ public class FirebaseMethods {
     }
 
     private void changeImageRecord(FirebaseUser user) {
-        processDone = false;
-        ArrayList<FirebasePuntuacion> fbPuntuacionList = new ArrayList<>();
-        ArrayList<DataSnapshot> dataSnapshotArrayList = new ArrayList<>();
-        FirebasePuntuacion miPuntacion;
-        listadoFinal = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference().child("Puntuacion");
-        reference.addValueEventListener(new ValueEventListener() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference puntuacionesRef = db.collection("Puntuacion");
+
+        String uid = user.getUid();
+
+        puntuacionesRef
+                .whereEqualTo("uid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                if (!processDone) {
-
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                        Object object = snapshot.getValue(Object.class);
-                        String json = new Gson().toJson(object);
-                        FirebasePuntuacion fbPuntuacion = new Gson().fromJson(json, FirebasePuntuacion.class);
-                        fbPuntuacionList.add(fbPuntuacion);
-                        dataSnapshotArrayList.add(dataSnapshot.child(snapshot.getKey()));
-
-
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Convert the whole Query Snapshot to a list
+                // of objects directly! No need to fetch each
+                // document.
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    for (QueryDocumentSnapshot querySnapshot : queryDocumentSnapshots) {
+                        Map puntuacionCambio = new HashMap<String, Object>();
+                        puntuacionCambio.put("image", String.valueOf(user.getPhotoUrl()));
+                        puntuacionCambio.put("username", String.valueOf(user.getDisplayName()));
+                        db.collection("Puntuacion").document(querySnapshot.getId()).update(puntuacionCambio);
                     }
-
-                    for (int i = 0; i < fbPuntuacionList.size(); i++) {
-
-                        fbPuntuacionList.get(i);
-
-                        String uidActual = user.getUid();
-                        String uidPuntuacion = fbPuntuacionList.get(i).getUid();
-//                        String namePuntuacion = fbPuntuacionList.get(i).getUsername();
-
-                        if (uidActual.equals(uidPuntuacion)) {
-
-                            DatabaseReference recordRef = reference.child(dataSnapshotArrayList.get(i).getKey());
-                            Map<String, Object> photoUpdates = new HashMap<>();
-                            photoUpdates.put("/image", String.valueOf(user.getPhotoUrl()));
-                            recordRef.updateChildren(photoUpdates);
-                        }
-
-
-                    }
-
-//                    for (FirebasePuntuacion firebasePuntuacionImage : fbPuntuacionList) {
-//
-//                        String uidActual = user.getUid();
-//                        String uidPuntuacion = firebasePuntuacionImage.getUid();
-//                        String namePuntuacion = firebasePuntuacionImage.getUsername();
-//                        int pointPuntuacion = firebasePuntuacionImage.getPoints();
-//
-//
-//                        if (uidActual.equals(uidPuntuacion)) {
-//                            String h = "";
-////                            DatabaseReference recordRef = reference.child(snapshot.getKey());
-////                            Map<String, Object> photoUpdates = new HashMap<>();
-////                            photoUpdates.put("/image", String.valueOf(user.getPhotoUrl()));
-////                            recordRef.updateChildren(photoUpdates);
-//                        }
-//
-//                    }
-
-
-                    processDone = true;
-//                    menu.setPuntuaciones(listadoFinal);
-//                    menu.goToPuntuaciones();
-//                    fragmentoMenu.setPuntuaciones(listadoFinal);
-//                    fragmentoMenu.goToPuntuaciones();
-
-
                 }
-
-
             }
-
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("");
+                // Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
             }
-
-
         });
+
     }
 
     //METODO PARA RECOGER LAS IMAGENES DE LOS USUARIOS
@@ -546,29 +514,33 @@ public class FirebaseMethods {
         });
     }
 
-    public void readCode(String codigo){
+    public void readCode(String codigo, FragmentoAccount fragmentoAccount){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         final String[] url = {""};
-        reference = FirebaseDatabase.getInstance().getReference().child("Codigo");
-        reference.addValueEventListener(new ValueEventListener() {
+
+        CollectionReference codigosRef = db.collection("Codigo");
+
+        codigosRef.whereEqualTo("codigo", codigo)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<Codigo> codigos = queryDocumentSnapshots.toObjects(Codigo.class);
+                if(codigos.size() > 0){
+                    url[0] = codigos.get(0).getUrl();
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    Object object = snapshot.getValue(Object.class);
-                    String json = new Gson().toJson(object);
-                    Codigo fbCodigo = new Gson().fromJson(json, Codigo.class);
-
-                    if(fbCodigo.getCodigo().equals(codigo)){
-                        url[0] = fbCodigo.getUrl();
+                    if(!"".equalsIgnoreCase(url[0])){
+                        fragmentoAccount.urlCode(url[0]);
                     }
                 }
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("");
+                //Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
             }
-
         });
     }
 }

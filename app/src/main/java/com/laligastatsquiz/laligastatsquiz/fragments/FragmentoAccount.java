@@ -3,6 +3,8 @@ package com.laligastatsquiz.laligastatsquiz.fragments;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.NavigationDrawerActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
+import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPhoto;
+import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPhotoSize;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
+import com.laligastatsquiz.laligastatsquiz.tools.SelectorImagenActivity;
 import com.laligastatsquiz.laligastatsquiz.tools.SessionManagement;
 
 import com.squareup.picasso.Picasso;
@@ -38,12 +44,16 @@ public class FragmentoAccount extends Fragment {
     Button btnSetOptions;
     TextView txtUserName;
     SessionManagement sm;
-    Spinner spinnerProfile;
     GenerateImageUrl generateImageUrl;
     ImageView ivAvatar;
     CircleImageView circleImageView;
     NavigationDrawerActivity navigationDrawerActivity;
+    String urlCode;
+    ArrayList<LaLigaPlayer> laLigaPlayers;
     FirebaseMethods firebaseMethods;
+    boolean codigo;
+    TextView txtCodigo;
+    private String urlFromDialog;
 
     private static FragmentoAccount fragmentoAccount;
 
@@ -87,7 +97,7 @@ public class FragmentoAccount extends Fragment {
         txtUserName.setEnabled(false);
 
 
-        ArrayList<LaLigaPlayer> laLigaPlayers = generateImageUrl.getLaLigaPlayers();
+        laLigaPlayers = generateImageUrl.getLaLigaPlayers();
 
         //ordenamos array
         if (laLigaPlayers.size() > 0) {
@@ -99,25 +109,6 @@ public class FragmentoAccount extends Fragment {
             });
         }
 
-        ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.list_spinner, laLigaPlayers);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerProfile.setAdapter(adapter);
-
-        //si el perfil tiene imagen, que busque de quien es esa imagen y la ponga como valor por defecto del spinner
-        if (sm.getSesionImage() != "") {
-
-            for (int i = 0; i < laLigaPlayers.size(); i++) {
-
-                if (laLigaPlayers.get(i).getPhotos().getPhoto().getBig().equalsIgnoreCase(sm.getSesionImage())) {
-                    spinnerProfile.setSelection(i);
-                }
-
-            }
-
-
-        }
-
-
         btnSetOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,14 +116,35 @@ public class FragmentoAccount extends Fragment {
                 if (checkInternetConnection() == true) {
 
                     //cogemos jugador seleccionado y pasamos la url de su imagen
-                    LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinnerProfile.getSelectedItem();
 
                     String userName = txtUserName.getText().toString();
                     String email = sm.getSessionEmail();
 
-                    sm.saveSession(txtUserName.getText().toString(), email, laLigaPlayer.getPhotos().getPhoto().getBig());
+                    if(codigo){
+                        sm.saveSession(userName, email, urlCode);
 
-                    firebaseMethods.updateAvatar(laLigaPlayer.getPhotos().getPhoto().getBig(),getContext());
+                        firebaseMethods.updateUser(userName, urlCode,getContext());
+                    }
+                    else{
+
+                        if(urlFromDialog != null && !"".equalsIgnoreCase(urlFromDialog)){
+                            sm.saveSession(userName, email, urlFromDialog);
+                            firebaseMethods.updateUser(userName, urlFromDialog,getContext());
+                        }
+
+                        else if (sm.getSesionImage() != "") {
+
+                            for (int i = 0; i < laLigaPlayers.size(); i++) {
+
+                                if (laLigaPlayers.get(i).getPhotos().getPhoto().getBig().equalsIgnoreCase(sm.getSesionImage())) {
+                                    sm.saveSession(userName, email, laLigaPlayers.get(i).getPhotos().getPhoto().getBig());
+                                    firebaseMethods.updateUser(userName, laLigaPlayers.get(i).getPhotos().getPhoto().getBig(),getContext());
+                                }
+
+                            }
+
+                        }
+                    }
 
 
 
@@ -146,16 +158,36 @@ public class FragmentoAccount extends Fragment {
             }
         });
 
-        spinnerProfile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinnerProfile.getSelectedItem();
-                Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
+            public void onClick(View view) {
+//                FragmentoSelectorImagen fragmentoSelectorImagen = FragmentoSelectorImagen.newInstance(null);
+//
+//
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.main_content, fragmentoSelectorImagen, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
+
+                DialogFragment dialog = new SelectorImagenActivity(fragmentoAccount);
+                dialog.show(getFragmentManager(), "NoticeDialogFragment");
+            }
+        });
+
+        txtCodigo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                firebaseMethods.readCode(s.toString(), fragmentoAccount);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -168,7 +200,7 @@ public class FragmentoAccount extends Fragment {
 
         btnSetOptions = view.findViewById(R.id.btnSetOptions);
         txtUserName = view.findViewById(R.id.txtUserNameOptions);
-        spinnerProfile = view.findViewById(R.id.spinnerProfilePicture);
+        txtCodigo = view.findViewById(R.id.txtCode);
 //        ivAvatar = view.findViewById(R.id.ivAvatar);
         circleImageView = view.findViewById(R.id.ivAvatar);
         Glide.with(getContext()).load(sm.getSesionImage()).into(circleImageView);
@@ -191,5 +223,58 @@ public class FragmentoAccount extends Fragment {
 
         return connected;
 
+    }
+
+    public void urlCode(String url){
+        if(!url.equalsIgnoreCase(laLigaPlayers.get(laLigaPlayers.size() - 1).getPhotos().getPhoto().getBig())){
+            LaLigaPlayer newLaLigaPlayer = generatePlayer(txtCodigo.getText().toString().toUpperCase(), url);
+            laLigaPlayers.add(newLaLigaPlayer);
+            ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.support_simple_spinner_dropdown_item, laLigaPlayers);
+            Glide.with(getContext()).load(url).into(circleImageView);
+            urlCode = url;
+            codigo = true;
+        }
+
+    }
+
+    private LaLigaPlayer generatePlayer(String nickname, String image) {
+        LaLigaPlayer laLigaPlayer = new LaLigaPlayer();
+        laLigaPlayer.setNickname(nickname);
+        laLigaPlayer.setPhotos(new LaLigaPhoto());
+        laLigaPlayer.getPhotos().setPhoto(new LaLigaPhotoSize());
+        laLigaPlayer.getPhotos().getPhoto().setBig(image);
+        return laLigaPlayer;
+    }
+
+    public String getUrlFromDialog() {
+        return urlFromDialog;
+    }
+
+    public void setUrlFromDialog(String urlFromDialog) {
+        this.urlFromDialog = urlFromDialog;
+    }
+
+    public static FragmentoAccount getFragmentoAccount() {
+        return fragmentoAccount;
+    }
+
+    public static void setFragmentoAccount(FragmentoAccount fragmentoAccount) {
+        FragmentoAccount.fragmentoAccount = fragmentoAccount;
+    }
+
+    public CircleImageView getCircleImageView() {
+        return circleImageView;
+    }
+
+    public void setCircleImageView(CircleImageView circleImageView) {
+        this.circleImageView = circleImageView;
+    }
+
+    public ArrayList<LaLigaPlayer> getLaLigaPlayers() {
+        return laLigaPlayers;
+    }
+
+    public void setLaLigaPlayers(ArrayList<LaLigaPlayer> laLigaPlayers) {
+        this.laLigaPlayers = laLigaPlayers;
     }
 }

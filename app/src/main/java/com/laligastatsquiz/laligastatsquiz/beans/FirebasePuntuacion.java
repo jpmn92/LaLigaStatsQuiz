@@ -3,12 +3,15 @@ package com.laligastatsquiz.laligastatsquiz.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 
 public class FirebasePuntuacion implements Parcelable, Serializable, Comparable<FirebasePuntuacion> {
 
-    String username, season, seasonType, statCategory, perMode, date, image, uid, liga;
+    String username, season, seasonType, statCategory, perMode, date, image, uid, liga, hour;
     int points, ranking;
+    Timestamp timestamp;
 
     public FirebasePuntuacion(String username, String season, String seasonType, String statCategory, String perMode, String date, String image, String liga, int points, String uid, int ranking) {
         this.username = username;
@@ -22,6 +25,22 @@ public class FirebasePuntuacion implements Parcelable, Serializable, Comparable<
         this.uid = uid;
         this.ranking = ranking;
         this.liga = liga;
+    }
+
+    public FirebasePuntuacion(String username, String season, String seasonType, String statCategory, String perMode, String date, String image, String uid, String liga, String hour, int points, int ranking, Timestamp timestamp) {
+        this.username = username;
+        this.season = season;
+        this.seasonType = seasonType;
+        this.statCategory = statCategory;
+        this.perMode = perMode;
+        this.date = date;
+        this.image = image;
+        this.uid = uid;
+        this.liga = liga;
+        this.hour = hour;
+        this.points = points;
+        this.ranking = ranking;
+        this.timestamp = timestamp;
     }
 
     //constructor para draft
@@ -149,6 +168,22 @@ public class FirebasePuntuacion implements Parcelable, Serializable, Comparable<
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
