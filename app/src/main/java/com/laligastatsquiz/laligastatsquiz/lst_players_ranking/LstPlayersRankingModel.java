@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayerCall;
+import com.laligastatsquiz.laligastatsquiz.tools.FooRequest;
 import com.laligastatsquiz.laligastatsquiz.tools.wsLaLiga;
 
 import java.io.IOException;
@@ -95,7 +96,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
                     Request original = chain.request();
 
                     Request request = original.newBuilder()
-                            .addHeader("Ocp-Apim-Subscription-Key", "c13c3a8e2f6b46da9c5c425cf61fab3e")
+//                            .addHeader("Ocp-Apim-Subscription-Key", "c13c3a8e2f6b46da9c5c425cf61fab3e")
                             .method(original.method(), original.body())
                             .build();
 
@@ -106,25 +107,39 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             OkHttpClient client = httpClient.build();
 
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl(url)
+//                    .addConverterFactory(GsonConverterFactory
+//                            .create()).client(client).build();
+
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
+                    .baseUrl("https://ii8tkqveae.execute-api.eu-west-3.amazonaws.com/borsoccer/")
                     .addConverterFactory(GsonConverterFactory
                             .create()).client(client).build();
-
-
             wsLaLiga service = retrofit.create(wsLaLiga.class);
 
 
-            //Call<JsonObject> response = service.getPlayersRanking(college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX);
             Call<JsonObject> response = service.getPlayersRanking(limit, offset, orderField, orderType);
+
+            String myBodyStr = "{\"playerName\": \"Karim\"}";
+            JsonParser parser = new JsonParser();
+
+            JsonObject myBody = parser.parse(myBodyStr).getAsJsonObject();
+            Call<JsonObject> response2 = service.postJson(myBody);
+
             System.out.println("");
             //            String myRequest = response.request().header("x-nba-stats-origin").toString();
 //            String my2 = response.request().header("Referer").toString();
 //            String myurl = response.request().url().toString();
 
             try {
+                statsJson = new Gson().toJson(response2.execute().body());
 
-                statsJson = new Gson().toJson(response.execute().body());
+
+                statsJson = "";
+
+                String h = "";
+//                statsJson = new Gson().toJson(response.execute().body());
 
                 if (statsJson == null) {
                     return false;

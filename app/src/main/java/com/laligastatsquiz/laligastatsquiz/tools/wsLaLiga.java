@@ -3,7 +3,10 @@ package com.laligastatsquiz.laligastatsquiz.tools;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface wsLaLiga {
@@ -43,6 +46,13 @@ public interface wsLaLiga {
             @Query("LeagueID") String leagueID,
             @Query("PerMode") String perMode,
             @Query("PlayerID") String playerID);
+
+    @POST("players")
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    Call<JsonObject> postJson(@Body JsonObject myBody);
+
+
+
 
 
 }

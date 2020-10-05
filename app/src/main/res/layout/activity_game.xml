@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="100"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/laliga" />
+                        android:src="@drawable/vidas2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="100"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/laliga" />
+                        android:src="@drawable/circular_progress_bar" />
                 </LinearLayout>
 
             </LinearLayout>
