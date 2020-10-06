@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayerCall;
-import com.laligastatsquiz.laligastatsquiz.tools.FooRequest;
+// import com.laligastatsquiz.laligastatsquiz.tools.FooRequest;
 import com.laligastatsquiz.laligastatsquiz.tools.wsLaLiga;
 
 import java.io.IOException;
@@ -121,7 +121,11 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             Call<JsonObject> response = service.getPlayersRanking(limit, offset, orderField, orderType);
 
-            String myBodyStr = "{\"playerName\": \"Karim\"}";
+            String myBodyStr = "{\n" +
+                    "  \"stat\": \"goals\",\n" +
+                    "  \"season\": \"2019/2020\",\n" +
+                    "  \"competition\": 1\n" +
+                    "}";
             JsonParser parser = new JsonParser();
 
             JsonObject myBody = parser.parse(myBodyStr).getAsJsonObject();
