@@ -11,10 +11,13 @@ import com.google.gson.JsonParser;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayerCall;
 // import com.laligastatsquiz.laligastatsquiz.tools.FooRequest;
+import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
+import com.laligastatsquiz.laligastatsquiz.data.ResponsePlayerCompetition;
 import com.laligastatsquiz.laligastatsquiz.tools.wsLaLiga;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -29,9 +32,10 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
     private OnLstPlayersRankingListener onLstPlayersRankingListener;
     private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga;
     private JsonObject jsonObject;
-    private ArrayList<LaLigaPlayer> laLigaPlayers;
+    private ArrayList<PlayerCompetition> playerCompetitions;
     private Bundle params;
-    private LaLigaPlayerCall laLigaPlayerCall;
+    private ResponsePlayerCompetition responsePlayerCompetition;
+    private ResponsePlayerCompetition playerCompetitionList;
 
 
     @Override
@@ -48,13 +52,13 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
         this.topX = topX;
         this.params = params;
 
-        new PeticionGetLaLigaPlayers().execute();
+        new PeticionGetPlayerCompetitions().execute();
 
     }
 
-    public class PeticionGetLaLigaPlayers extends AsyncTask<Void, Void, Boolean> {
+    public class PeticionGetPlayerCompetitions extends AsyncTask<Void, Void, Boolean> {
 
-        public PeticionGetLaLigaPlayers() {
+        public PeticionGetPlayerCompetitions() {
             super();
 
         }
@@ -63,7 +67,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
         protected Boolean doInBackground(Void... voids) {
 
             jsonObject = new JsonObject();
-            laLigaPlayers = new ArrayList<>();
+            playerCompetitions = new ArrayList<>();
 
 
             String statsJson;
@@ -123,7 +127,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             String myBodyStr = "{\n" +
                     "  \"stat\": \"goals\",\n" +
-                    "  \"season\": \"2019/2020\",\n" +
+                    "  \"season\": \"2019-2020\",\n" +
                     "  \"competition\": 1\n" +
                     "}";
             JsonParser parser = new JsonParser();
@@ -139,9 +143,6 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
             try {
                 statsJson = new Gson().toJson(response2.execute().body());
 
-
-                statsJson = "";
-
                 String h = "";
 //                statsJson = new Gson().toJson(response.execute().body());
 
@@ -149,10 +150,12 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
                     return false;
                 }
 
-                laLigaPlayerCall = new Gson().fromJson(statsJson, LaLigaPlayerCall.class);
+                // laLigaPlayerCall = new Gson().fromJson(statsJson, LaLigaPlayerCall.class);
 
-                for(LaLigaPlayer laLigaPlayer: laLigaPlayerCall.getPlayer_rankings()){
-                    laLigaPlayers.add(laLigaPlayer);
+                playerCompetitionList = new Gson().fromJson(statsJson, ResponsePlayerCompetition.class);
+
+                for(PlayerCompetition playerCompetition: playerCompetitionList.getPlayerCompetitionList()){
+                    playerCompetitions.add(playerCompetition);
                 }
 
             } catch (IOException e) {
@@ -173,7 +176,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
             try {
                 if (resp) {
                     //al componente reactivo le devuelvo la lista de sesiones
-                    onLstPlayersRankingListener.onFinished(laLigaPlayers);
+                    onLstPlayersRankingListener.onFinished(playerCompetitions);
                 } else {
                     onLstPlayersRankingListener.onFailure("No hay jugadores para esa selección");
                 }

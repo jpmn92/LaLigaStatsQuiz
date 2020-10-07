@@ -3,6 +3,7 @@ package com.laligastatsquiz.laligastatsquiz.lst_players_ranking;
 import android.os.Bundle;
 
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,8 @@ public class LstPlayersRankingPresenter implements LstPlayersRankingContract.Pre
 
         this.modelo.getPlayersRankingService(new LstPlayersRankingContract.Model.OnLstPlayersRankingListener() {
             @Override
-            public void onFinished(ArrayList<LaLigaPlayer> laLigaPlayers) {
-                vista.successListPlayersRanking(laLigaPlayers);
+            public void onFinished(ArrayList<PlayerCompetition> playerCompetitions) {
+                vista.successListPlayersRanking(playerCompetitions);
             }
 
             @Override

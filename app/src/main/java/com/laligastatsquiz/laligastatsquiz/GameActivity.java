@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaStat;
+import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingContract;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
 import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
@@ -40,7 +41,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private FirebaseMethods firebaseMethods;
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
-    private ArrayList<LaLigaPlayer> laLigaPlayerArrayList;
+    private ArrayList<PlayerCompetition> playerCompetitionArrayList;
     private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas;
     private TextView txtP1, txtP2, txtNameP1, txtNameP2, txtPoints, txtPregunta;
     private RelativeLayout relFront;
@@ -49,8 +50,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private ProgressBar progressBar;
 
     private int valueP1, valueP2;
-    private LaLigaPlayer player1;
-    private LaLigaPlayer player2;
+    private PlayerCompetition player1;
+    private PlayerCompetition player2;
     private boolean sound;
     private String statName, stat, liga, season;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
@@ -140,36 +141,36 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         int randomP1;
         int randomP2;
 
-        randomP1 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
-        player1 = laLigaPlayerArrayList.get(randomP1);
+        randomP1 = (int) (Math.random() * (playerCompetitionArrayList.size()));
+        player1 = playerCompetitionArrayList.get(randomP1);
 
         do{
-            randomP2 = (int) (Math.random() * (laLigaPlayerArrayList.size()));
-            player2 = laLigaPlayerArrayList.get(randomP2);
+            randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
+            player2 = playerCompetitionArrayList.get(randomP2);
         } while (randomP2 == randomP1);
 
 
         showPlayers();
 
 
-        valueP1 = calculateValue(player1, stat);
-        valueP2 = calculateValue(player2, stat);
+        //valueP1 = calculateValue(player1, stat);
+        //valueP2 = calculateValue(player2, stat);
         myCountDownTimer.start();
     }
 
     /**
      * Metodo para ver que jugadores no tienen foto
      */
-    private void comprobarSinFoto() {
-        ArrayList<LaLigaPlayer> laLigaPlayersSinFoto = new ArrayList<>();
-        for(LaLigaPlayer laLigaPlayer: laLigaPlayerArrayList){
-            if(laLigaPlayer.getPhotos() == null){
-                laLigaPlayersSinFoto.add(laLigaPlayer);
-                System.out.println("SIN FOTO " + laLigaPlayer.getNickname());
-            }
-        }
-        System.out.println("PUNTO DE RUPTURA");
-    }
+//    private void comprobarSinFoto() {
+//        ArrayList<LaLigaPlayer> laLigaPlayersSinFoto = new ArrayList<>();
+//        for(PlayerCompetition playerCompetition: playerCompetitionArrayList){
+//            if(playerCompetition.getPhotos() == null){
+//                laLigaPlayersSinFoto.add(laLigaPlayer);
+//                System.out.println("SIN FOTO " + laLigaPlayer.getNickname());
+//            }
+//        }
+//        System.out.println("PUNTO DE RUPTURA");
+//    }
 
     private int calculateValue(LaLigaPlayer laLigaPlayer, String stat) {
         int statValue = 0;
@@ -184,40 +185,47 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void showPlayers() {
-        if(player1.getPhotos() != null){
-            Glide.with(this).load(String.valueOf(player1.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
-            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
-        } else{
-            String imageP1Default = "";
-            if(image2B(player1.getTeam().getId())){
-                imageP1Default = imagePlayer(player1.getTeam().getId());
-            }
-            else{
-                imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
-            }
-
-            Glide.with(this).load(imageP1Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
-            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
+        if(player1.getUrlPlayerPhoto() != null){
+            Glide.with(this).load(String.valueOf(player1.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
+            Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
+        }
+        else{
+            Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player1.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
+            Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
+//            String imageP1Default = "";
+//            if(image2B(player1.getTeam().getId())){
+//                imageP1Default = imagePlayer(player1.getTeam().getId());
+//            }
+//            else{
+//                imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
+//            }
+//
+//            Glide.with(this).load(imageP1Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
+//            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
 
-        if(player2.getPhotos() != null){
-            Glide.with(this).load(String.valueOf(player2.getPhotos().getPhoto().getBig())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
-            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
+        if(player2.getUrlPlayerPhoto() != null){
+            Glide.with(this).load(String.valueOf(player2.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
+            Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         } else{
-            String imageP2Default = "";
-            if(image2B(player2.getTeam().getId())){
-                imageP2Default = imagePlayer(player2.getTeam().getId());
-            }
-            else{
-                imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
-            }
-
-            Glide.with(this).load(imageP2Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
-            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
+            Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player2.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
+            Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
+//            String imageP2Default = "";
+//            if(image2B(player2.getTeam().getId())){
+//                imageP2Default = imagePlayer(player2.getTeam().getId());
+//            }
+//            else{
+//                imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
+//            }
+//
+//            Glide.with(this).load(imageP2Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
+//            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
         }
 
-        txtNameP1.setText(player1.getNickname());
-        txtNameP2.setText(player2.getNickname());
+//        txtNameP1.setText(player1.getNickname());
+//        txtNameP2.setText(player2.getNickname());
+        txtNameP1.setText(player1.getName() + " " + player1.getLastName());
+        txtNameP2.setText(player2.getName() + " " + player2.getLastName());
     }
 
     private void acierto(){
@@ -330,8 +338,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
 
     @Override
-    public void successListPlayersRanking(ArrayList<LaLigaPlayer> laLigaPlayers) {
-        setLaLigaPlayerArrayList(laLigaPlayers);
+    public void successListPlayersRanking(ArrayList<PlayerCompetition> playerCompetitions) {
+        setPlayerCompetitionArrayList(playerCompetitions);
         selectPlayers();
 
     }
@@ -362,12 +370,12 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
     }
 
-    public ArrayList<LaLigaPlayer> getLaLigaPlayerArrayList() {
-        return laLigaPlayerArrayList;
+    public ArrayList<PlayerCompetition> getPlayerCompetitionArrayList() {
+        return playerCompetitionArrayList;
     }
 
-    public void setLaLigaPlayerArrayList(ArrayList<LaLigaPlayer> laLigaPlayerArrayList) {
-        this.laLigaPlayerArrayList = laLigaPlayerArrayList;
+    public void setPlayerCompetitionArrayList(ArrayList<PlayerCompetition> playerCompetitionArrayList) {
+        this.playerCompetitionArrayList = playerCompetitionArrayList;
     }
 
     public class MyCountDownTimer extends CountDownTimer {

@@ -6,11 +6,13 @@ public class PlayerCompetition {
     private String lastName;
     private String urlPlayerPhoto;
     private String urlTeamPhoto;
+    private String urlCompetitionPhoto;
     private int goals;
     private int assists;
     private String teamName;
     private String competitionName;
     private String season;
+    private int idfm;
 
     public String getSeason() {
         return season;
@@ -84,4 +86,19 @@ public class PlayerCompetition {
         this.assists = assists;
     }
 
+    public String getUrlCompetitionPhoto() {
+        return urlCompetitionPhoto;
+    }
+
+    public void setUrlCompetitionPhoto(String urlCompetitionPhoto) {
+        this.urlCompetitionPhoto = urlCompetitionPhoto;
+    }
+
+    public int getIdfm() {
+        return idfm;
+    }
+
+    public void setIdfm(int idfm) {
+        this.idfm = idfm;
+    }
 }
