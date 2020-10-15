@@ -68,12 +68,60 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         statName = this.getIntent().getStringExtra("stat");
         stat = traducirEstadistica(statName);
         this.getIntent().putExtra("statId", statId);
-        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
+//        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
+        liga = this.getIntent().getStringExtra("liga");
+
+//        final String laliga = getString(R.string.liga_santander);
+//        final String premier = getString(R.string.premier);
+//        final String bundesliga = getString(R.string.bundesliga);
+//        final String calcio = getString(R.string.seriea);
+//        final String league1 = getString(R.string.league1);
+
+        switch (liga){
+            case "La Liga Santander":
+
+                liga = "1";
+
+                break;
+
+            case "La Liga Smartbank":
+
+                liga = "2";
+
+                break;
+
+            case "Premier League":
+
+                liga = "3";
+
+                break;
+
+            case "Bundesliga":
+
+                liga = "6";
+
+                break;
+
+            case "Ligue 1":
+
+                liga = "7";
+
+                break;
+
+            case "Serie A":
+
+                liga = "8";
+
+                break;
+
+        }
         sound = true;
         initComponents();
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
-        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
+//        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
+//        season = "";
+        season = this.getIntent().getStringExtra("season");
         params.putString("season", season);
         txtPregunta.setText(statName + " " + this.getIntent().getStringExtra("season"));
         relFront.setVisibility(View.INVISIBLE);
@@ -447,46 +495,46 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             stat = "total_assists";
             statId = R.string.asistencias;
         }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.pases_completados))){
-            stat = "total_accurate_pass";
-            statId = R.string.pases_completados;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.paradas))){
-            stat = "total_saves";
-            statId = R.string.paradas;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_amarillas))){
-            stat = "total_yellow_card";
-            statId = R.string.tarjetas_amarillas;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_rojas))){
-            stat = "total_red_card";
-            statId = R.string.tarjetas_rojas;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.penaltis))){
-            stat = "total_att_pen_goal";
-            statId = R.string.penaltis;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.goles_falta))){
-            stat = "total_att_freekick_goal";
-            statId = R.string.goles_falta;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.entradas_exitosas))){
-            stat = "total_won_tackle";
-            statId = R.string.entradas_exitosas;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.minutos))){
-            stat = "total_mins_played";
-            statId = R.string.minutos;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas))){
-            stat = "total_card";
-            statId = R.string.tarjetas;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.faltas))){
-            stat = "total_fouls";
-            statId = R.string.faltas;
-        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.pases_completados))){
+//            stat = "total_accurate_pass";
+//            statId = R.string.pases_completados;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.paradas))){
+//            stat = "total_saves";
+//            statId = R.string.paradas;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_amarillas))){
+//            stat = "total_yellow_card";
+//            statId = R.string.tarjetas_amarillas;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas_rojas))){
+//            stat = "total_red_card";
+//            statId = R.string.tarjetas_rojas;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.penaltis))){
+//            stat = "total_att_pen_goal";
+//            statId = R.string.penaltis;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.goles_falta))){
+//            stat = "total_att_freekick_goal";
+//            statId = R.string.goles_falta;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.entradas_exitosas))){
+//            stat = "total_won_tackle";
+//            statId = R.string.entradas_exitosas;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.minutos))){
+//            stat = "total_mins_played";
+//            statId = R.string.minutos;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.tarjetas))){
+//            stat = "total_card";
+//            statId = R.string.tarjetas;
+//        }
+//        else if(statCategory.equalsIgnoreCase(getString(R.string.faltas))){
+//            stat = "total_fouls";
+//            statId = R.string.faltas;
+//        }
 
         return stat;
     }
@@ -499,12 +547,12 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         else if(ligaName.equalsIgnoreCase(getString(R.string.liga_smartbank))){
             liga = "laliga-smartbank-";
         }
-        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_femenina))){
-            liga = "primera-division-femenina-";
-        }
-        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_1_2_3))){
-            liga = "laliga-1-2-3-";
-        }
+//        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_femenina))){
+//            liga = "primera-division-femenina-";
+//        }
+//        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_1_2_3))){
+//            liga = "laliga-1-2-3-";
+//        }
 
         return liga;
     }

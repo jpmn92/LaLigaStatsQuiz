@@ -39,7 +39,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     Resources res;
     FirebaseMethods firebaseMethods;
     Bundle params;
-    boolean sound;
+    boolean sound, crono;
     ArrayList<FirebasePuntuacion> puntuaciones, puntuacionPersonal;
     String userName;
     SessionManagement sessionManagement;
@@ -79,14 +79,14 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
         //Al comenzar chequeamos el sonido de la sesion
 
-        ivSound = view.findViewById(R.id.ivSound);
+//        ivSound = view.findViewById(R.id.ivSound);
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
 
         stringArrayAdapter1920 = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS));
         stringArrayAdapter1920.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stringArrayAdapter_old = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS_OLD));
-        stringArrayAdapter_old.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        stringArrayAdapter_old = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS_OLD));
+//        stringArrayAdapter_old.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,13 +98,13 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
         //dependiendo de si es true pintamos una imagen u otra
 
-        if (sound) {
-            ivSound.setImageResource(R.drawable.volume_on);
-
-        } else {
-            ivSound.setImageResource(R.drawable.volume_off);
-
-        }
+//        if (sound) {
+//            ivSound.setImageResource(R.drawable.volume_on);
+//
+//        } else {
+//            ivSound.setImageResource(R.drawable.volume_off);
+//
+//        }
 
 
         btComenzar = view.findViewById(R.id.btnStart);
@@ -120,17 +120,17 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-//                    spinnerLiga.setEnabled(true);
-                    spinnerLiga.setAdapter(stringArrayAdapter1920);
-
-
-                } else {
-//                    spinnerLiga.setSelection(0);
-//                    spinnerLiga.setEnabled(false);
-                    spinnerLiga.setAdapter(stringArrayAdapter_old);
-
-                }
+//                if (i == 0) {
+////                    spinnerLiga.setEnabled(true);
+//                    spinnerLiga.setAdapter(stringArrayAdapter1920);
+//
+//
+//                } else {
+////                    spinnerLiga.setSelection(0);
+////                    spinnerLiga.setEnabled(false);
+//                    spinnerLiga.setAdapter(stringArrayAdapter_old);
+//
+//                }
             }
 
             @Override
@@ -138,19 +138,19 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
             }
         });
-        ivSound.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (sound) {
-                    sound = false;
-                    ivSound.setImageResource(R.drawable.volume_off);
-                } else {
-                    sound = true;
-                    ivSound.setImageResource(R.drawable.volume_on);
-                }
-            }
-        });
+//        ivSound.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                if (sound) {
+//                    sound = false;
+//                    ivSound.setImageResource(R.drawable.volume_off);
+//                } else {
+//                    sound = true;
+//                    ivSound.setImageResource(R.drawable.volume_on);
+//                }
+//            }
+//        });
         params = new Bundle();
     }
 
@@ -159,7 +159,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btnStart:
                 //al pulsar el boton de inicio de partida guardamos sonido de la sesion
-                sessionManagement.saveSession(sound);
+//                sessionManagement.saveSession(sound, "sound");
                 checkSession();
                 break;
             case R.id.btnRecords:
@@ -173,6 +173,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putInt("statId", getStatId());
                 params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+                params.putBoolean("sound", sound);//NUEVO
+
                 firebaseMethods.getTopPuntuaciones(params);
                 break;
         }
@@ -184,6 +186,9 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        sound = sessionManagement.getSound();
+        String h = "";
+
 
 
         if (firebaseUser != null) {
@@ -294,28 +299,28 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.goles_anotados))) {
             statId = R.string.goles_anotados;
         } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.asistencias))) {
-            statId = R.string.asistencias;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.pases_completados))) {
-            statId = R.string.pases_completados;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.paradas))) {
-            statId = R.string.paradas;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_amarillas))) {
-            statId = R.string.tarjetas_amarillas;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_rojas))) {
-            statId = R.string.tarjetas_rojas;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.penaltis))) {
-            statId = R.string.penaltis;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.goles_falta))) {
-            statId = R.string.goles_falta;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.entradas_exitosas))) {
-            statId = R.string.entradas_exitosas;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.minutos))) {
-            statId = R.string.minutos;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas))) {
-            statId = R.string.tarjetas;
-        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.faltas))) {
-            statId = R.string.faltas;
-        }
+            statId = R.string.asistencias;}
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.pases_completados))) {
+//            statId = R.string.pases_completados;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.paradas))) {
+//            statId = R.string.paradas;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_amarillas))) {
+//            statId = R.string.tarjetas_amarillas;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas_rojas))) {
+//            statId = R.string.tarjetas_rojas;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.penaltis))) {
+//            statId = R.string.penaltis;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.goles_falta))) {
+//            statId = R.string.goles_falta;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.entradas_exitosas))) {
+//            statId = R.string.entradas_exitosas;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.minutos))) {
+//            statId = R.string.minutos;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.tarjetas))) {
+//            statId = R.string.tarjetas;
+//        } else if (String.valueOf(spinnerStats.getSelectedItem()).equalsIgnoreCase(getString(R.string.faltas))) {
+//            statId = R.string.faltas;
+//        }
         return statId;
     }
 

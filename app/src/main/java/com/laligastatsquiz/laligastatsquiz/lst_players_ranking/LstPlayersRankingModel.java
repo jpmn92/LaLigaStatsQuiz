@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
     private OnLstPlayersRankingListener onLstPlayersRankingListener;
-    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga;
+    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga, newSeason, newLiga;
     private JsonObject jsonObject;
     private ArrayList<PlayerCompetition> playerCompetitions;
     private Bundle params;
@@ -73,6 +73,9 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
             String statsJson;
             season = params.getString("season");
             liga = params.getString("liga");
+
+            newSeason = params.getString("season");
+            newLiga = params.getString("liga");
 
             String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/" + liga + season + "/";
 
@@ -125,10 +128,16 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             Call<JsonObject> response = service.getPlayersRanking(limit, offset, orderField, orderType);
 
+//            String myBodyStr = "{\n" +
+//                    "  \"stat\": \"goals\",\n" +
+//                    "  \"season\": \"2006-2007\",\n" +
+//                    "  \"competition\": 1\n" +
+//                    "}";
+
             String myBodyStr = "{\n" +
                     "  \"stat\": \"goals\",\n" +
-                    "  \"season\": \"2019-2020\",\n" +
-                    "  \"competition\": 1\n" +
+                    "  \"season\": \""+newSeason+"\",\n" +
+                    "  \"competition\": "+newLiga+"\n" +
                     "}";
             JsonParser parser = new JsonParser();
 

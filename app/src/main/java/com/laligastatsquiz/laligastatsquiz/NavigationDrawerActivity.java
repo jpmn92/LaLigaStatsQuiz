@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -51,7 +53,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private String userName, email;
     private long backPressedTime;
     Toast backToast;
-    private Boolean logueado;
+    private Boolean logueado, sound, crono;
+    private SessionManagement sessionManagement;
+    private SwitchCompat soundSwitch, cronoSwitch;
 
 
     @Override
@@ -109,6 +113,11 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         checkSession();
     }
 
+    private void checkPrefs() {
+//        crono = sessionManagement.getCrono();
+        sound = sessionManagement.getSound();
+    }
+
     private void checkSession() {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
@@ -151,6 +160,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_navigation_drawer);
 
 
+        sessionManagement = new SessionManagement(getApplication().getBaseContext());
+        checkPrefs();
+
         setToolbar(); // Setear Toolbar como action bar
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -162,6 +174,23 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         nameHeader = (TextView) headerView.findViewById(R.id.usernameHeader);
         imageHeader = (ImageView) headerView.findViewById(R.id.circle_image);
 
+        //switchs
+
+        soundSwitch = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_switch_sonido).getActionView();
+        cronoSwitch = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_switch_crono).getActionView();
+
+//        if (crono) {
+//            cronoSwitch.setChecked(true);
+//        }else{
+//            cronoSwitch.setChecked(false);
+//        }
+
+        if(sound){
+            soundSwitch.setChecked(true);
+        }else{
+            soundSwitch.setChecked(false);
+        }
+
         if (navigationView != null) {
             // Añadir caracteristicas
             setupDrawerContent(navigationView);
@@ -171,6 +200,52 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             // Seleccionar item
             selectItem(navigationView.getMenu().getItem(0));
         }
+
+
+        //CRONO
+//        cronoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if (!isChecked) {
+//                    // Switch is unchecked - Do something
+////                    Toast.makeText(getApplicationContext(), "crono OFF", Toast.LENGTH_SHORT).show();
+//
+//                    crono = false;
+//                    sessionManagement.saveSession(crono, "crono");
+//
+//                } else {
+//                    // Switch is checked - Do something
+////                    Toast.makeText(getApplicationContext(), "crono ON", Toast.LENGTH_SHORT).show();
+//
+//                    crono = true;
+//                    sessionManagement.saveSession(crono, "crono");
+//
+//                }
+//            }
+//        });
+
+        //SONIDO
+        soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (!isChecked) {
+                    // Switch is unchecked - Do something
+//                    Toast.makeText(getApplicationContext(), "sound OFF", Toast.LENGTH_SHORT).show();
+
+                    sound = false;
+                    sessionManagement.saveSession(false, "sound");
+
+                } else {
+                    // Switch is checked - Do something
+//                    Toast.makeText(getApplicationContext(), "sound ON", Toast.LENGTH_SHORT).show();
+
+                    sound = true;
+                    sessionManagement.saveSession(true, "sound");
+
+                }
+            }
+        });
+
 
 
         //si esta logueado lo manda al perfil, sino al login
@@ -237,7 +312,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             case R.id.nav_about_us:
                 try {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "bowlofricedev@gmail.com", null));
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "La Liga Stats Season - ");
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Football Stats Season - ");
                     startActivity(Intent.createChooser(emailIntent, getString(R.string.enviar_mail)));
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, getText(R.string.contact_mail), Toast.LENGTH_LONG);
