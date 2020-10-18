@@ -191,19 +191,50 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         randomP1 = (int) (Math.random() * (playerCompetitionArrayList.size()));
         player1 = playerCompetitionArrayList.get(randomP1);
+        if(stat.equalsIgnoreCase("goals")){
+            valueP1 = player1.getGoals();
+        }
 
         do{
             randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
             player2 = playerCompetitionArrayList.get(randomP2);
         } while (randomP2 == randomP1);
 
+        if(stat.equalsIgnoreCase("goals")){
+            valueGoles();
+        } else if (stat.equalsIgnoreCase("assist")){
+            valueAsistencias();
+        } else if(stat.equalsIgnoreCase("mezcla")){
+            int random = (int) (Math.random() * 2) + 1;
+            if(random == 1){
+                valueGoles();
+                txtPregunta.setText(getString(R.string.goles_anotados) + " " + this.getIntent().getStringExtra("season"));
+            }
+            else if (random == 2){
+                valueAsistencias();
+                txtPregunta.setText(getString(R.string.asistencias) + " " + this.getIntent().getStringExtra("season"));
+            }
+        }
 
         showPlayers();
 
-
-        //valueP1 = calculateValue(player1, stat);
-        //valueP2 = calculateValue(player2, stat);
         myCountDownTimer.start();
+    }
+
+    /**
+     * Metodo para que el valor a comparar sean los goles
+     */
+    private void valueGoles(){
+        valueP1 = player1.getGoals();
+        valueP2 = player2.getGoals();
+    }
+
+    /**
+     * Metodo para que el valor a comparar sean las asistencias
+     */
+    private void valueAsistencias(){
+        valueP1 = player1.getAssists();
+        valueP2 = player2.getAssists();
     }
 
     /**
@@ -488,12 +519,16 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private String traducirEstadistica(String statCategory){
         String stat = "";
         if(statCategory.equalsIgnoreCase(getString(R.string.goles_anotados))){
-            stat = "total_goals";
+            stat = "goals";
             statId = R.string.goles_anotados;
         }
         else if(statCategory.equalsIgnoreCase(getString(R.string.asistencias))){
-            stat = "total_assists";
+            stat = "assist";
             statId = R.string.asistencias;
+        }
+        else if(statCategory.equalsIgnoreCase(getString(R.string.misc))){
+            stat = "mezcla";
+            statId = R.string.misc;
         }
 //        else if(statCategory.equalsIgnoreCase(getString(R.string.pases_completados))){
 //            stat = "total_accurate_pass";
