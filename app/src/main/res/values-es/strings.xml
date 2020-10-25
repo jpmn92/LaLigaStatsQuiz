@@ -125,5 +125,13 @@
     <string name="sound">Sonido</string>
     <string name="nav_cuenta">Cuenta</string>
 
+    <string-array name="COMPETICIONES">
+        <item>Ligas Europeas</item>
+        <item>Clubes Internacionales</item>
+        <item>Selecciones Internacionales</item>
+
+
+    </string-array>
+
 
 </resources>

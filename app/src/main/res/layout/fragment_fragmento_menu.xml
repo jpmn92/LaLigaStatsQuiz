@@ -85,6 +85,25 @@
                 <!--                    android:spinnerMode="dialog" />-->
 
                 <TextView
+                    android:id="@+id/txtTipoCompeticion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="20dp"
+                    android:text="Tipo Competicion"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
+
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerTipoCompeticion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:entries="@array/COMPETICIONES"
+                    android:spinnerMode="dialog" />
+                <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

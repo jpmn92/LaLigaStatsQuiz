@@ -34,7 +34,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     private static FragmentoMenu fragmentoMenu;
 
     Button btComenzar, btPuntuaciones;
-    Spinner spinnerStats, spinnerLiga, spinnerTemporada;
+    Spinner spinnerStats, spinnerLiga, spinnerTemporada, spinnerTipoCompeticion;
     ImageView ivSound;
     Resources res;
     FirebaseMethods firebaseMethods;
@@ -45,7 +45,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat;
+    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat, adapterCompeticionesClubInternacional, adapterCompeticionesSelecciones;
 
 
 
@@ -94,7 +94,11 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         adapterStat = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.ESTADISTICAS));
         adapterStat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        adapterCompeticionesClubInternacional = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.COMPETICIONES_INTERNACIONALES_CLUB));
+        adapterCompeticionesClubInternacional.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        adapterCompeticionesSelecciones = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.SELECCIONES_INTERNACIONALES));
+        adapterCompeticionesSelecciones.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //dependiendo de si es true pintamos una imagen u otra
 
@@ -116,6 +120,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTemporada = view.findViewById(R.id.spinnerTemporada);
         spinnerTemporada.setAdapter(adapterSeason);
         spinnerStats.setAdapter(adapterStat);
+        spinnerTipoCompeticion = view.findViewById(R.id.spinnerTipoCompeticion);
 
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -133,8 +138,30 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 //                }
             }
 
+
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerTipoCompeticion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 1){
+                    spinnerLiga.setAdapter(adapterCompeticionesClubInternacional);
+                }
+
+                if(i == 2){
+                    spinnerLiga.setAdapter(adapterCompeticionesSelecciones);
+                    spinnerTemporada.setEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });

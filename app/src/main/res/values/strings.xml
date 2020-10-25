@@ -148,15 +148,39 @@
     </string-array>
 
     <string-array name="LIGAS">
-        <item>@string/liga_santander</item>
-        <item>@string/liga_smartbank</item>
-        <item>@string/bundesliga</item>
-        <item>@string/premier</item>
-        <item>@string/seriea</item>
-        <item>@string/league1</item>
+    <item>@string/liga_santander</item>
+    <item>@string/liga_smartbank</item>
+    <item>@string/bundesliga</item>
+    <item>@string/premier</item>
+    <item>@string/seriea</item>
+    <item>@string/league1</item>
+
+
+</string-array>
+
+    <string-array name="COMPETICIONES">
+        <item>Ligas Europeas</item>
+        <item>Clubes Internacionales</item>
+        <item>Selecciones Internacionales</item>
 
 
     </string-array>
+
+    <string-array name="COMPETICIONES_INTERNACIONALES_CLUB">
+        <item>UEFA Champions League</item>
+        <item>Europa League</item>
+
+    </string-array>
+
+    <string-array name="SELECCIONES_INTERNACIONALES">
+        <item>World Cup 2018</item>
+        <item>Euro 2016</item>
+        <item>Euro 2012</item>
+        <item>Euro 2008</item>
+        <item>Euro 2004</item>
+
+    </string-array>
+
 
 <!--    <string-array name="LIGAS_OLD">-->
 <!--        <item>@string/liga_santander</item>-->

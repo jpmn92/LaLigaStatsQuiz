@@ -34,6 +34,7 @@ import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRanking
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
 import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
+
 import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
@@ -70,6 +71,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         this.getIntent().putExtra("statId", statId);
 //        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
         liga = this.getIntent().getStringExtra("liga");
+        season = this.getIntent().getStringExtra("season");
 
 //        final String laliga = getString(R.string.liga_santander);
 //        final String premier = getString(R.string.premier);
@@ -77,7 +79,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //        final String calcio = getString(R.string.seriea);
 //        final String league1 = getString(R.string.league1);
 
-        switch (liga){
+        switch (liga) {
             case "La Liga Santander":
 
                 liga = "1";
@@ -114,6 +116,61 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
                 break;
 
+            case "UEFA Champions League":
+
+                liga = "9";
+
+                break;
+
+            case "Euro 2016":
+
+                liga = "10";
+                season = "";
+
+
+                break;
+
+            case "Euro 2012":
+
+                liga = "11";
+                season = "";
+
+                break;
+
+            case "Euro 2008":
+
+                liga = "12";
+                season = "";
+
+                break;
+
+            case "Euro 2004":
+
+                liga = "13";
+                season = "";
+
+                break;
+            case "Euro 2000":
+
+                liga = "14";
+                season = "";
+
+                break;
+
+            case "Euro 1996":
+
+                liga = "15";
+                season = "";
+
+                break;
+
+            case "World Cup 2018":
+
+                liga = "16";
+                season = "";
+
+                break;
+
         }
         sound = true;
         initComponents();
@@ -121,7 +178,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         params.putString("liga", liga);
 //        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
 //        season = "";
-        season = this.getIntent().getStringExtra("season");
+
+
+
         params.putString("season", season);
         txtPregunta.setText(statName + " " + this.getIntent().getStringExtra("season"));
         relFront.setVisibility(View.INVISIBLE);
@@ -135,7 +194,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //Este es el de prueba
         //mInterstitialAd.setAdUnitId("ca-app-pub-5187656956047852/2422488014"); //Este es el nuestro
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener(){
+        mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -191,26 +250,25 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         randomP1 = (int) (Math.random() * (playerCompetitionArrayList.size()));
         player1 = playerCompetitionArrayList.get(randomP1);
-        if(stat.equalsIgnoreCase("goals")){
+        if (stat.equalsIgnoreCase("goals")) {
             valueP1 = player1.getGoals();
         }
 
-        do{
+        do {
             randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
             player2 = playerCompetitionArrayList.get(randomP2);
         } while (randomP2 == randomP1);
 
-        if(stat.equalsIgnoreCase("goals")){
+        if (stat.equalsIgnoreCase("goals")) {
             valueGoles();
-        } else if (stat.equalsIgnoreCase("assist")){
+        } else if (stat.equalsIgnoreCase("assist")) {
             valueAsistencias();
-        } else if(stat.equalsIgnoreCase("mezcla")){
+        } else if (stat.equalsIgnoreCase("mezcla")) {
             int random = (int) (Math.random() * 2) + 1;
-            if(random == 1){
+            if (random == 1) {
                 valueGoles();
                 txtPregunta.setText(getString(R.string.goles_anotados) + " " + this.getIntent().getStringExtra("season"));
-            }
-            else if (random == 2){
+            } else if (random == 2) {
                 valueAsistencias();
                 txtPregunta.setText(getString(R.string.asistencias) + " " + this.getIntent().getStringExtra("season"));
             }
@@ -224,7 +282,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     /**
      * Metodo para que el valor a comparar sean los goles
      */
-    private void valueGoles(){
+    private void valueGoles() {
         valueP1 = player1.getGoals();
         valueP2 = player2.getGoals();
     }
@@ -232,7 +290,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     /**
      * Metodo para que el valor a comparar sean las asistencias
      */
-    private void valueAsistencias(){
+    private void valueAsistencias() {
         valueP1 = player1.getAssists();
         valueP2 = player2.getAssists();
     }
@@ -250,12 +308,11 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //        }
 //        System.out.println("PUNTO DE RUPTURA");
 //    }
-
     private int calculateValue(LaLigaPlayer laLigaPlayer, String stat) {
         int statValue = 0;
-        for(LaLigaStat laLigaStat: laLigaPlayer.getStats()){
+        for (LaLigaStat laLigaStat : laLigaPlayer.getStats()) {
 
-            if(laLigaStat.getName().equals(stat)){
+            if (laLigaStat.getName().equals(stat)) {
                 statValue = Integer.valueOf(laLigaStat.getStat());
             }
         }
@@ -264,11 +321,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void showPlayers() {
-        if(player1.getUrlPlayerPhoto() != null){
+        if (player1.getUrlPlayerPhoto() != null) {
             Glide.with(this).load(String.valueOf(player1.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
-        }
-        else{
+        } else {
             Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player1.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
 //            String imageP1Default = "";
@@ -283,10 +339,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
         }
 
-        if(player2.getUrlPlayerPhoto() != null){
+        if (player2.getUrlPlayerPhoto() != null) {
             Glide.with(this).load(String.valueOf(player2.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
-        } else{
+        } else {
             Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player2.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
 //            String imageP2Default = "";
@@ -307,7 +363,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         txtNameP2.setText(player2.getName() + " " + player2.getLastName());
     }
 
-    private void acierto(){
+    private void acierto() {
 
         if (sound) {
             mediaPlayer = MediaPlayer.create(this, R.raw.acierto);
@@ -397,7 +453,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
     }
 
-    private void iluminar(String color){
+    private void iluminar(String color) {
         txtP1.setText(String.valueOf(valueP1));
         txtP2.setText(String.valueOf(valueP2));
         relFront.setBackgroundColor(Color.parseColor(color));
@@ -408,6 +464,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             }
         }, 1000);
     }
+
     private void buscarRecord() {
         if (this.getIntent().getBooleanExtra("loged", false)) {
             firebaseMethods.getRecord();
@@ -431,7 +488,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     @Override
     public void onClick(View view) {
         myCountDownTimer.cancel();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.linP1:
                 if (valueP2 <= valueP1) {
                     acierto();
@@ -495,6 +552,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         return connected;
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -516,17 +574,15 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         finish();
     }
 
-    private String traducirEstadistica(String statCategory){
+    private String traducirEstadistica(String statCategory) {
         String stat = "";
-        if(statCategory.equalsIgnoreCase(getString(R.string.goles_anotados))){
+        if (statCategory.equalsIgnoreCase(getString(R.string.goles_anotados))) {
             stat = "goals";
             statId = R.string.goles_anotados;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.asistencias))){
+        } else if (statCategory.equalsIgnoreCase(getString(R.string.asistencias))) {
             stat = "assist";
             statId = R.string.asistencias;
-        }
-        else if(statCategory.equalsIgnoreCase(getString(R.string.misc))){
+        } else if (statCategory.equalsIgnoreCase(getString(R.string.misc))) {
             stat = "mezcla";
             statId = R.string.misc;
         }
@@ -574,12 +630,11 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         return stat;
     }
 
-    private String traducirLiga(String ligaName){
+    private String traducirLiga(String ligaName) {
         String liga = "";
-        if(ligaName.equalsIgnoreCase(getString(R.string.liga_santander))){
+        if (ligaName.equalsIgnoreCase(getString(R.string.liga_santander))) {
             liga = "laliga-santander-";
-        }
-        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_smartbank))){
+        } else if (ligaName.equalsIgnoreCase(getString(R.string.liga_smartbank))) {
             liga = "laliga-smartbank-";
         }
 //        else if(ligaName.equalsIgnoreCase(getString(R.string.liga_femenina))){
@@ -632,16 +687,17 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
     /**
      * Metodo para generar en consola un texto con los jugadores y sus imagenes
+     *
      * @param laLigaPlayers
      */
-    private void generarJugadorConSuImagen(ArrayList<LaLigaPlayer> laLigaPlayers){
-        for(LaLigaPlayer laLigaPlayer1: laLigaPlayers){
+    private void generarJugadorConSuImagen(ArrayList<LaLigaPlayer> laLigaPlayers) {
+        for (LaLigaPlayer laLigaPlayer1 : laLigaPlayers) {
             System.out.println("laLigaPlayer = generatePlayer(\"" + laLigaPlayer1.getNickname() + "\", \"" + laLigaPlayer1.getPhotos().getPhoto().getMedium() + "\");\n" +
                     "laLigaPlayers.add(laLigaPlayer);\n\n");
         }
     }
 
-    private boolean image2B(String teamID){
+    private boolean image2B(String teamID) {
         return teamID.equalsIgnoreCase("219") || teamID.equalsIgnoreCase("166")
                 || teamID.equalsIgnoreCase("23") || teamID.equalsIgnoreCase("37")
                 || teamID.equalsIgnoreCase("38") || teamID.equalsIgnoreCase("304")
@@ -649,9 +705,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
                 || teamID.equalsIgnoreCase("288") || teamID.equalsIgnoreCase("284");
     }
 
-    private String imagePlayer(String teamID){
+    private String imagePlayer(String teamID) {
         String imageUrl = "";
-        switch (teamID){
+        switch (teamID) {
             case "219": // Athletic
                 imageUrl = "https://assets.laliga.com/squad/2019/" + "t174" + "/default/1024x1024/default_" + "t174" + "_2019_1_003_000.png";
                 break;
@@ -687,6 +743,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         return imageUrl;
     }
+
     //GETTERS Y SETTERS
     public int getRecord() {
         return record;
