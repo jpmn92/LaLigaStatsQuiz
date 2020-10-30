@@ -43,8 +43,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
     private ArrayList<PlayerCompetition> playerCompetitionArrayList;
-    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas;
-    private TextView txtP1, txtP2, txtNameP1, txtNameP2, txtPoints, txtPregunta;
+    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas, ivCompetition1, ivCompetition2;
+    private TextView txtP1, txtP2, txtNameP1, txtNameP2, txtPoints, txtPregunta, txtSeasonP1, txtSeasonP2;
     private RelativeLayout relFront;
     private LinearLayout linP1, linP2, linLoad;
     private MediaPlayer mediaPlayer;
@@ -70,8 +70,13 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         stat = traducirEstadistica(statName);
         this.getIntent().putExtra("statId", statId);
 //        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
-        liga = this.getIntent().getStringExtra("liga");
-        season = this.getIntent().getStringExtra("season");
+
+        if(!this.getIntent().getStringExtra("season").equalsIgnoreCase(getResources().getString(R.string.misc))) {
+            season = this.getIntent().getStringExtra("season");
+        }
+        else{
+            season = "";
+        }
 
 //        final String laliga = getString(R.string.liga_santander);
 //        final String premier = getString(R.string.premier);
@@ -79,99 +84,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //        final String calcio = getString(R.string.seriea);
 //        final String league1 = getString(R.string.league1);
 
-        switch (liga) {
-            case "La Liga Santander":
+        liga = String.valueOf(this.getIntent().getIntExtra("liga", 0));
 
-                liga = "1";
-
-                break;
-
-            case "La Liga Smartbank":
-
-                liga = "2";
-
-                break;
-
-            case "Premier League":
-
-                liga = "3";
-
-                break;
-
-            case "Bundesliga":
-
-                liga = "6";
-
-                break;
-
-            case "Ligue 1":
-
-                liga = "7";
-
-                break;
-
-            case "Serie A":
-
-                liga = "8";
-
-                break;
-
-            case "UEFA Champions League":
-
-                liga = "9";
-
-                break;
-
-            case "Euro 2016":
-
-                liga = "10";
-                season = "";
-
-
-                break;
-
-            case "Euro 2012":
-
-                liga = "11";
-                season = "";
-
-                break;
-
-            case "Euro 2008":
-
-                liga = "12";
-                season = "";
-
-                break;
-
-            case "Euro 2004":
-
-                liga = "13";
-                season = "";
-
-                break;
-            case "Euro 2000":
-
-                liga = "14";
-                season = "";
-
-                break;
-
-            case "Euro 1996":
-
-                liga = "15";
-                season = "";
-
-                break;
-
-            case "World Cup 2018":
-
-                liga = "16";
-                season = "";
-
-                break;
-
-        }
         sound = true;
         initComponents();
         params.putString("StatCategory", stat);
@@ -182,7 +96,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
 
         params.putString("season", season);
-        txtPregunta.setText(statName + " " + this.getIntent().getStringExtra("season"));
+        txtPregunta.setText(statName);
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
         lstPlayersRankingPresenter.getPlayersRanking(params);
@@ -210,6 +124,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         ivTeam2 = findViewById(R.id.ivTeam2);
         ivPlayer1 = findViewById(R.id.ivPlayer1);
         ivPlayer2 = findViewById(R.id.ivPlayer2);
+        ivCompetition1 = findViewById(R.id.ivCompetition1);
+        ivCompetition2 = findViewById(R.id.ivCompetition2);
         ivVidas = findViewById(R.id.ivVidas);
         relFront = findViewById(R.id.relFront);
         linP1 = findViewById(R.id.linP1);
@@ -220,11 +136,14 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         txtNameP1 = findViewById(R.id.txtNameP1);
         txtP2 = findViewById(R.id.txtP2);
         txtNameP2 = findViewById(R.id.txtNameP2);
+        txtSeasonP1 = findViewById(R.id.txtSeasonP1);
+        txtSeasonP2 = findViewById(R.id.txtSeasonP2);
         txtPoints = findViewById(R.id.txtPuntuacion);
         txtPregunta = findViewById(R.id.txtPregunta);
         vidas = 3;
         points = 0;
         tiempo = 10000;
+        tiempo = 99999999;
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
@@ -267,10 +186,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             int random = (int) (Math.random() * 2) + 1;
             if (random == 1) {
                 valueGoles();
-                txtPregunta.setText(getString(R.string.goles_anotados) + " " + this.getIntent().getStringExtra("season"));
+                txtPregunta.setText(getString(R.string.goles_anotados));
             } else if (random == 2) {
                 valueAsistencias();
-                txtPregunta.setText(getString(R.string.asistencias) + " " + this.getIntent().getStringExtra("season"));
+                txtPregunta.setText(getString(R.string.asistencias));
             }
         }
 
@@ -324,43 +243,30 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if (player1.getUrlPlayerPhoto() != null) {
             Glide.with(this).load(String.valueOf(player1.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
+            Glide.with(this).load(String.valueOf(player1.getUrlCompetitionPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivCompetition1);
         } else {
             Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player1.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
-//            String imageP1Default = "";
-//            if(image2B(player1.getTeam().getId())){
-//                imageP1Default = imagePlayer(player1.getTeam().getId());
-//            }
-//            else{
-//                imageP1Default = "https://assets.laliga.com/squad/2019/" + player1.getTeam().getOptaId() + "/default/1024x1024/default_" + player1.getTeam().getOptaId() + "_2019_1_003_000.png";
-//            }
-//
-//            Glide.with(this).load(imageP1Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
-//            Glide.with(this).load(String.valueOf(player1.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
-        }
+            Glide.with(this).load(String.valueOf(player1.getUrlCompetitionPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivCompetition1);
+         }
 
         if (player2.getUrlPlayerPhoto() != null) {
             Glide.with(this).load(String.valueOf(player2.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
+            Glide.with(this).load(String.valueOf(player2.getUrlCompetitionPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivCompetition2);
         } else {
             Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player2.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
             Glide.with(this).load(String.valueOf(player2.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
-//            String imageP2Default = "";
-//            if(image2B(player2.getTeam().getId())){
-//                imageP2Default = imagePlayer(player2.getTeam().getId());
-//            }
-//            else{
-//                imageP2Default = "https://assets.laliga.com/squad/2019/" + player2.getTeam().getOptaId() + "/default/1024x1024/default_" + player2.getTeam().getOptaId() + "_2019_1_003_000.png";
-//            }
-//
-//            Glide.with(this).load(imageP2Default).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
-//            Glide.with(this).load(String.valueOf(player2.getTeam().getShield().getUrl())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam2);
+            Glide.with(this).load(String.valueOf(player2.getUrlCompetitionPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivCompetition2);
         }
 
 //        txtNameP1.setText(player1.getNickname());
 //        txtNameP2.setText(player2.getNickname());
         txtNameP1.setText(player1.getName() + " " + player1.getLastName());
         txtNameP2.setText(player2.getName() + " " + player2.getLastName());
+
+        txtSeasonP1.setText(player1.getSeason());
+        txtSeasonP2.setText(player2.getSeason());
     }
 
     private void acierto() {

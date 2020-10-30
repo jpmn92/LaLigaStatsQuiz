@@ -23,6 +23,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.GameActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
+import com.laligastatsquiz.laligastatsquiz.competiciones.ClubesInternacional;
+import com.laligastatsquiz.laligastatsquiz.competiciones.Competicion;
+import com.laligastatsquiz.laligastatsquiz.competiciones.LigaEuropea;
+import com.laligastatsquiz.laligastatsquiz.competiciones.SeleccionesInternacional;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoRegister;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.SessionManagement;
@@ -45,8 +49,10 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat, adapterCompeticionesClubInternacional, adapterCompeticionesSelecciones;
-
+    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat;
+    ArrayAdapter<ClubesInternacional> adapterCompeticionesClubInternacional;
+    ArrayAdapter<LigaEuropea> adapterCompeticionesLigaEuropeaArrayAdapter;
+    ArrayAdapter<SeleccionesInternacional> adapterCompeticionesSelecciones;
 
 
     @Override
@@ -94,10 +100,13 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         adapterStat = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.ESTADISTICAS));
         adapterStat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adapterCompeticionesClubInternacional = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.COMPETICIONES_INTERNACIONALES_CLUB));
+        adapterCompeticionesLigaEuropeaArrayAdapter = new ArrayAdapter<LigaEuropea>(getContext(), R.layout.list_spinner, LigaEuropea.values());
+        adapterCompeticionesLigaEuropeaArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapterCompeticionesClubInternacional = new ArrayAdapter<ClubesInternacional>(getContext(), R.layout.list_spinner, ClubesInternacional.values());
         adapterCompeticionesClubInternacional.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adapterCompeticionesSelecciones = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.SELECCIONES_INTERNACIONALES));
+        adapterCompeticionesSelecciones = new ArrayAdapter<SeleccionesInternacional>(getContext(), R.layout.list_spinner, SeleccionesInternacional.values());
         adapterCompeticionesSelecciones.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //dependiendo de si es true pintamos una imagen u otra
@@ -149,13 +158,20 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTipoCompeticion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0){
+                    spinnerLiga.setAdapter(adapterCompeticionesLigaEuropeaArrayAdapter);
+                    spinnerTemporada.setEnabled(true);
+                }
                 if(i == 1){
                     spinnerLiga.setAdapter(adapterCompeticionesClubInternacional);
+                    spinnerTemporada.setEnabled(false);
+                    spinnerTemporada.setSelection(0);
                 }
 
                 if(i == 2){
                     spinnerLiga.setAdapter(adapterCompeticionesSelecciones);
                     spinnerTemporada.setEnabled(false);
+                    spinnerTemporada.setSelection(0);
                 }
 
             }
@@ -196,9 +212,11 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 if (firebaseUser != null) {
                     params.putString("uid", mAuth.getUid());
                 }
+                Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
                 params.putString("stat", String.valueOf(spinnerStats.getSelectedItem()));
                 params.putInt("statId", getStatId());
-                params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                //params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                params.putInt("liga", competicion.getId());
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 params.putBoolean("sound", sound);//NUEVO
 
@@ -223,7 +241,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
             Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
             intent.putExtra("uid", mAuth.getUid());
             intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
-            intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+            Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
+            intent.putExtra("liga", competicion.getId());
             intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
             intent.putExtra("sound", sound);
             intent.putExtra("loged", true);
@@ -245,7 +264,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
                     intent.putExtra("loged", false);
                     intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
-                    intent.putExtra("liga", String.valueOf(spinnerLiga.getSelectedItem()));
+                    Competicion competicion = (Competicion) spinnerLiga.getSelectedItem();
+                    intent.putExtra("liga", competicion.getId());
                     intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                     intent.putExtra("sound", sound);
                     getActivity().startActivity(intent);

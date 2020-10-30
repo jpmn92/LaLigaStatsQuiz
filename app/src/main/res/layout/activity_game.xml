@@ -52,16 +52,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="68"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:weightSum="100">
 
                     <ImageView
                         android:id="@+id/ivTeam1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="100"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:gravity="bottom"
                         android:src="@drawable/vidas2" />
+
+                    <TextView
+                        android:id="@+id/txtSeasonP1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivCompetition1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="25"
+                        android:src="@drawable/vidas2" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -138,16 +160,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="68"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:weightSum="100">
 
                     <ImageView
                         android:id="@+id/ivTeam2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="100"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
                         android:src="@drawable/vidas2" />
+
+                    <TextView
+                        android:id="@+id/txtSeasonP2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivCompetition2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="25"
+                        android:src="@drawable/vidas2" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -357,6 +400,7 @@
                     android:layout_centerVertical="true"
                     android:layout_weight="8"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -364,12 +408,14 @@
                         android:layout_centerVertical="true"
                         android:layout_weight="8"
                         android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/ivVidas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/vidas3" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

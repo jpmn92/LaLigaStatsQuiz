@@ -134,11 +134,20 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 //                    "  \"competition\": 1\n" +
 //                    "}";
 
-            String myBodyStr = "{\n" +
+            String myBodyStr2 = "{\n" +
                     "  \"stat\": \"goals\",\n" +
                     "  \"season\": \""+newSeason+"\",\n" +
                     "  \"competition\": "+newLiga+"\n" +
                     "}";
+            String myBodyStr = "{\n";
+            myBodyStr = myBodyStr.concat("  \"stat\": \"goals\",\n");
+            if(newSeason != null && !"".equalsIgnoreCase(newSeason)){
+                myBodyStr = myBodyStr.concat("  \"season\": \""+newSeason+"\",\n");
+            }
+            if(newLiga != null && !"".equalsIgnoreCase(newLiga)){
+                myBodyStr = myBodyStr.concat("  \"competition\": "+newLiga+"\n");
+            }
+            myBodyStr = myBodyStr.concat("}");
             JsonParser parser = new JsonParser();
 
             JsonObject myBody = parser.parse(myBodyStr).getAsJsonObject();
