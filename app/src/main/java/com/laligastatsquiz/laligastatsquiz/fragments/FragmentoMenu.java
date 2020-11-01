@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.GameActivity;
@@ -39,7 +41,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
     Button btComenzar, btPuntuaciones;
     Spinner spinnerStats, spinnerLiga, spinnerTemporada, spinnerTipoCompeticion;
-    ImageView ivSound;
+    ImageView ivImagenPrincipal;
     Resources res;
     FirebaseMethods firebaseMethods;
     Bundle params;
@@ -49,7 +51,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat;
+    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat, adapterTipoCompeticion;
     ArrayAdapter<ClubesInternacional> adapterCompeticionesClubInternacional;
     ArrayAdapter<LigaEuropea> adapterCompeticionesLigaEuropeaArrayAdapter;
     ArrayAdapter<SeleccionesInternacional> adapterCompeticionesSelecciones;
@@ -86,6 +88,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         //Al comenzar chequeamos el sonido de la sesion
 
 //        ivSound = view.findViewById(R.id.ivSound);
+        ivImagenPrincipal = view.findViewById(R.id.imageViewPrincipal);
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
 
@@ -99,6 +102,9 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
         adapterStat = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.ESTADISTICAS));
         adapterStat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapterTipoCompeticion = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.COMPETICIONES));
+        adapterTipoCompeticion.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         adapterCompeticionesLigaEuropeaArrayAdapter = new ArrayAdapter<LigaEuropea>(getContext(), R.layout.list_spinner, LigaEuropea.values());
         adapterCompeticionesLigaEuropeaArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,6 +136,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTemporada.setAdapter(adapterSeason);
         spinnerStats.setAdapter(adapterStat);
         spinnerTipoCompeticion = view.findViewById(R.id.spinnerTipoCompeticion);
+        spinnerTipoCompeticion.setAdapter(adapterTipoCompeticion);
 
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -161,19 +168,32 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 if(i == 0){
                     spinnerLiga.setAdapter(adapterCompeticionesLigaEuropeaArrayAdapter);
                     spinnerTemporada.setEnabled(true);
+                    spinnerTemporada.setSelection(0);
                 }
                 if(i == 1){
                     spinnerLiga.setAdapter(adapterCompeticionesClubInternacional);
                     spinnerTemporada.setEnabled(false);
-                    spinnerTemporada.setSelection(0);
+                    spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length-1);
                 }
 
                 if(i == 2){
                     spinnerLiga.setAdapter(adapterCompeticionesSelecciones);
                     spinnerTemporada.setEnabled(false);
-                    spinnerTemporada.setSelection(0);
+                    spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length-1);
                 }
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerLiga.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cambiarImagenPrincipal();
             }
 
             @Override
@@ -195,6 +215,11 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 //            }
 //        });
         params = new Bundle();
+    }
+
+    private void cambiarImagenPrincipal() {
+        String url = ((Competicion) spinnerLiga.getSelectedItem()).getUrlImage();
+        Glide.with(this).load(url).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivImagenPrincipal);
     }
 
     @Override

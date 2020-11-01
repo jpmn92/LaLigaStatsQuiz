@@ -143,7 +143,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         vidas = 3;
         points = 0;
         tiempo = 10000;
-        tiempo = 99999999;
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);

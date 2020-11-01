@@ -199,7 +199,6 @@
 <!--    </string-array>-->
 
     <string-array name="TEMPORADAS">
-        <item>@string/misc</item>
         <item>2019-2020</item>
         <item>2018-2019</item>
         <item>2017-2018</item>
@@ -217,6 +216,7 @@
         <item>2005-2006</item>
         <item>2004-2005</item>
         <item>2003-2004</item>
+        <item>@string/misc</item>
 
     </string-array>
 </resources>
