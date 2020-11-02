@@ -180,7 +180,6 @@
                         android:text="TextView"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -194,6 +193,24 @@
                 </LinearLayout>
 
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+
+            android:background="@drawable/grassbg"
+            android:orientation="vertical">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewGame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-5187656956047852/7696342838" />
         </LinearLayout>
 
     </LinearLayout>
@@ -218,7 +235,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="8"
+                android:layout_weight="4"
                 android:orientation="vertical"
                 android:weightSum="100">
 
@@ -238,6 +255,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shapes"></ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:weightSum="100">
+
 
             </LinearLayout>
 
@@ -266,7 +293,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="8"
+                android:layout_weight="4"
                 android:orientation="vertical"
                 android:weightSum="100">
 
@@ -297,6 +324,16 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:weightSum="100">
+
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
@@ -322,7 +359,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="8"
+                android:layout_weight="4"
                 android:orientation="vertical"
                 android:weightSum="100">
 
@@ -349,6 +386,16 @@
                     android:textColor="#000000"
                     android:textSize="36sp"
                     tools:ignore="RtlCompat" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:weightSum="100">
 
 
             </LinearLayout>
@@ -536,7 +583,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/grassbg"
+        android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
-        tools:visibility="invisible"></LinearLayout>
+        tools:visibility="invisible">
+    </LinearLayout>
 
 </RelativeLayout>

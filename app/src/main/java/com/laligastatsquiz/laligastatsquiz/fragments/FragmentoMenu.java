@@ -51,7 +51,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> stringArrayAdapter1920, stringArrayAdapter_old, adapterSeason, adapterStat, adapterTipoCompeticion;
+    ArrayAdapter<String> adapterSeason, adapterStat, adapterTipoCompeticion;
     ArrayAdapter<ClubesInternacional> adapterCompeticionesClubInternacional;
     ArrayAdapter<LigaEuropea> adapterCompeticionesLigaEuropeaArrayAdapter;
     ArrayAdapter<SeleccionesInternacional> adapterCompeticionesSelecciones;
@@ -92,11 +92,6 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
 
-        stringArrayAdapter1920 = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS));
-        stringArrayAdapter1920.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        stringArrayAdapter_old = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.LIGAS_OLD));
-//        stringArrayAdapter_old.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -115,17 +110,6 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         adapterCompeticionesSelecciones = new ArrayAdapter<SeleccionesInternacional>(getContext(), R.layout.list_spinner, SeleccionesInternacional.values());
         adapterCompeticionesSelecciones.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        //dependiendo de si es true pintamos una imagen u otra
-
-//        if (sound) {
-//            ivSound.setImageResource(R.drawable.volume_on);
-//
-//        } else {
-//            ivSound.setImageResource(R.drawable.volume_off);
-//
-//        }
-
-
         btComenzar = view.findViewById(R.id.btnStart);
         btComenzar.setOnClickListener(this);
         btPuntuaciones = view.findViewById(R.id.btnRecords);
@@ -141,20 +125,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (i == 0) {
-////                    spinnerLiga.setEnabled(true);
-//                    spinnerLiga.setAdapter(stringArrayAdapter1920);
-//
-//
-//                } else {
-////                    spinnerLiga.setSelection(0);
-////                    spinnerLiga.setEnabled(false);
-//                    spinnerLiga.setAdapter(stringArrayAdapter_old);
-//
-//                }
+
             }
-
-
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -201,19 +173,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
             }
         });
-//        ivSound.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                if (sound) {
-//                    sound = false;
-//                    ivSound.setImageResource(R.drawable.volume_off);
-//                } else {
-//                    sound = true;
-//                    ivSound.setImageResource(R.drawable.volume_on);
-//                }
-//            }
-//        });
+
         params = new Bundle();
     }
 

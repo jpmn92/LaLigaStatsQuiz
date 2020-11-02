@@ -53,6 +53,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.google.firebase:firebase-firestore:21.5.0'
 
+    // https://mvnrepository.com/artifact/com.airbnb.android/lottie
+    implementation group: 'com.airbnb.android', name: 'lottie', version: '3.4.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

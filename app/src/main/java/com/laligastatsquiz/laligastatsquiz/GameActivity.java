@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingContract;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
 import com.laligastatsquiz.laligastatsquiz.tools.ColorApp;
+import com.laligastatsquiz.laligastatsquiz.tools.Constantes;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
     private ArrayList<PlayerCompetition> playerCompetitionArrayList;
-    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas, ivCompetition1, ivCompetition2;
+    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas, ivCompetition1, ivCompetition2, ivLoad;
     private TextView txtP1, txtP2, txtNameP1, txtNameP2, txtPoints, txtPregunta, txtSeasonP1, txtSeasonP2;
     private RelativeLayout relFront;
     private LinearLayout linP1, linP2, linLoad;
@@ -57,6 +59,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private String statName, stat, liga, season;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
     private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +108,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private void inicializarPublicidad() {
         MobileAds.initialize(this);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //Este es el de prueba
-        //mInterstitialAd.setAdUnitId("ca-app-pub-5187656956047852/2422488014"); //Este es el nuestro
+        mInterstitialAd.setAdUnitId("ca-app-pub-5187656956047852/2422488014"); //Este es el nuestro
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -115,6 +117,19 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
                 myCountDownTimer.start();
             }
         });
+
+        if(!Constantes.DEVELOPER_MODE){
+            mAdView = findViewById(R.id.adViewGame);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+            mAdView.setAdListener(new AdListener(){
+                @Override
+                public void onAdClosed() {
+                    mAdView.loadAd(new AdRequest.Builder().build());
+                }
+            });
+        }
+
     }
 
     private void initComponents() {
@@ -151,6 +166,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Cargando...");
         progressDialog.show();
+
         linLoad.postDelayed(new Runnable() {
             public void run() {
                 linLoad.setVisibility(View.GONE);
@@ -561,8 +577,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         builder.setPositiveButton(R.string.play_again, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int random = (int) (Math.random() * 2) + 1;
-                if (mInterstitialAd.isLoaded()) {
+                if (!Constantes.DEVELOPER_MODE && mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 }
                 vidas = 3;
@@ -579,8 +594,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //                Intent menu = new Intent(GameActivity.this, NavigationDrawerActivity.class);
 //                GameActivity.this.startActivity(menu);
 //                GameActivity.this.finish();
-                int random = (int) (Math.random() * 2) + 1;
-                if (mInterstitialAd.isLoaded() && random % 2 == 0) {
+                if (!Constantes.DEVELOPER_MODE && mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 }
                 onBackPressed();

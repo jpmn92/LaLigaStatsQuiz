@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.adaptador.AdapterPuntuaciones;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
+import com.laligastatsquiz.laligastatsquiz.tools.Constantes;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,9 @@ public class FragmentoPuntuaciones extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_fragmento_puntuaciones, container, false);
 
-        inicializarPublicidad(view);
+        if(!Constantes.DEVELOPER_MODE){
+            inicializarPublicidad(view);
+        }
 
         bundle = fragmentoPuntuaciones.getArguments();
         tipoTemporada = "";
