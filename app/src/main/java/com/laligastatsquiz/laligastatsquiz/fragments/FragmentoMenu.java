@@ -91,6 +91,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         ivImagenPrincipal = view.findViewById(R.id.imageViewPrincipal);
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
+        crono = sessionManagement.getCrono();
 
         adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -204,6 +205,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putInt("liga", competicion.getId());
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 params.putBoolean("sound", sound);//NUEVO
+                params.putBoolean("crono", crono);
 
                 firebaseMethods.getTopPuntuaciones(params);
                 break;
@@ -217,6 +219,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         sound = sessionManagement.getSound();
+        crono = sessionManagement.getCrono();
         String h = "";
 
 
@@ -230,6 +233,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
             intent.putExtra("liga", competicion.getId());
             intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
             intent.putExtra("sound", sound);
+            intent.putExtra("crono", crono);
             intent.putExtra("loged", true);
 
 
@@ -253,6 +257,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     intent.putExtra("liga", competicion.getId());
                     intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                     intent.putExtra("sound", sound);
+                    intent.putExtra("crono", crono);
                     getActivity().startActivity(intent);
 
                 }

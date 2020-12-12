@@ -7,9 +7,9 @@
     <string name="btnComenzar">START GAME</string>
     <string name="btnRecords">BEST SCORES</string>
     <string name="options">OPCIONES</string>
-    <string name="goToRegister">Aún no estoy registrado</string>
-    <string name="goToLogin">Ya tengo una cuenta</string>
-    <string name="reset_filters">Reiniciar filtros</string>
+    <string name="goToRegister">Not registred yet</string>
+    <string name="goToLogin">I already have an account</string>
+    <string name="reset_filters">Reset filters</string>
 
     <!--    Estadisticas-->
     <string name="goles_anotados">Goals</string>
@@ -86,6 +86,8 @@
     <string name="login_correcto">Welcome again </string>
     <string name="login_incorrecto">Log in error</string>
     <string name="registro_correcto">Sign Up Succesful</string>
+
+    <string name="no_data_found">No players founds with this params</string>
 
     <!--    Registro-->
     <string name="user_registred">user registred</string>

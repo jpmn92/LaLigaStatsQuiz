@@ -55,7 +55,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private int valueP1, valueP2;
     private PlayerCompetition player1;
     private PlayerCompetition player2;
-    private boolean sound;
+    private boolean sound, crono, logeado;
     private String statName, stat, liga, season;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
     private InterstitialAd mInterstitialAd;
@@ -89,7 +89,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         liga = String.valueOf(this.getIntent().getIntExtra("liga", 0));
 
-        sound = true;
+
         initComponents();
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
@@ -114,7 +114,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             @Override
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                myCountDownTimer.start();
+                if(crono){
+                    myCountDownTimer.start();
+                }
             }
         });
 
@@ -134,7 +136,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
     private void initComponents() {
         firebaseMethods = new FirebaseMethods(this, this.getIntent().getExtras());
-        sound = this.getIntent().getBooleanExtra("sound", true); // se tendrá que pasar por parametro
+        crono = this.getIntent().getBooleanExtra("crono", true);
+        sound = this.getIntent().getBooleanExtra("sound", true);
+        logeado = this.getIntent().getBooleanExtra("loged", false);
         ivTeam1 = findViewById(R.id.ivTeam1);
         ivTeam2 = findViewById(R.id.ivTeam2);
         ivPlayer1 = findViewById(R.id.ivPlayer1);
@@ -172,7 +176,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
                 linLoad.setVisibility(View.GONE);
                 progressDialog.dismiss();
                 myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
-                myCountDownTimer.start();
+                if(crono){
+                    myCountDownTimer.start();
+                }
             }
         }, 5000);
     }
@@ -209,8 +215,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
 
         showPlayers();
-
-        myCountDownTimer.start();
+        if(crono){
+            myCountDownTimer.start();
+        }
     }
 
     /**
@@ -326,8 +333,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if (checkInternetConnection() == true) {
             String message = "";
             //TODO: Cuando implementemos el logeo hay que descomentar estas lineas
-            boolean logeado = this.getIntent().getBooleanExtra("loged", false);
-            if (logeado) {
+
+            if (logeado && crono) {
                 FirebaseAuth mAuth;
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -387,7 +394,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     }
 
     private void buscarRecord() {
-        if (this.getIntent().getBooleanExtra("loged", false)) {
+        if (logeado && crono) {
             firebaseMethods.getRecord();
         }
 
@@ -403,7 +410,21 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
     @Override
     public void failureListPlayersRanking(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setCancelable(false);
+        builder.setTitle(R.string.no_data_found);
+        builder.setPositiveButton(R.string.back_to_menu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                onBackPressed();
+//                Intent menu = new Intent(GameActivity.this, Menu.class);
+//                menu.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                GameActivity.this.startActivity(menu);
+            }
+        });
+        builder.show();
     }
 
     @Override

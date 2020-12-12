@@ -114,7 +114,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     }
 
     private void checkPrefs() {
-//        crono = sessionManagement.getCrono();
+        crono = sessionManagement.getCrono();
         sound = sessionManagement.getSound();
     }
 
@@ -179,11 +179,11 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         soundSwitch = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_switch_sonido).getActionView();
         cronoSwitch = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_switch_crono).getActionView();
 
-//        if (crono) {
-//            cronoSwitch.setChecked(true);
-//        }else{
-//            cronoSwitch.setChecked(false);
-//        }
+        if (crono) {
+            cronoSwitch.setChecked(true);
+        }else{
+            cronoSwitch.setChecked(false);
+        }
 
         if(sound){
             soundSwitch.setChecked(true);
@@ -203,26 +203,26 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
 
         //CRONO
-//        cronoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (!isChecked) {
-//                    // Switch is unchecked - Do something
-////                    Toast.makeText(getApplicationContext(), "crono OFF", Toast.LENGTH_SHORT).show();
-//
-//                    crono = false;
-//                    sessionManagement.saveSession(crono, "crono");
-//
-//                } else {
-//                    // Switch is checked - Do something
-////                    Toast.makeText(getApplicationContext(), "crono ON", Toast.LENGTH_SHORT).show();
-//
-//                    crono = true;
-//                    sessionManagement.saveSession(crono, "crono");
-//
-//                }
-//            }
-//        });
+        cronoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (!isChecked) {
+                    // Switch is unchecked - Do something
+//                    Toast.makeText(getApplicationContext(), "crono OFF", Toast.LENGTH_SHORT).show();
+
+                    crono = false;
+                    sessionManagement.saveSession(crono, "crono");
+
+                } else {
+                    // Switch is checked - Do something
+//                    Toast.makeText(getApplicationContext(), "crono ON", Toast.LENGTH_SHORT).show();
+
+                    crono = true;
+                    sessionManagement.saveSession(crono, "crono");
+
+                }
+            }
+        });
 
         //SONIDO
         soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

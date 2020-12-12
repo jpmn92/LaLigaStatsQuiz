@@ -83,6 +83,9 @@
     <string name="login_incorrecto">Error en el inicio de sesión</string>
     <string name="registro_correcto">Registro exitoso  </string>
 
+    <string name="no_data_found">No se encontraron datos con estos parámetros</string>
+
+
     <!--    Registro-->
     <string name="user_registred">usuario registrado correctamente</string>
     <!--    Errores al registrarse-->
