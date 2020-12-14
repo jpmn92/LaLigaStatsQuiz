@@ -51,7 +51,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     SessionManagement sessionManagement;
 
 
-    ArrayAdapter<String> adapterSeason, adapterStat, adapterTipoCompeticion;
+    ArrayAdapter<String> adapterSeason, adapterSeasonSeleccion, adapterStat, adapterTipoCompeticion;
     ArrayAdapter<ClubesInternacional> adapterCompeticionesClubInternacional;
     ArrayAdapter<LigaEuropea> adapterCompeticionesLigaEuropeaArrayAdapter;
     ArrayAdapter<SeleccionesInternacional> adapterCompeticionesSelecciones;
@@ -95,6 +95,9 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
         adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapterSeasonSeleccion = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS_SELECCION));
+        adapterSeasonSeleccion.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         adapterStat = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.ESTADISTICAS));
         adapterStat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -140,19 +143,21 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0){
                     spinnerLiga.setAdapter(adapterCompeticionesLigaEuropeaArrayAdapter);
+                    spinnerTemporada.setAdapter(adapterSeason);
                     spinnerTemporada.setEnabled(true);
                     spinnerTemporada.setSelection(0);
                 }
                 if(i == 1){
                     spinnerLiga.setAdapter(adapterCompeticionesClubInternacional);
-                    spinnerTemporada.setEnabled(false);
+                    spinnerTemporada.setAdapter(adapterSeason);
+                    spinnerTemporada.setEnabled(true);
                     spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length-1);
                 }
 
                 if(i == 2){
                     spinnerLiga.setAdapter(adapterCompeticionesSelecciones);
-                    spinnerTemporada.setEnabled(false);
-                    spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length-1);
+                    spinnerTemporada.setAdapter(adapterSeasonSeleccion);
+                    spinnerTemporada.setEnabled(true);
                 }
 
             }
@@ -203,6 +208,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putInt("statId", getStatId());
                 //params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
                 params.putInt("liga", competicion.getId());
+                params.putInt("tipo", competicion.getTipo());
+                params.putInt("country", competicion.getCountry());
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                 params.putBoolean("sound", sound);//NUEVO
                 params.putBoolean("crono", crono);
@@ -231,6 +238,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
             intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
             Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
             intent.putExtra("liga", competicion.getId());
+            intent.putExtra("tipo", competicion.getTipo());
+            intent.putExtra("country", competicion.getCountry());
             intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
             intent.putExtra("sound", sound);
             intent.putExtra("crono", crono);
@@ -255,6 +264,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
                     Competicion competicion = (Competicion) spinnerLiga.getSelectedItem();
                     intent.putExtra("liga", competicion.getId());
+                    intent.putExtra("tipo", competicion.getTipo());
+                    intent.putExtra("country", competicion.getCountry());
                     intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
                     intent.putExtra("sound", sound);
                     intent.putExtra("crono", crono);

@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
     private OnLstPlayersRankingListener onLstPlayersRankingListener;
-    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga, newSeason, newLiga;
+    private String college, leagueID, overallPick, roundNum, roundPick, season, teamID, topX, limit, offset, orderField, orderType, liga, newSeason, newLiga, tipo, country;
     private JsonObject jsonObject;
     private ArrayList<PlayerCompetition> playerCompetitions;
     private Bundle params;
@@ -76,6 +76,8 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             newSeason = params.getString("season");
             newLiga = params.getString("liga");
+            tipo = params.getString("tipo");
+            country = params.getString("country");
 
             String url = "https://apim.laliga.com/public-service/api/v1/subscriptions/" + liga + season + "/";
 
@@ -134,20 +136,29 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 //                    "  \"competition\": 1\n" +
 //                    "}";
 
-            String myBodyStr2 = "{\n" +
-                    "  \"stat\": \"goals\",\n" +
-                    "  \"season\": \""+newSeason+"\",\n" +
-                    "  \"competition\": "+newLiga+"\n" +
-                    "}";
+//            String myBodyStr2 = "{\n" +
+//                    "  \"stat\": \"goals\",\n" +
+//                    "  \"season\": \""+newSeason+"\",\n" +
+//                    "  \"competition\": "+newLiga+"\n" +
+//                    "  \"tipo\": "+newLiga+"\n" +
+//                    "  \"country\": "+newLiga+"\n" +
+//                    "}";
+
             String myBodyStr = "{\n";
-            myBodyStr = myBodyStr.concat("  \"stat\": \"goals\",\n");
+            myBodyStr = myBodyStr.concat("  \"stat\": \"goals\"");
             if(newSeason != null && !"".equalsIgnoreCase(newSeason)){
-                myBodyStr = myBodyStr.concat("  \"season\": \""+newSeason+"\",\n");
+                myBodyStr = myBodyStr.concat(",\n  \"season\": \""+newSeason+"\"");
             }
             if(newLiga != null && !"".equalsIgnoreCase(newLiga)){
-                myBodyStr = myBodyStr.concat("  \"competition\": "+newLiga+"\n");
+                myBodyStr = myBodyStr.concat(",\n  \"competition\": "+newLiga);
             }
-            myBodyStr = myBodyStr.concat("}");
+            if(tipo != null && !"".equalsIgnoreCase(tipo)){
+                myBodyStr = myBodyStr.concat(",\n  \"tipo\": "+tipo);
+            }
+            if(country != null && !"".equalsIgnoreCase(country)){
+                myBodyStr = myBodyStr.concat(",\n  \"country\": "+country);
+            }
+            myBodyStr = myBodyStr.concat("\n}");
             JsonParser parser = new JsonParser();
 
             JsonObject myBody = parser.parse(myBodyStr).getAsJsonObject();

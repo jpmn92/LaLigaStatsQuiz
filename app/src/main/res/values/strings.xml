@@ -44,6 +44,7 @@
 
     <!--    General-->
     <string name="misc">Mix</string>
+    <string name="total">Total</string>
     <string name="seleccionar_avatar">Choose your avatar</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
@@ -218,7 +219,14 @@
         <item>2005-2006</item>
         <item>2004-2005</item>
         <item>2003-2004</item>
+        <item>@string/total</item>
         <item>@string/misc</item>
+
+    </string-array>
+
+    <string-array name="TEMPORADAS_SELECCION">
+        <item>@string/misc</item>
+        <item>@string/total</item>
 
     </string-array>
 </resources>

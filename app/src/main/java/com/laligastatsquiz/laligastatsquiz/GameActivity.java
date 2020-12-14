@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
 
+
     private FirebaseMethods firebaseMethods;
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
@@ -56,7 +58,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private PlayerCompetition player1;
     private PlayerCompetition player2;
     private boolean sound, crono, logeado;
-    private String statName, stat, liga, season;
+    private String statName, stat, liga, season, tipo, country;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
@@ -88,11 +90,15 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //        final String league1 = getString(R.string.league1);
 
         liga = String.valueOf(this.getIntent().getIntExtra("liga", 0));
+        tipo = String.valueOf(this.getIntent().getIntExtra("tipo", 0));
+        country = String.valueOf(this.getIntent().getIntExtra("country", 0));
 
 
         initComponents();
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
+        params.putString("tipo", tipo);
+        params.putString("country", country);
 //        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
 //        season = "";
 

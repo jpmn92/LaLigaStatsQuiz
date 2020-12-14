@@ -1,9 +1,9 @@
 package com.laligastatsquiz.laligastatsquiz.competiciones;
 
 public enum ClubesInternacional implements Competicion{
-
     CHAMPIONS(9, "UEFA Champions League", "https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/1200px-UEFA_Champions_League_logo_2.svg.png"),
-    UEFA(20, "UEFA Europa League", "https://as01.epimg.net/img/comunes/logos/competiciones/futbol-europa_league.png");
+    UEFA(20, "UEFA Europa League", "https://as01.epimg.net/img/comunes/logos/competiciones/futbol-europa_league.png"),
+    UCLUEL(0, "UCL + UEL", "https://betting-preview.com/wp-content/uploads/2020/01/cl-el.png");
 
     private int id;
     private String name;
