@@ -15,7 +15,7 @@
         android:layout_height="@dimen/perfil_image_size"
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo_laliga_transparente"
+        android:src="@drawable/fsqtransparentemin"
         app:civ_border_color="@android:color/white"
         app:civ_border_width="1dp" />
 

@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="30dp"
-            android:src="@drawable/logo_ligero"
+            android:src="@drawable/fsqtransparentemin"
             app:civ_border_width="4dp"
             app:civ_fill_color="@color/colorPrimary"
             app:civ_border_color="@color/material_black"/>

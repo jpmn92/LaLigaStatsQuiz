@@ -160,8 +160,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
-        loadGif = (ImageView) findViewById(R.id.loadGif);
-        Glide.with(this).asGif().load(CARGA_GIF).into(loadGif);
+
+//        loadGif = (ImageView) findViewById(R.id.loadGif);
+//        Glide.with(this).asGif().load(CARGA_GIF).into(loadGif);
+
         buscarRecord();
         linLoad.setVisibility(View.VISIBLE);
 //        final ProgressDialog progressDialog = new ProgressDialog(GameActivity.this, R.style.Theme_AppCompat_DayNight_Dialog); //TODO: RECIEN CAMBIADO 16/06

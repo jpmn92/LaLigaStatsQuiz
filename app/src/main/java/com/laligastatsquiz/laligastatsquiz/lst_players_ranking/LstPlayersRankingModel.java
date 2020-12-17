@@ -212,7 +212,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
 
             } catch (Exception e) {
 
-                onLstPlayersRankingListener.onFailure("Error: Listar Draft");
+                onLstPlayersRankingListener.onFailure("Error: Listar Jugadores");
 
             }
         }

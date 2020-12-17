@@ -124,7 +124,7 @@
     <string name="glossary_paragraph">En la parte superior de la pantalla de partida podrás encontrar la pregunta indicada por la abreviatura de la categoría estadística en cuestión</string>
 
     <!--    Textos about us-->
-    <string name="aboutUs_paragraph">Todas las estadísticas, nombres e imágenes pertenecen a www.laliga.com/</string>
+    <string name="aboutUs_paragraph">Todas las estadísticas, nombres e imágenes pertenecen a sus respectivas organizaciones</string>
 
     <string name="sound">Sonido</string>
     <string name="nav_cuenta">Cuenta</string>

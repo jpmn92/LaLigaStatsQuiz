@@ -14,22 +14,22 @@
     <!--    Estadisticas-->
     <string name="goles_anotados">Goals</string>
     <string name="asistencias">Assists</string>
-<!--    <string name="pases_completados">Completed passes</string>-->
-<!--    <string name="paradas">Saves</string>-->
-<!--    <string name="tarjetas_amarillas">Yellow cards</string>-->
-<!--    <string name="tarjetas_rojas">Red cards</string>-->
-<!--    <string name="tarjetas">Cards</string>-->
-<!--    <string name="penaltis">Penalties</string>-->
-<!--    <string name="minutos">Mins</string>-->
-<!--    <string name="goles_falta">Free kick goals</string>-->
-<!--    <string name="entradas_exitosas">Won tackles</string>-->
-<!--    <string name="faltas">Fouls</string>-->
+    <!--    <string name="pases_completados">Completed passes</string>-->
+    <!--    <string name="paradas">Saves</string>-->
+    <!--    <string name="tarjetas_amarillas">Yellow cards</string>-->
+    <!--    <string name="tarjetas_rojas">Red cards</string>-->
+    <!--    <string name="tarjetas">Cards</string>-->
+    <!--    <string name="penaltis">Penalties</string>-->
+    <!--    <string name="minutos">Mins</string>-->
+    <!--    <string name="goles_falta">Free kick goals</string>-->
+    <!--    <string name="entradas_exitosas">Won tackles</string>-->
+    <!--    <string name="faltas">Fouls</string>-->
 
     <!--    Ligas-->
-<!--    <string name="liga_santander">Liga Santander</string>-->
-<!--    <string name="liga_smartbank">Liga Smartbank</string>-->
-<!--    <string name="liga_1_2_3">Liga 1-2-3</string>-->
-<!--    <string name="liga_femenina">Primera División Femenina</string>-->
+    <!--    <string name="liga_santander">Liga Santander</string>-->
+    <!--    <string name="liga_smartbank">Liga Smartbank</string>-->
+    <!--    <string name="liga_1_2_3">Liga 1-2-3</string>-->
+    <!--    <string name="liga_femenina">Primera División Femenina</string>-->
     <string name="liga_santander">La Liga Santander</string>
     <string name="liga_smartbank">La Liga Smartbank</string>
     <string name="premier">Premier League</string>
@@ -130,7 +130,7 @@
     <string name="glossary_paragraph">On the top of the game screen you will find the abbreviated stat category asked. \nThe abbreviations are the following:</string>
 
     <!--    Textos about us-->
-    <string name="aboutUs_paragraph">All the statistics, names and images are retrieved from www.laliga.com/</string>
+    <string name="aboutUs_paragraph">All the statistics, names and images are property of their organizations.</string>
 
     <string-array name="ESTADISTICAS">
 
@@ -139,27 +139,27 @@
         <item>Mezcla</item>
 
         <!--        <item>@string/pases_completados</item>-->
-<!--        <item>@string/goles_falta</item>-->
-<!--        <item>@string/penaltis</item>-->
-<!--        <item>@string/minutos</item>-->
-<!--        <item>@string/paradas</item>-->
-<!--        <item>@string/entradas_exitosas</item>-->
-<!--        <item>@string/faltas</item>-->
-<!--        <item>@string/tarjetas_amarillas</item>-->
-<!--        <item>@string/tarjetas</item>-->
+        <!--        <item>@string/goles_falta</item>-->
+        <!--        <item>@string/penaltis</item>-->
+        <!--        <item>@string/minutos</item>-->
+        <!--        <item>@string/paradas</item>-->
+        <!--        <item>@string/entradas_exitosas</item>-->
+        <!--        <item>@string/faltas</item>-->
+        <!--        <item>@string/tarjetas_amarillas</item>-->
+        <!--        <item>@string/tarjetas</item>-->
 
     </string-array>
 
     <string-array name="LIGAS">
-    <item>@string/liga_santander</item>
-    <item>@string/liga_smartbank</item>
-    <item>@string/bundesliga</item>
-    <item>@string/premier</item>
-    <item>@string/seriea</item>
-    <item>@string/league1</item>
+        <item>@string/liga_santander</item>
+        <item>@string/liga_smartbank</item>
+        <item>@string/bundesliga</item>
+        <item>@string/premier</item>
+        <item>@string/seriea</item>
+        <item>@string/league1</item>
 
 
-</string-array>
+    </string-array>
 
     <string-array name="COMPETICIONES">
         <item>Ligas Europeas</item>
@@ -185,21 +185,20 @@
     </string-array>
 
 
-<!--    <string-array name="LIGAS_OLD">-->
-<!--        <item>@string/liga_santander</item>-->
-<!--        <item>@string/liga_1_2_3</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="LIGAS_OLD">-->
+    <!--        <item>@string/liga_santander</item>-->
+    <!--        <item>@string/liga_1_2_3</item>-->
+    <!--    </string-array>-->
 
 
-
-<!--    <string-array name="TEMPORADAS">-->
-<!--        <item>19/20</item>-->
-<!--        <item>18/19</item>-->
-<!--        <item>17/18</item>-->
-<!--        <item>16/17</item>-->
-<!--        <item>15/16</item>-->
-<!--        <item>14/15</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="TEMPORADAS">-->
+    <!--        <item>19/20</item>-->
+    <!--        <item>18/19</item>-->
+    <!--        <item>17/18</item>-->
+    <!--        <item>16/17</item>-->
+    <!--        <item>15/16</item>-->
+    <!--        <item>14/15</item>-->
+    <!--    </string-array>-->
 
     <string-array name="TEMPORADAS">
         <item>2019-2020</item>
@@ -229,4 +228,6 @@
         <item>@string/total</item>
 
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
