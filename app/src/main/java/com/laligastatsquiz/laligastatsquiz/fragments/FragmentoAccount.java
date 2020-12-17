@@ -94,7 +94,7 @@ public class FragmentoAccount extends Fragment {
 
         txtUserName.setText(sm.getSessionUserName());
 //TODO: no permitimos cambiar el username de momento
-        txtUserName.setEnabled(false);
+        txtUserName.setEnabled(true);
 
 
         laLigaPlayers = generateImageUrl.getLaLigaPlayers();

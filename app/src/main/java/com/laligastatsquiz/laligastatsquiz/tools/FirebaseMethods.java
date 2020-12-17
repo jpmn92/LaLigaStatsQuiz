@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -269,12 +270,32 @@ public class FirebaseMethods {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String id = mAuth.getCurrentUser().getUid();
-                    //AQUI CREAMOS LOS PARAMETROS A NUESTRO ANTOJO, POR EJEMPLO URL DE IMAGEN DEL USUARIO O LO QUE SEA
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("uid", id);
-                    map.put("email", email);
-                    map.put("name", username);
-                    logIn(mAuth.getCurrentUser(), RegisterContext);
+
+                    FirebaseUser myUser = mAuth.getCurrentUser();
+
+//                                myUser.sendEmailVerification();
+
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(username).setPhotoUri(Uri.parse(urlImage)).build();
+
+                    myUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task3) {
+                                    if (task3.isSuccessful()) {
+                                        //USERNAME ACTUALIZADO
+                                        String OK = "OK";
+                                        //TODO: loguear de otra manera mas limpia
+                                        logIn(myUser, RegisterContext);
+
+
+                                    } else {
+                                        //no se le ha asignado el username
+                                        String NOOK = "NOOK";
+                                    }
+                                }
+                            });
 
                 } else {
 
@@ -313,6 +334,15 @@ public class FirebaseMethods {
                         // If sign in fails, display a message to the user.
                         //TODO: Error en inicio de sesión
                         // Toast.makeText(loginContext, getString(R.string.login_incorrecto), Toast.LENGTH_SHORT).show();
+                        try{
+
+                            task.getResult();
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println(e.getMessage());
+                            fragmentoLogin.getTxtErrorLogIn().setText(loginContext.getString(R.string.login_incorrecto));
+                            fragmentoLogin.getTxtErrorLogIn().setVisibility(View.VISIBLE);
+                        }
 
                     }
 
@@ -325,9 +355,13 @@ public class FirebaseMethods {
     }
 
     public void logIn(FirebaseUser myUser, Context loginContext) {
+        System.out.println(myUser.getDisplayName());
+        System.out.println(myUser.getEmail());
+        System.out.println(myUser.getPhotoUrl());
         sessionManagement = new SessionManagement(loginContext);
         reference = FirebaseDatabase.getInstance().getReference();
-        sessionManagement.saveSession(myUser.getDisplayName(), myUser.getEmail(), myUser.getPhotoUrl().toString());
+
+        //sessionManagement.saveSession(myUser.getDisplayName(), myUser.getEmail(), myUser.getPhotoUrl().toString());
 
 
         goToMenu(myUser.getDisplayName());

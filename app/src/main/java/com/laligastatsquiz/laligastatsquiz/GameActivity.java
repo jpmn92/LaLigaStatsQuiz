@@ -42,12 +42,12 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener, LstPlayersRankingContract.View {
 
-
+    private final String CARGA_GIF = "https://lh3.googleusercontent.com/proxy/xdJQkw7k_ONt0iSd36Rl3a70RBAj8HQJkFv3IZlLjaElizrRQeGKGQpcYhE1vclm6z320rM7RPvuJ--3Mg";
     private FirebaseMethods firebaseMethods;
     private MyCountDownTimer myCountDownTimer;
     private LstPlayersRankingPresenter lstPlayersRankingPresenter;
     private ArrayList<PlayerCompetition> playerCompetitionArrayList;
-    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas, ivCompetition1, ivCompetition2, ivLoad;
+    private ImageView ivPlayer1, ivPlayer2, ivTeam1, ivTeam2, ivVidas, ivCompetition1, ivCompetition2, loadGif;
     private TextView txtP1, txtP2, txtNameP1, txtNameP2, txtPoints, txtPregunta, txtSeasonP1, txtSeasonP2;
     private RelativeLayout relFront;
     private LinearLayout linP1, linP2, linLoad;
@@ -83,12 +83,6 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             season = "";
         }
 
-//        final String laliga = getString(R.string.liga_santander);
-//        final String premier = getString(R.string.premier);
-//        final String bundesliga = getString(R.string.bundesliga);
-//        final String calcio = getString(R.string.seriea);
-//        final String league1 = getString(R.string.league1);
-
         liga = String.valueOf(this.getIntent().getIntExtra("liga", 0));
         tipo = String.valueOf(this.getIntent().getIntExtra("tipo", 0));
         country = String.valueOf(this.getIntent().getIntExtra("country", 0));
@@ -99,15 +93,12 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         params.putString("liga", liga);
         params.putString("tipo", tipo);
         params.putString("country", country);
-//        season = "20" + this.getIntent().getStringExtra("season").substring(0, this.getIntent().getStringExtra("season").indexOf('/'));
-//        season = "";
-
-
 
         params.putString("season", season);
         txtPregunta.setText(statName);
         relFront.setVisibility(View.INVISIBLE);
         txtPoints.setText(String.valueOf(points));
+        myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
         lstPlayersRankingPresenter.getPlayersRanking(params);
     }
 
@@ -120,9 +111,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             @Override
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                if(crono){
-                    myCountDownTimer.start();
-                }
+
             }
         });
 
@@ -171,22 +160,20 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
+        loadGif = (ImageView) findViewById(R.id.loadGif);
+        Glide.with(this).asGif().load(CARGA_GIF).into(loadGif);
         buscarRecord();
-        final ProgressDialog progressDialog = new ProgressDialog(GameActivity.this, R.style.Theme_AppCompat_DayNight_Dialog); //TODO: RECIEN CAMBIADO 16/06
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Cargando...");
-        progressDialog.show();
-
-        linLoad.postDelayed(new Runnable() {
-            public void run() {
-                linLoad.setVisibility(View.GONE);
-                progressDialog.dismiss();
-                myCountDownTimer = new MyCountDownTimer(tiempo, 1000);
-                if(crono){
-                    myCountDownTimer.start();
-                }
-            }
-        }, 5000);
+        linLoad.setVisibility(View.VISIBLE);
+//        final ProgressDialog progressDialog = new ProgressDialog(GameActivity.this, R.style.Theme_AppCompat_DayNight_Dialog); //TODO: RECIEN CAMBIADO 16/06
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Cargando...");
+//        progressDialog.show();
+//        linLoad.postDelayed(new Runnable() {
+//            public void run() {
+//                linLoad.setVisibility(View.GONE);
+//                progressDialog.dismiss();
+//            }
+//        }, 1000);
     }
 
     private void selectPlayers() {
@@ -221,9 +208,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
 
         showPlayers();
-        if(crono){
-            myCountDownTimer.start();
-        }
+
     }
 
     /**
@@ -295,6 +280,13 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 
         txtSeasonP1.setText(player1.getSeason());
         txtSeasonP2.setText(player2.getSeason());
+
+        if (myCountDownTimer != null) {
+            myCountDownTimer.cancel();
+        }
+        if(crono){
+            myCountDownTimer.start();
+        }
     }
 
     private void acierto() {
@@ -410,6 +402,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     @Override
     public void successListPlayersRanking(ArrayList<PlayerCompetition> playerCompetitions) {
         setPlayerCompetitionArrayList(playerCompetitions);
+        linLoad.setVisibility(View.GONE);
         selectPlayers();
 
     }

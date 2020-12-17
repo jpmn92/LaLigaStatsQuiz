@@ -586,6 +586,12 @@
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         tools:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/loadGif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/doncic" />
     </LinearLayout>
 
 </RelativeLayout>

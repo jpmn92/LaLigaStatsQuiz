@@ -20,7 +20,7 @@ public class FragmentoLogin extends FragmentoAutentificacion {
     private Button btLogIn, btnGoogle;
     private EditText txtLogIn, txtPass;
     private FirebaseMethods firebaseMethods;
-    private TextView goToRegister;
+    private TextView goToRegister, txtErrorLogIn;
     private FirebaseAuth firebaseAuth;
 
 
@@ -94,6 +94,8 @@ public class FragmentoLogin extends FragmentoAutentificacion {
         firebaseMethods = new FirebaseMethods(this);
         txtLogIn = view.findViewById(R.id.txtLoginEmail);
         txtPass = view.findViewById(R.id.txtLoginPasswd);
+        txtErrorLogIn = view.findViewById(R.id.txtErrorLogIn);
+        txtErrorLogIn.setVisibility(View.GONE);
         goToRegister = view.findViewById(R.id.txtGoToRegister);
         btnGoogle = view.findViewById(R.id.btnLogInGoogle);
     }
@@ -108,5 +110,11 @@ public class FragmentoLogin extends FragmentoAutentificacion {
                 .commit();
     }
 
+    public TextView getTxtErrorLogIn() {
+        return txtErrorLogIn;
+    }
 
+    public void setTxtErrorLogIn(TextView txtErrorLogIn) {
+        this.txtErrorLogIn = txtErrorLogIn;
+    }
 }
