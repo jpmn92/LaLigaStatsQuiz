@@ -1,18 +1,20 @@
 package com.laligastatsquiz.laligastatsquiz.competiciones;
 
 public enum ClubesInternacional implements Competicion{
-    CHAMPIONS(9, "UEFA Champions League", "https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/1200px-UEFA_Champions_League_logo_2.svg.png"),
-    UEFA(20, "UEFA Europa League", "https://as01.epimg.net/img/comunes/logos/competiciones/futbol-europa_league.png"),
-    UCLUEL(0, "UCL + UEL", "https://betting-preview.com/wp-content/uploads/2020/01/cl-el.png");
+    CHAMPIONS(9, 9,"UEFA Champions League", "https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/1200px-UEFA_Champions_League_logo_2.svg.png"),
+    UEFA(20, 20,"UEFA Europa League", "https://as01.epimg.net/img/comunes/logos/competiciones/futbol-europa_league.png"),
+    UCLUEL(0, 1001,"UCL + UEL", "https://betting-preview.com/wp-content/uploads/2020/01/cl-el.png");
 
     private int id;
+    private int idPuntuacion;
     private String name;
     private String urlImage;
     private int country;
     private int tipo;
 
-    ClubesInternacional(int id, String name, String urlImage) {
+    ClubesInternacional(int id, int idPuntuacion, String name, String urlImage) {
         this.id = id;
+        this.idPuntuacion = idPuntuacion;
         this.name = name;
         this.urlImage = urlImage;
         this.tipo = 2;
@@ -63,5 +65,14 @@ public enum ClubesInternacional implements Competicion{
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public int getIdPuntuacion() {
+        return idPuntuacion;
+    }
+
+    public void setIdPuntuacion(int idPuntuacion) {
+        this.idPuntuacion = idPuntuacion;
     }
 }

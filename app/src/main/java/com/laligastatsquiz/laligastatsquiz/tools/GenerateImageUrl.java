@@ -42,7 +42,7 @@ public class GenerateImageUrl {
         footballPlayer = generatePlayer("Vinicius Jr", "https://assets.laliga.com/squad/2019/t186/p246333/256x278/p246333_t186_2019_1_001_000.png");
         footballPlayers.add(footballPlayer);
 
-        footballPlayer = generatePlayer("Martin Ødegaard", "https://assets.laliga.com/squad/2019/t188/p184029/128x139/p184029_t188_2019_1_001_000.png");
+        footballPlayer = generatePlayer("Martin Odegaard", "https://assets.laliga.com/squad/2019/t188/p184029/128x139/p184029_t188_2019_1_001_000.png");
         footballPlayers.add(footballPlayer);
 
         footballPlayer = generatePlayer("Cristiano Ronaldo", "https://pbs.twimg.com/media/DhwSUQKWkAAY7z-.png");
@@ -57,7 +57,7 @@ public class GenerateImageUrl {
         footballPlayer = generatePlayer("Neymar Jr", "https://s.yimg.com/xe/i/us/sp/v/soccer/wc/players/372885.3.png");
         footballPlayers.add(footballPlayer);
 
-        footballPlayer = generatePlayer("Erling Haaland", "https://lh3.googleusercontent.com/proxy/sdj0hvVYRp0c_Q1eK5ul_baz3IYiETWVSxYZ4MrwRdJLARgVoI4kcW7HNghoL3LXdVEnuZsoQ97HmHMLGjJUx0cIQo2uFDBOK5puLwLeFrin");
+        footballPlayer = generatePlayer("Erling Haaland", "https://lh3.googleusercontent.com/proxy/XopPZ6amErpGxR3wjkRH843dgfBDgD5JuidY503y8CWO4wZiVYIZPWSBvZxtTXcP9MB29UwHlmUxDsA58dVamOVsLWH2v_1-o7bjgHluS2Rt");
         footballPlayers.add(footballPlayer);
 
         footballPlayer = generatePlayer("Lucas Vazquez", "https://assets.laliga.com/squad/2020/t186/p107593/2048x2225/p107593_t186_2020_1_001_000.png");
@@ -81,7 +81,7 @@ public class GenerateImageUrl {
         footballPlayer = generatePlayer("Robben", "https://b.fssta.com/uploads/application/soccer/headshots/2263.vresize.350.350.medium.69.png");
         footballPlayers.add(footballPlayer);
 
-        footballPlayer = generatePlayer("Aguero", "https://resources.premierleague.com/premierleague/photos/players/250x250/p37572.png");
+        footballPlayer = generatePlayer("Kun Aguero", "https://resources.premierleague.com/premierleague/photos/players/250x250/p37572.png");
         footballPlayers.add(footballPlayer);
 
         footballPlayer = generatePlayer("Kane", "https://resources.premierleague.com/premierleague/photos/players/250x250/p78830.png");
@@ -294,6 +294,9 @@ public class GenerateImageUrl {
         footballPlayers.add(footballPlayer);
 
         footballPlayer = generatePlayer("Muniain", "https://assets.laliga.com/squad/2019/t174/p76012/256x278/p76012_t174_2019_1_001_000.png");
+        footballPlayers.add(footballPlayer);
+
+        footballPlayer = generatePlayer("Son", "https://resources.premierleague.com/premierleague/photos/players/250x250/p85971.png");
         footballPlayers.add(footballPlayer);
 //
 //        //Mujeres

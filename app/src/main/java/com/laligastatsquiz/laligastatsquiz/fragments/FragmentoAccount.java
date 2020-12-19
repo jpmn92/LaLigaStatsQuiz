@@ -18,6 +18,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.NavigationDrawerActivity;
@@ -25,6 +29,7 @@ import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.beans.FootballPhoto;
 import com.laligastatsquiz.laligastatsquiz.beans.FootballPhotoSize;
+import com.laligastatsquiz.laligastatsquiz.tools.Constantes;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
 import com.laligastatsquiz.laligastatsquiz.tools.SelectorImagenActivity;
@@ -56,6 +61,8 @@ public class FragmentoAccount extends Fragment {
 
     private static FragmentoAccount fragmentoAccount;
 
+    private AdView adViewProfile;
+
     public FragmentoAccount() {
         // Required empty public constructor
     }
@@ -76,7 +83,10 @@ public class FragmentoAccount extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
     }
 
     @Override
@@ -87,6 +97,10 @@ public class FragmentoAccount extends Fragment {
 
         sm = new SessionManagement(getContext());
         generateImageUrl = new GenerateImageUrl();
+        if(Constantes.DEVELOPER_MODE){
+
+            inicializarPublicidad(view);
+        }
 
         initComponents(view);
 
@@ -211,6 +225,19 @@ public class FragmentoAccount extends Fragment {
         return view;
     }
 
+    private void inicializarPublicidad( View view) {
+        MobileAds.initialize(getContext());
+        adViewProfile = view.findViewById(R.id.adViewProfile);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        System.out.println(adViewProfile.getAdUnitId());
+        adViewProfile.loadAd(adRequest);
+        adViewProfile.setAdListener(new AdListener(){
+            @Override
+            public void onAdClosed() {
+                adViewProfile.loadAd(new AdRequest.Builder().build());
+            }
+        });
+    }
 
     private void initComponents(View view) {
 

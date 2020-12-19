@@ -3,10 +3,14 @@ package com.laligastatsquiz.laligastatsquiz.fragments;
 
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +24,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.google.gson.Gson;
 import com.laligastatsquiz.laligastatsquiz.GameActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FirebasePuntuacion;
@@ -33,8 +42,11 @@ import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoRegister;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.SessionManagement;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class FragmentoMenu extends Fragment implements View.OnClickListener {
     private static FragmentoMenu fragmentoMenu;
@@ -56,6 +68,9 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     ArrayAdapter<LigaEuropea> adapterCompeticionesLigaEuropeaArrayAdapter;
     ArrayAdapter<SeleccionesInternacional> adapterCompeticionesSelecciones;
 
+    int version; //version de nuestra app
+    FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +82,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         initComponents(view);
         res = getResources();
         firebaseMethods = new FirebaseMethods(this);
+        comprobacionUltimaVersion();
         return view;
     }
 
@@ -92,6 +108,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         sessionManagement = new SessionManagement(getContext());
         sound = sessionManagement.getSound();
         crono = sessionManagement.getCrono();
+
 
         adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -126,6 +143,8 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerTipoCompeticion = view.findViewById(R.id.spinnerTipoCompeticion);
         spinnerTipoCompeticion.setAdapter(adapterTipoCompeticion);
 
+
+
         spinnerTemporada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,6 +153,35 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerLiga.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Competicion competicionSeleccionada = (Competicion)spinnerLiga.getSelectedItem();
+                if(competicionSeleccionada.getId() != 0){
+                    spinnerTemporada.setEnabled(true);
+                    ArrayList<String> seasons = getSeasons(competicionSeleccionada.getId());
+                    adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, seasons);
+                    adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerTemporada.setAdapter(adapterSeason);
+
+                }
+                else{
+                    adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS_SELECCION));
+                    adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerTemporada.setEnabled(false);
+                }
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -160,18 +208,6 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     spinnerTemporada.setEnabled(true);
                 }
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinnerLiga.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cambiarImagenPrincipal();
             }
 
             @Override
@@ -207,7 +243,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 params.putString("stat", String.valueOf(spinnerStats.getSelectedItem()));
                 params.putInt("statId", getStatId());
                 //params.putString("liga", String.valueOf(spinnerLiga.getSelectedItem()));
-                params.putInt("liga", competicion.getId());
+                params.putString("ligaPuntuacion", competicion.getName());
                 params.putInt("tipo", competicion.getTipo());
                 params.putInt("country", competicion.getCountry());
                 params.putString("season", String.valueOf(spinnerTemporada.getSelectedItem()));
@@ -247,6 +283,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                         intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
                         Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
                         intent.putExtra("liga", competicion.getId());
+                        intent.putExtra("ligaPuntuacion", competicion.getName());
                         intent.putExtra("tipo", competicion.getTipo());
                         intent.putExtra("country", competicion.getCountry());
                         intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
@@ -273,6 +310,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                 intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
                 Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
                 intent.putExtra("liga", competicion.getId());
+                intent.putExtra("ligaPuntuacion", competicion.getName());
                 intent.putExtra("tipo", competicion.getTipo());
                 intent.putExtra("country", competicion.getCountry());
                 intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
@@ -302,6 +340,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
                     Competicion competicion = (Competicion) spinnerLiga.getSelectedItem();
                     intent.putExtra("liga", competicion.getId());
+                    intent.putExtra("ligaPuntuacion", competicion.getName());
                     intent.putExtra("tipo", competicion.getTipo());
                     intent.putExtra("country", competicion.getCountry());
                     intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
@@ -410,6 +449,90 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         return statId;
     }
 
+    private void comprobacionUltimaVersion() {
+
+
+        //comprobaciones de version
+        PackageInfo packageInfo;
+
+        try {
+            packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            version = packageInfo.versionCode; //version actual instalada
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //configuracion firebase remote config
+
+        remoteConfig.setConfigSettings(new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(true).build());
+        HashMap<String, Object> actualizacion = new HashMap<>();
+        actualizacion.put("versioncode", version);
+        Task<Void> recogerInfoFbRc = remoteConfig.fetch(0);
+        recogerInfoFbRc.addOnSuccessListener((Activity) getContext(), aVoid -> {
+
+            remoteConfig.activateFetched();
+            checkVersion(version);
+
+        });
+
+    }
+
+    private void checkVersion(int version) {
+
+        int newerVersion = (int) remoteConfig.getLong("versioncode");
+        String urlApp = remoteConfig.getString("web");
+        String newerVersionName = remoteConfig.getString("versionname");
+//        boolean sorteoActivo =  remoteConfig.getBoolean("sorteoActivo");
+
+        if (newerVersion > version) {
+            mostrarDialogVersion(urlApp, newerVersionName);
+
+//            Toast.makeText(getContext(), "Existe una nueva version", Toast.LENGTH_SHORT).show();
+        } else {
+//            Toast.makeText(getContext(), "NO HAY VERSIONES DISPONIBLES ", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private void mostrarDialogVersion(String urlApp, String versionName) {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Actualización Disponible")
+                .setMessage("¿Quieres Actualizar NBA STATS QUIZ a la versión " + versionName + "?")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // si damos a aceptar
+
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getActivity().getPackageName())));
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getActivity().getPackageName())));
+                        }
+
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private ArrayList<String> getSeasons(int liga){
+        ArrayList<String> seasons = new ArrayList<>();
+        String key = "temporadas" + liga;
+        FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+        String seasonsFB = remoteConfig.getString(key);
+
+        Type listType = new TypeToken<List<String>>() {}.getType();
+        seasons = new Gson().fromJson(seasonsFB, listType);
+        return seasons;
+    }
 
     public ArrayList<FirebasePuntuacion> getPuntuaciones() {
         return puntuaciones;

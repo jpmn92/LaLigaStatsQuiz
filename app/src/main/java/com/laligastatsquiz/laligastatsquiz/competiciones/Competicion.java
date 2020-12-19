@@ -6,4 +6,5 @@ public interface Competicion {
     String getUrlImage();
     int getCountry();
     int getTipo();
+    int getIdPuntuacion();
 }

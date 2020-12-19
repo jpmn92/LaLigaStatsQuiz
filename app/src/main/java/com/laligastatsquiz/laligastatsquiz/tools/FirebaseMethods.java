@@ -101,7 +101,8 @@ public class FirebaseMethods {
         fbPuntuacion.setPoints(bundle.getInt("puntos"));
         fbPuntuacion.setDate(currentDate);
         fbPuntuacion.setHour(hour);
-        fbPuntuacion.setLiga(bundle.getString("liga"));
+        fbPuntuacion.setLiga(bundle.getString("ligaPuntuacion"));
+        //fbPuntuacion.setLiga(bundle.getString("liga"));
         fbPuntuacion.setSeason(bundle.getString("season"));
         fbPuntuacion.setStatCategory(String.valueOf(bundle.getInt("statId")));
         fbPuntuacion.setImage(bundle.getString("image"));
@@ -139,7 +140,8 @@ public class FirebaseMethods {
         String stat =  String.valueOf(bundlePartida.getInt("statId"));
 
         puntuacionesRef.whereEqualTo("season", bundlePartida.getString("season"))
-                .whereEqualTo("liga", bundlePartida.getString("liga"))
+                //.whereEqualTo("liga", bundlePartida.getString("liga"))
+                .whereEqualTo("liga", bundlePartida.getString("ligaPuntuacion"))
                 .whereEqualTo("statCategory", stat)
                 .whereEqualTo("uid", mAuth.getUid()).whereGreaterThan("points", -1)
                 .orderBy("points", Query.Direction.DESCENDING).limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -183,7 +185,7 @@ public class FirebaseMethods {
         CollectionReference puntuacionesRef = db.collection("Puntuacion");
 
         puntuacionesRef.whereEqualTo("season", paramsPartida.getString("season"))
-                .whereEqualTo("liga", paramsPartida.getString("liga"))
+                .whereEqualTo("liga", paramsPartida.getString("ligaPuntuacion"))
                 .whereEqualTo("statCategory", stat)
                 .whereGreaterThan("points", -1)
                 .orderBy("points", Query.Direction.DESCENDING).limit(LIMITE_PUNTUACIONES).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -228,7 +230,7 @@ public class FirebaseMethods {
         CollectionReference puntuacionesRef = db.collection("Puntuacion");
 
         puntuacionesRef.whereEqualTo("season", bundle.getString("season"))
-                .whereEqualTo("liga", bundle.getString("liga"))
+                .whereEqualTo("liga", bundle.getString("ligaPuntuacion"))
                 .whereEqualTo("statCategory", stat)
                 .whereEqualTo("uid", mAuth.getUid()).whereGreaterThan("points", -1)
                 .orderBy("points", Query.Direction.DESCENDING).limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -419,6 +421,7 @@ public class FirebaseMethods {
                         if (task3.isSuccessful()) {
                             //AVATAR ACTUALIZADO
 //                            Toast.makeText(context, R.string.config_updated, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(avatarContext, R.string.config_updated, Toast.LENGTH_SHORT).show();
                             changeImageRecord(avatarUser);
 
 

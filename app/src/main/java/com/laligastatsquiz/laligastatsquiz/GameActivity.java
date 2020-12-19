@@ -54,7 +54,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private PlayerCompetition player1;
     private PlayerCompetition player2;
     private boolean sound, crono, logeado;
-    private String statName, stat, liga, season, tipo, country;
+    private String statName, stat, liga, season, tipo, country, ligaPuntuacion;
     private int contadorAciertos, vidas, points, tiempo, record, statId;
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
@@ -80,6 +80,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         }
 
         liga = String.valueOf(this.getIntent().getIntExtra("liga", 0));
+        //ligaPuntuacion = String.valueOf(this.getIntent().getIntExtra("ligaPuntuacion", 0));
         tipo = String.valueOf(this.getIntent().getIntExtra("tipo", 0));
         country = String.valueOf(this.getIntent().getIntExtra("country", 0));
 
@@ -87,6 +88,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         initComponents();
         params.putString("StatCategory", stat);
         params.putString("liga", liga);
+        //params.putString("liga", ligaPuntuacion);
         params.putString("tipo", tipo);
         params.putString("country", country);
 
@@ -184,26 +186,28 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if (stat.equalsIgnoreCase("goals")) {
             valueP1 = player1.getGoals();
         }
+        do{
+            do {
+                randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
+                player2 = playerCompetitionArrayList.get(randomP2);
+            } while (randomP2 == randomP1);
 
-        do {
-            randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
-            player2 = playerCompetitionArrayList.get(randomP2);
-        } while (randomP2 == randomP1);
-
-        if (stat.equalsIgnoreCase("goals")) {
-            valueGoles();
-        } else if (stat.equalsIgnoreCase("assist")) {
-            valueAsistencias();
-        } else if (stat.equalsIgnoreCase("mezcla")) {
-            int random = (int) (Math.random() * 2) + 1;
-            if (random == 1) {
+            if (stat.equalsIgnoreCase("goals")) {
                 valueGoles();
-                txtPregunta.setText(getString(R.string.goles_anotados));
-            } else if (random == 2) {
+            } else if (stat.equalsIgnoreCase("assist")) {
                 valueAsistencias();
-                txtPregunta.setText(getString(R.string.asistencias));
+            } else if (stat.equalsIgnoreCase("mezcla")) {
+                int random = (int) (Math.random() * 2) + 1;
+                if (random == 1) {
+                    valueGoles();
+                    txtPregunta.setText(getString(R.string.goles_anotados));
+                } else if (random == 2) {
+                    valueAsistencias();
+                    txtPregunta.setText(getString(R.string.asistencias));
+                }
             }
-        }
+        } while (valueP1 == valueP2);
+
 
         showPlayers();
 
