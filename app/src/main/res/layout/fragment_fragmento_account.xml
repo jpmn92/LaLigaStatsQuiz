@@ -25,6 +25,20 @@
             app:civ_border_color="#ffffff"
             app:civ_border_width="4dp"
             app:civ_fill_color="@color/colorPrimary" />
+        <Button
+            android:id="@+id/txtCambiaAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/rounded_button"
+            android:padding="5dp"
+            android:gravity="center"
+            android:text="@string/seleccionar_avatar"
+            android:textColor="@color/colorBlanco"
+            android:textSize="16dp"
+
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -75,6 +89,23 @@
             android:background="@color/colorAccent"
             android:textColor="#ffffff"
             android:text="@string/actualizar" />
+
+        <LinearLayout
+            android:id="@+id/lnprofilead"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:adSize="BANNER"
+                app:adUnitId="@string/banner_prueba" />
+        </LinearLayout>
 
 
     </LinearLayout>

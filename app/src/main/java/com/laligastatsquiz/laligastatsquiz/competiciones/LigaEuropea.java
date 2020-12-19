@@ -6,7 +6,7 @@ import com.laligastatsquiz.laligastatsquiz.GameActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoMenu;
 
-public enum LigaEuropea implements Competicion{
+public enum LigaEuropea implements Competicion {
 
     SANTANDER(1, "La Liga Santander", "https://a.espncdn.com/combiner/i?img=/i/leaguelogos/soccer/500/15.png&transparent=true&w=288&h=288", 1),
     SMARRBANK(2, "La Liga Smartbank 2", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/LaLiga_SmartBank.svg/1200px-LaLiga_SmartBank.svg.png", 1),
@@ -14,8 +14,8 @@ public enum LigaEuropea implements Competicion{
     BUNDESLIGA(6, "Bundesliga", "https://a.espncdn.com/combiner/i?img=/i/leaguelogos/soccer/500/10.png", 3),
     LIGUE1(7, "Ligue 1", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ligue1.svg/1200px-Ligue1.svg.png", 4),
     SERIEA(8, "Serie A", "https://upload.wikimedia.org/wikipedia/commons/9/93/Serie_A_Logo_%28ab_2019%29.png", 5),
-    MEZCLA(0, "All", "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/European_Leagues_logo.svg/1200px-European_Leagues_logo.svg.png", 0);
-
+    //    MEZCLA(0, "All", "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/European_Leagues_logo.svg/1200px-European_Leagues_logo.svg.png", 0);
+    MEZCLA(0, "All", "https://i.ibb.co/K2KLHVH/europeanleagues.png", 0);
     private int id;
     private String name;
     private String urlImage;

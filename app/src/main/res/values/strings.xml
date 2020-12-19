@@ -228,6 +228,9 @@
         <item>@string/total</item>
 
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="banner_prueba" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="temporizador_off">TIMER OFF</string>
+    <string name="aviso_temporizador">If timer is off your game record won\'t be saved</string>
 </resources>

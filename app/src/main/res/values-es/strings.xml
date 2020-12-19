@@ -136,6 +136,7 @@
 
 
     </string-array>
-
+    <string name="temporizador_off">TEMPORIZADOR DESACTIVADO</string>
+    <string name="aviso_temporizador">Si el temporizador esta desactivado no se guardarán tus puntuaciones</string>
 
 </resources>

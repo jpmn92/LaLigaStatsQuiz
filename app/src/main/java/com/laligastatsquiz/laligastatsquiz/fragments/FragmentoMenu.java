@@ -232,21 +232,59 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
 
 
         if (firebaseUser != null) {
-            userName = firebaseUser.getDisplayName();
-            Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
-            intent.putExtra("uid", mAuth.getUid());
-            intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
-            Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
-            intent.putExtra("liga", competicion.getId());
-            intent.putExtra("tipo", competicion.getTipo());
-            intent.putExtra("country", competicion.getCountry());
-            intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
-            intent.putExtra("sound", sound);
-            intent.putExtra("crono", crono);
-            intent.putExtra("loged", true);
+
+            if (!crono) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(R.string.temporizador_off);
+                builder.setMessage(R.string.aviso_temporizador);
+                builder.setPositiveButton(R.string.empezar_partida, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        userName = firebaseUser.getDisplayName();
+                        Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
+                        intent.putExtra("uid", mAuth.getUid());
+                        intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
+                        Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
+                        intent.putExtra("liga", competicion.getId());
+                        intent.putExtra("tipo", competicion.getTipo());
+                        intent.putExtra("country", competicion.getCountry());
+                        intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+                        intent.putExtra("sound", sound);
+                        intent.putExtra("crono", crono);
+                        intent.putExtra("loged", true);
 
 
-            getActivity().startActivity(intent);
+                        getActivity().startActivity(intent);
+
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            } else {
+                userName = firebaseUser.getDisplayName();
+                Intent intent = new Intent(getActivity().getBaseContext(), GameActivity.class);
+                intent.putExtra("uid", mAuth.getUid());
+                intent.putExtra("stat", String.valueOf(spinnerStats.getSelectedItem()));
+                Competicion competicion =  (Competicion) spinnerLiga.getSelectedItem();
+                intent.putExtra("liga", competicion.getId());
+                intent.putExtra("tipo", competicion.getTipo());
+                intent.putExtra("country", competicion.getCountry());
+                intent.putExtra("season", String.valueOf(spinnerTemporada.getSelectedItem()));
+                intent.putExtra("sound", sound);
+                intent.putExtra("crono", crono);
+                intent.putExtra("loged", true);
+
+
+                getActivity().startActivity(intent);
+            }
+
+
         } else {
 
             //No logueados

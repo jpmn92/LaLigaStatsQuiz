@@ -184,6 +184,15 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
                 playerCompetitionList = new Gson().fromJson(statsJson, ResponsePlayerCompetition.class);
 
                 for(PlayerCompetition playerCompetition: playerCompetitionList.getPlayerCompetitionList()){
+                    //quitamos lo de que salga null
+                    try{
+                        if(playerCompetition.getLastName() == null ){
+                            playerCompetition.setLastName(" ");
+                        }
+                    }catch (Exception e){
+                        String myerror = e.getMessage();
+                    }
+
                     playerCompetitions.add(playerCompetition);
                 }
 

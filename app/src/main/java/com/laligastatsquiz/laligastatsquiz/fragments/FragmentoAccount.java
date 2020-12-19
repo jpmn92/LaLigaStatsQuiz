@@ -20,6 +20,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.NavigationDrawerActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPhoto;
@@ -42,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FragmentoAccount extends Fragment {
 
     Button btnSetOptions;
-    TextView txtUserName;
+    TextView txtUserName, txtCambiaAvatar;
     SessionManagement sm;
     GenerateImageUrl generateImageUrl;
     ImageView ivAvatar;
@@ -54,6 +56,7 @@ public class FragmentoAccount extends Fragment {
     boolean codigo;
     TextView txtCodigo;
     private String urlFromDialog;
+    FirebaseUser currentFirebaseUser;
 
     private static FragmentoAccount fragmentoAccount;
 
@@ -77,6 +80,7 @@ public class FragmentoAccount extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -92,7 +96,14 @@ public class FragmentoAccount extends Fragment {
 
         firebaseMethods = new FirebaseMethods(this);
 
-        txtUserName.setText(sm.getSessionUserName());
+//        txtUserName.setText(sm.getSessionUserName());
+
+        if(currentFirebaseUser != null){
+            txtUserName.setText(currentFirebaseUser.getDisplayName());
+            Glide.with(getContext()).load(currentFirebaseUser.getPhotoUrl()).into(circleImageView);
+
+        }
+
 //TODO: no permitimos cambiar el username de momento
         txtUserName.setEnabled(true);
 
@@ -158,6 +169,15 @@ public class FragmentoAccount extends Fragment {
             }
         });
 
+
+        txtCambiaAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new SelectorImagenActivity(fragmentoAccount);
+                dialog.show(getFragmentManager(), "NoticeDialogFragment");
+            }
+        });
+
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,7 +223,8 @@ public class FragmentoAccount extends Fragment {
         txtCodigo = view.findViewById(R.id.txtCode);
 //        ivAvatar = view.findViewById(R.id.ivAvatar);
         circleImageView = view.findViewById(R.id.ivAvatar);
-        Glide.with(getContext()).load(sm.getSesionImage()).into(circleImageView);
+        txtCambiaAvatar = view.findViewById(R.id.txtCambiaAvatar);
+//        Glide.with(getContext()).load(sm.getSesionImage()).into(circleImageView);
 
     }
 

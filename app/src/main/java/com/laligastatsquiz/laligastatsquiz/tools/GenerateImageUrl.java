@@ -109,6 +109,8 @@ public class GenerateImageUrl {
         laLigaPlayer = generatePlayer("Kimmich", "https://www.thesportsdb.com/images/media/player/cutout/ukg7cr1578151267.png");
         laLigaPlayers.add(laLigaPlayer);
 
+
+
 //        laLigaPlayer = generatePlayer("Royston Drenthe", "https://2img.net/h/futhead.cursecdn.com/static/img/14/players/177752.png");
 //        laLigaPlayers.add(laLigaPlayer);
 //
