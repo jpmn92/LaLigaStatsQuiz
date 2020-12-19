@@ -233,4 +233,5 @@
 
     <string name="temporizador_off">TIMER OFF</string>
     <string name="aviso_temporizador">If timer is off your game record won\'t be saved</string>
+    <string name="busca_jugador">Search Player</string>
 </resources>

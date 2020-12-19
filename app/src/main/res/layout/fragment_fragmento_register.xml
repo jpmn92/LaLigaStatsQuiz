@@ -31,6 +31,20 @@
             app:civ_border_width="4dp"
             app:civ_fill_color="@color/colorPrimary"
             app:civ_border_color="@color/material_black"/>
+        <Button
+            android:id="@+id/txtCambiaAvatarRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/rounded_button"
+            android:padding="5dp"
+            android:gravity="center"
+            android:text="@string/seleccionar_avatar"
+            android:textColor="@color/colorBlanco"
+            android:textSize="16dp"
+
+            />
 
         <EditText
             android:paddingLeft="15dp"
@@ -75,30 +89,13 @@
             android:hint="@string/introduce_passwd2"
             android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/txtRegisterAvatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="@string/seleccionar_avatar"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        <Spinner
-            android:paddingLeft="15dp"
-
-            android:id="@+id/spinnerRegisterAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dialog"
-            />
-
         <TextView
             android:id="@+id/txtErrorRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="#9E0808"
+            android:textColor="#FFEB3B"
+            android:textStyle="bold"
             android:visibility="invisible" />
 
 

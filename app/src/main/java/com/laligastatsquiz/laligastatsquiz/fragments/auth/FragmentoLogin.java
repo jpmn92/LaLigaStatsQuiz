@@ -117,4 +117,6 @@ public class FragmentoLogin extends FragmentoAutentificacion {
     public void setTxtErrorLogIn(TextView txtErrorLogIn) {
         this.txtErrorLogIn = txtErrorLogIn;
     }
+
+
 }

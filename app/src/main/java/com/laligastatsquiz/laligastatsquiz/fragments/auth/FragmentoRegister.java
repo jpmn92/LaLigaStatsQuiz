@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
+import com.laligastatsquiz.laligastatsquiz.tools.SelectorImagenActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,15 +35,17 @@ public class FragmentoRegister extends FragmentoAutentificacion {
 
 
     private EditText email, passwd, passwd2, username;
-    private TextView txtError;
+    private TextView txtError, txtCambiaAvatar;
     private Button btnRegister, btnGoogle;
     private FirebaseMethods firebaseMethods;
     private String mensaje;
     private static FragmentoRegister fragmentoRegister;
     private CircleImageView circleImageView;
     private GenerateImageUrl generateImageUrl;
-    private Spinner spinner;
+   // private Spinner spinner;
     private TextView goToLogin;
+    private ArrayList<FootballPlayer> laLigaPlayers;
+    FootballPlayer laLigaPlayer;
 
 
     public FragmentoRegister() {
@@ -87,7 +93,7 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             public void onClick(View v) {
 
                 //cogemos jugador seleccionado y pasamos la url de su imagen
-                FootballPlayer laLigaPlayer = (FootballPlayer) spinner.getSelectedItem();
+                // laLigaPlayer = (LaLigaPlayer) spinner.getSelectedItem();
 
                 txtError.setVisibility(View.GONE);
                 if (isEmailValid(email.getText().toString())) {
@@ -96,27 +102,30 @@ public class FragmentoRegister extends FragmentoAutentificacion {
                         //6 es el minimo de seguridad de firebase
                         if (passwd.getText().toString().length() >= 6) {
                             //registrar
+                            if(laLigaPlayer != null){
+                                final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog);
+                                progressDialog.setIndeterminate(true);
+                                progressDialog.setMessage("Iniciando...");
+                                progressDialog.show();
 
-                            final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog);
-                            progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage("Iniciando...");
-                            progressDialog.show();
+                                new android.os.Handler().postDelayed(
+                                        new Runnable() {
+                                            public void run() {
+
+                                                firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
+
+                                                // firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
+                                                progressDialog.dismiss();
+                                            }
+                                        }, 1000);
+                            }
+
+                            else {
+//                        La contraseña minimo son 6 caracteres para firebase
+                                mostrarError(getString(R.string.seleccionar_avatar));
+                            }
 
 
-                            new android.os.Handler().postDelayed(
-                                    new Runnable() {
-                                        public void run() {
-                                            firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
-                                            // firebaseMethods.registerUser(email.getText().toString(), passwd.getText().toString(), username.getText().toString(), laLigaPlayer.getPhotos().getPhoto().getBig(), getContext());
-                                            progressDialog.dismiss();
-                                        }
-                                    }, 1000);
-
-                            //mostrarError(mensaje);
-//                            getActivity().getSupportFragmentManager()
-//                                    .beginTransaction()
-//                                    .replace(R.id.main_content, FragmentoMenu.newInstance(null))
-//                                    .commit();
                         } else {
 //                        La contraseña minimo son 6 caracteres para firebase
                             mostrarError(getString(R.string.password_characters));
@@ -133,6 +142,23 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             }
         });
 
+        txtCambiaAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new SelectorImagenActivity(fragmentoRegister);
+                dialog.show(getFragmentManager(), "NoticeDialogFragment");
+            }
+        });
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DialogFragment dialog = new SelectorImagenActivity(fragmentoRegister);
+                dialog.show(getFragmentManager(), "NoticeDialogFragment");
+            }
+        });
+
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,26 +169,28 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             }
         });
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                FootballPlayer laLigaPlayer = (FootballPlayer) spinner.getSelectedItem();
-                Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                laLigaPlayer = (LaLigaPlayer) spinner.getSelectedItem();
+//                Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         return view;
+
+
     }
 
     private void populateSpinner() {
         generateImageUrl = new GenerateImageUrl();
 
-        ArrayList<FootballPlayer> laLigaPlayers = generateImageUrl.getFootballPlayers();
+        laLigaPlayers = generateImageUrl.getFootballPlayers();
 
         //ordenamos array
         if (laLigaPlayers.size() > 0) {
@@ -176,11 +204,13 @@ public class FragmentoRegister extends FragmentoAutentificacion {
 
         ArrayAdapter<FootballPlayer> adapter = new ArrayAdapter<FootballPlayer>(getContext(), R.layout.list_spinner, laLigaPlayers);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setSelection(1);
+        //spinner.setAdapter(adapter);
+        //spinner.setSelection(1);
 
 
     }
+
+
 
     public void mostrarError(String mensaje) {
         txtError.setText(mensaje);
@@ -203,9 +233,9 @@ public class FragmentoRegister extends FragmentoAutentificacion {
         txtError = view.findViewById(R.id.txtErrorRegister);
         username = view.findViewById(R.id.txtRegisterUserName);
         circleImageView = view.findViewById(R.id.ivAvatarRegister);
-        spinner = view.findViewById(R.id.spinnerRegisterAvatar);
         goToLogin = view.findViewById(R.id.txtGoToLogin);
         btnGoogle = view.findViewById(R.id.btnLogInGoogle);
+        txtCambiaAvatar = view.findViewById(R.id.txtCambiaAvatarRegister);
 
 
     }
@@ -234,5 +264,29 @@ public class FragmentoRegister extends FragmentoAutentificacion {
                 .replace(R.id.main_content, fragmentoLogin, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public CircleImageView getCircleImageView() {
+        return circleImageView;
+    }
+
+    public void setCircleImageView(CircleImageView circleImageView) {
+        this.circleImageView = circleImageView;
+    }
+
+    public ArrayList<FootballPlayer> getLaLigaPlayers() {
+        return laLigaPlayers;
+    }
+
+    public void setLaLigaPlayers(ArrayList<FootballPlayer> laLigaPlayers) {
+        this.laLigaPlayers = laLigaPlayers;
+    }
+
+    public FootballPlayer getLaLigaPlayer() {
+        return laLigaPlayer;
+    }
+
+    public void setLaLigaPlayer(FootballPlayer laLigaPlayer) {
+        this.laLigaPlayer = laLigaPlayer;
     }
 }

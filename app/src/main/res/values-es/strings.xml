@@ -138,5 +138,6 @@
     </string-array>
     <string name="temporizador_off">TEMPORIZADOR DESACTIVADO</string>
     <string name="aviso_temporizador">Si el temporizador esta desactivado no se guardarán tus puntuaciones</string>
+    <string name="busca_jugador">Busca Jugador</string>
 
 </resources>
