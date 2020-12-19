@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class LaLigaPlayer {
+public class FootballPlayer {
     private String id;
     private String name;
     private String nickname;
-    private LaLigaPosition position;
-    private LaLigaTeam team;
-    private ArrayList<LaLigaStat> stats;
-    private LaLigaPhoto photos;
+    private FootballPosition position;
+    private FootballTeam team;
+    private ArrayList<FootballStat> stats;
+    private FootballPhoto photos;
     @SerializedName("opta_id")
     private String optaId;
 
-    public LaLigaPlayer(String id, String name, String nickname, LaLigaPosition position, LaLigaTeam team, ArrayList<LaLigaStat> stats, LaLigaPhoto photos, String optaId) {
+    public FootballPlayer(String id, String name, String nickname, FootballPosition position, FootballTeam team, ArrayList<FootballStat> stats, FootballPhoto photos, String optaId) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
@@ -26,7 +26,7 @@ public class LaLigaPlayer {
         this.optaId = optaId;
     }
 
-    public LaLigaPlayer() {
+    public FootballPlayer() {
     }
 
     public String getId() {
@@ -53,35 +53,35 @@ public class LaLigaPlayer {
         this.nickname = nickname;
     }
 
-    public LaLigaPosition getPosition() {
+    public FootballPosition getPosition() {
         return position;
     }
 
-    public void setPosition(LaLigaPosition position) {
+    public void setPosition(FootballPosition position) {
         this.position = position;
     }
 
-    public LaLigaTeam getTeam() {
+    public FootballTeam getTeam() {
         return team;
     }
 
-    public void setTeam(LaLigaTeam team) {
+    public void setTeam(FootballTeam team) {
         this.team = team;
     }
 
-    public ArrayList<LaLigaStat> getStats() {
+    public ArrayList<FootballStat> getStats() {
         return stats;
     }
 
-    public void setStats(ArrayList<LaLigaStat> stats) {
+    public void setStats(ArrayList<FootballStat> stats) {
         this.stats = stats;
     }
 
-    public LaLigaPhoto getPhotos() {
+    public FootballPhoto getPhotos() {
         return photos;
     }
 
-    public void setPhotos(LaLigaPhoto photos) {
+    public void setPhotos(FootballPhoto photos) {
         this.photos = photos;
     }
 

@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.adaptador.AdapterAvatar;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoAccount;
 
 public class SelectorImagenActivity extends DialogFragment {
@@ -40,12 +40,12 @@ public class SelectorImagenActivity extends DialogFragment {
 
         grid = view.findViewById(R.id.grid);
 
-        grid.setAdapter(new AdapterAvatar(this.getContext(), fragmentoAccount.getLaLigaPlayers()));
+        grid.setAdapter(new AdapterAvatar(this.getContext(), fragmentoAccount.getFootballPlayers()));
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                LaLigaPlayer laLigaPlayer = (LaLigaPlayer) grid.getAdapter().getItem(position);
+                FootballPlayer laLigaPlayer = (FootballPlayer) grid.getAdapter().getItem(position);
                 fragmentoAccount.setUrlFromDialog(laLigaPlayer.getPhotos().getPhoto().getBig());
                 Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(fragmentoAccount.getCircleImageView());
                 dismiss();

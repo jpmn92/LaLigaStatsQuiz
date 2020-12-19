@@ -2,12 +2,12 @@ package com.laligastatsquiz.laligastatsquiz.beans;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LaLigaTeam {
+public class FootballTeam {
     private String id;
     private String name;
     private String nickname;
     private String shortname;
-    private LaLigaShield shield;
+    private FootballShield shield;
     @SerializedName("opta_id")
     private String optaId;
 
@@ -43,11 +43,11 @@ public class LaLigaTeam {
         this.shortname = shortname;
     }
 
-    public LaLigaShield getShield() {
+    public FootballShield getShield() {
         return shield;
     }
 
-    public void setShield(LaLigaShield shield) {
+    public void setShield(FootballShield shield) {
         this.shield = shield;
     }
 

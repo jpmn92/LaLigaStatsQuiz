@@ -1,12 +1,8 @@
 package com.laligastatsquiz.laligastatsquiz;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -29,8 +25,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaStat;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballStat;
 import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingContract;
 import com.laligastatsquiz.laligastatsquiz.lst_players_ranking.LstPlayersRankingPresenter;
@@ -233,7 +229,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
      * Metodo para ver que jugadores no tienen foto
      */
 //    private void comprobarSinFoto() {
-//        ArrayList<LaLigaPlayer> laLigaPlayersSinFoto = new ArrayList<>();
+//        ArrayList<FootballPlayer> laLigaPlayersSinFoto = new ArrayList<>();
 //        for(PlayerCompetition playerCompetition: playerCompetitionArrayList){
 //            if(playerCompetition.getPhotos() == null){
 //                laLigaPlayersSinFoto.add(laLigaPlayer);
@@ -242,12 +238,12 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
 //        }
 //        System.out.println("PUNTO DE RUPTURA");
 //    }
-    private int calculateValue(LaLigaPlayer laLigaPlayer, String stat) {
+    private int calculateValue(FootballPlayer laLigaPlayer, String stat) {
         int statValue = 0;
-        for (LaLigaStat laLigaStat : laLigaPlayer.getStats()) {
+        for (FootballStat footballStat : laLigaPlayer.getStats()) {
 
-            if (laLigaStat.getName().equals(stat)) {
-                statValue = Integer.valueOf(laLigaStat.getStat());
+            if (footballStat.getName().equals(stat)) {
+                statValue = Integer.valueOf(footballStat.getStat());
             }
         }
 
@@ -631,8 +627,8 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
      *
      * @param laLigaPlayers
      */
-    private void generarJugadorConSuImagen(ArrayList<LaLigaPlayer> laLigaPlayers) {
-        for (LaLigaPlayer laLigaPlayer1 : laLigaPlayers) {
+    private void generarJugadorConSuImagen(ArrayList<FootballPlayer> laLigaPlayers) {
+        for (FootballPlayer laLigaPlayer1 : laLigaPlayers) {
             System.out.println("laLigaPlayer = generatePlayer(\"" + laLigaPlayer1.getNickname() + "\", \"" + laLigaPlayer1.getPhotos().getPhoto().getMedium() + "\");\n" +
                     "laLigaPlayers.add(laLigaPlayer);\n\n");
         }

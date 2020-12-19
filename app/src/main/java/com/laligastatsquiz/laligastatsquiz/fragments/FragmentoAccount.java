@@ -8,11 +8,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,15 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.laligastatsquiz.laligastatsquiz.NavigationDrawerActivity;
 import com.laligastatsquiz.laligastatsquiz.R;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPhoto;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPhotoSize;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPhoto;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPhotoSize;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
 import com.laligastatsquiz.laligastatsquiz.tools.SelectorImagenActivity;
 import com.laligastatsquiz.laligastatsquiz.tools.SessionManagement;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +47,7 @@ public class FragmentoAccount extends Fragment {
     CircleImageView circleImageView;
     NavigationDrawerActivity navigationDrawerActivity;
     String urlCode;
-    ArrayList<LaLigaPlayer> laLigaPlayers;
+    ArrayList<FootballPlayer> footballPlayers;
     FirebaseMethods firebaseMethods;
     boolean codigo;
     TextView txtCodigo;
@@ -108,13 +104,13 @@ public class FragmentoAccount extends Fragment {
         txtUserName.setEnabled(true);
 
 
-        laLigaPlayers = generateImageUrl.getLaLigaPlayers();
+        footballPlayers = generateImageUrl.getFootballPlayers();
 
         //ordenamos array
-        if (laLigaPlayers.size() > 0) {
-            Collections.sort(laLigaPlayers, new Comparator<LaLigaPlayer>() {
+        if (footballPlayers.size() > 0) {
+            Collections.sort(footballPlayers, new Comparator<FootballPlayer>() {
                 @Override
-                public int compare(LaLigaPlayer o1, LaLigaPlayer o2) {
+                public int compare(FootballPlayer o1, FootballPlayer o2) {
                     return o1.getNickname().compareTo(o2.getNickname());
                 }
             });
@@ -145,11 +141,11 @@ public class FragmentoAccount extends Fragment {
 
                         else if (sm.getSesionImage() != "") {
 
-                            for (int i = 0; i < laLigaPlayers.size(); i++) {
+                            for (int i = 0; i < footballPlayers.size(); i++) {
 
-                                if (laLigaPlayers.get(i).getPhotos().getPhoto().getBig().equalsIgnoreCase(sm.getSesionImage())) {
-                                    sm.saveSession(userName, email, laLigaPlayers.get(i).getPhotos().getPhoto().getBig());
-                                    firebaseMethods.updateUser(userName, laLigaPlayers.get(i).getPhotos().getPhoto().getBig(),getContext());
+                                if (footballPlayers.get(i).getPhotos().getPhoto().getBig().equalsIgnoreCase(sm.getSesionImage())) {
+                                    sm.saveSession(userName, email, footballPlayers.get(i).getPhotos().getPhoto().getBig());
+                                    firebaseMethods.updateUser(userName, footballPlayers.get(i).getPhotos().getPhoto().getBig(),getContext());
                                 }
 
                             }
@@ -247,10 +243,10 @@ public class FragmentoAccount extends Fragment {
     }
 
     public void urlCode(String url){
-        if(!url.equalsIgnoreCase(laLigaPlayers.get(laLigaPlayers.size() - 1).getPhotos().getPhoto().getBig())){
-            LaLigaPlayer newLaLigaPlayer = generatePlayer(txtCodigo.getText().toString().toUpperCase(), url);
-            laLigaPlayers.add(newLaLigaPlayer);
-            ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.support_simple_spinner_dropdown_item, laLigaPlayers);
+        if(!url.equalsIgnoreCase(footballPlayers.get(footballPlayers.size() - 1).getPhotos().getPhoto().getBig())){
+            FootballPlayer newFootballPlayer = generatePlayer(txtCodigo.getText().toString().toUpperCase(), url);
+            footballPlayers.add(newFootballPlayer);
+            ArrayAdapter<FootballPlayer> adapter = new ArrayAdapter<FootballPlayer>(getContext(), R.layout.support_simple_spinner_dropdown_item, footballPlayers);
             Glide.with(getContext()).load(url).into(circleImageView);
             urlCode = url;
             codigo = true;
@@ -258,13 +254,13 @@ public class FragmentoAccount extends Fragment {
 
     }
 
-    private LaLigaPlayer generatePlayer(String nickname, String image) {
-        LaLigaPlayer laLigaPlayer = new LaLigaPlayer();
-        laLigaPlayer.setNickname(nickname);
-        laLigaPlayer.setPhotos(new LaLigaPhoto());
-        laLigaPlayer.getPhotos().setPhoto(new LaLigaPhotoSize());
-        laLigaPlayer.getPhotos().getPhoto().setBig(image);
-        return laLigaPlayer;
+    private FootballPlayer generatePlayer(String nickname, String image) {
+        FootballPlayer footballPlayer = new FootballPlayer();
+        footballPlayer.setNickname(nickname);
+        footballPlayer.setPhotos(new FootballPhoto());
+        footballPlayer.getPhotos().setPhoto(new FootballPhotoSize());
+        footballPlayer.getPhotos().getPhoto().setBig(image);
+        return footballPlayer;
     }
 
     public String getUrlFromDialog() {
@@ -291,11 +287,11 @@ public class FragmentoAccount extends Fragment {
         this.circleImageView = circleImageView;
     }
 
-    public ArrayList<LaLigaPlayer> getLaLigaPlayers() {
-        return laLigaPlayers;
+    public ArrayList<FootballPlayer> getFootballPlayers() {
+        return footballPlayers;
     }
 
-    public void setLaLigaPlayers(ArrayList<LaLigaPlayer> laLigaPlayers) {
-        this.laLigaPlayers = laLigaPlayers;
+    public void setFootballPlayers(ArrayList<FootballPlayer> footballPlayers) {
+        this.footballPlayers = footballPlayers;
     }
 }

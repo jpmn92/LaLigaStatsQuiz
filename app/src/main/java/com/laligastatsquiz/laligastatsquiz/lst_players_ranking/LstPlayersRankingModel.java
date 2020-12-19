@@ -4,12 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayerCall;
 // import com.laligastatsquiz.laligastatsquiz.tools.FooRequest;
 import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 import com.laligastatsquiz.laligastatsquiz.data.ResponsePlayerCompetition;
@@ -17,7 +13,6 @@ import com.laligastatsquiz.laligastatsquiz.tools.wsLaLiga;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -179,7 +174,7 @@ public class LstPlayersRankingModel implements LstPlayersRankingContract.Model {
                     return false;
                 }
 
-                // laLigaPlayerCall = new Gson().fromJson(statsJson, LaLigaPlayerCall.class);
+                // laLigaPlayerCall = new Gson().fromJson(statsJson, FootballPlayerCall.class);
 
                 playerCompetitionList = new Gson().fromJson(statsJson, ResponsePlayerCompetition.class);
 

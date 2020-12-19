@@ -14,10 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.R;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.tools.FirebaseMethods;
 import com.laligastatsquiz.laligastatsquiz.tools.GenerateImageUrl;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,7 +87,7 @@ public class FragmentoRegister extends FragmentoAutentificacion {
             public void onClick(View v) {
 
                 //cogemos jugador seleccionado y pasamos la url de su imagen
-                LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinner.getSelectedItem();
+                FootballPlayer laLigaPlayer = (FootballPlayer) spinner.getSelectedItem();
 
                 txtError.setVisibility(View.GONE);
                 if (isEmailValid(email.getText().toString())) {
@@ -147,7 +146,7 @@ public class FragmentoRegister extends FragmentoAutentificacion {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LaLigaPlayer laLigaPlayer = (LaLigaPlayer) spinner.getSelectedItem();
+                FootballPlayer laLigaPlayer = (FootballPlayer) spinner.getSelectedItem();
                 Glide.with(getContext()).load(laLigaPlayer.getPhotos().getPhoto().getBig()).into(circleImageView);
             }
 
@@ -163,19 +162,19 @@ public class FragmentoRegister extends FragmentoAutentificacion {
     private void populateSpinner() {
         generateImageUrl = new GenerateImageUrl();
 
-        ArrayList<LaLigaPlayer> laLigaPlayers = generateImageUrl.getLaLigaPlayers();
+        ArrayList<FootballPlayer> laLigaPlayers = generateImageUrl.getFootballPlayers();
 
         //ordenamos array
         if (laLigaPlayers.size() > 0) {
-            Collections.sort(laLigaPlayers, new Comparator<LaLigaPlayer>() {
+            Collections.sort(laLigaPlayers, new Comparator<FootballPlayer>() {
                 @Override
-                public int compare(LaLigaPlayer o1, LaLigaPlayer o2) {
+                public int compare(FootballPlayer o1, FootballPlayer o2) {
                     return o1.getNickname().compareTo(o2.getNickname());
                 }
             });
         }
 
-        ArrayAdapter<LaLigaPlayer> adapter = new ArrayAdapter<LaLigaPlayer>(getContext(), R.layout.list_spinner, laLigaPlayers);
+        ArrayAdapter<FootballPlayer> adapter = new ArrayAdapter<FootballPlayer>(getContext(), R.layout.list_spinner, laLigaPlayers);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(1);

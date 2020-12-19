@@ -3,16 +3,16 @@ package com.laligastatsquiz.laligastatsquiz.beans;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class LaLigaPlayerCall {
+public class FootballPlayerCall {
     private String total;
-    private ArrayList<LaLigaPlayer> player_rankings;
+    private ArrayList<FootballPlayer> player_rankings;
 
-    public LaLigaPlayerCall(String total, ArrayList<LaLigaPlayer> player_rankings) {
+    public FootballPlayerCall(String total, ArrayList<FootballPlayer> player_rankings) {
         this.total = total;
         this.player_rankings = player_rankings;
     }
 
-    public LaLigaPlayerCall() {
+    public FootballPlayerCall() {
     }
 
     public String getTotal() {
@@ -23,11 +23,11 @@ public class LaLigaPlayerCall {
         this.total = total;
     }
 
-    public ArrayList<LaLigaPlayer> getPlayer_rankings() {
+    public ArrayList<FootballPlayer> getPlayer_rankings() {
         return player_rankings;
     }
 
-    public void setPlayer_rankings(ArrayList<LaLigaPlayer> player_rankings) {
+    public void setPlayer_rankings(ArrayList<FootballPlayer> player_rankings) {
         this.player_rankings = player_rankings;
     }
 }

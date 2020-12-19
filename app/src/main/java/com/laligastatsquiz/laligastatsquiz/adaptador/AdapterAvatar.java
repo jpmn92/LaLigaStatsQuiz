@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.laligastatsquiz.laligastatsquiz.R;
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class AdapterAvatar extends BaseAdapter {
     private Context context;
-    private ArrayList<LaLigaPlayer> laLigaPlayers;
+    private ArrayList<FootballPlayer> laLigaPlayers;
 
-    public AdapterAvatar(Context context, ArrayList<LaLigaPlayer> laLigaPlayers) {
+    public AdapterAvatar(Context context, ArrayList<FootballPlayer> laLigaPlayers) {
         this.context = context;
         this.laLigaPlayers = laLigaPlayers;
     }
@@ -33,7 +33,7 @@ public class AdapterAvatar extends BaseAdapter {
     }
 
     @Override
-    public LaLigaPlayer getItem(int position) {
+    public FootballPlayer getItem(int position) {
         return laLigaPlayers.get(position);
     }
 
@@ -55,7 +55,7 @@ public class AdapterAvatar extends BaseAdapter {
         TextView nombrePlayer = (TextView) view.findViewById(R.id.nombre_player);
 
 
-        final LaLigaPlayer item = getItem(position);
+        final FootballPlayer item = getItem(position);
         Glide.with(context).load(item.getPhotos().getPhoto().getBig()).into(imagenPlayer);
         nombrePlayer.setText(item.getNickname());
 

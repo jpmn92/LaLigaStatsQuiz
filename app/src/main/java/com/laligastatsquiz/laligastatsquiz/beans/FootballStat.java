@@ -1,6 +1,6 @@
 package com.laligastatsquiz.laligastatsquiz.beans;
 
-public class LaLigaStat {
+public class FootballStat {
     private String name;
     private String stat;
 

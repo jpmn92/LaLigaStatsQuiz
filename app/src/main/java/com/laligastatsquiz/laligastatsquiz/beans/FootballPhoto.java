@@ -2,15 +2,15 @@ package com.laligastatsquiz.laligastatsquiz.beans;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LaLigaPhoto {
+public class FootballPhoto {
     @SerializedName("001")
-    LaLigaPhotoSize photo;
+    FootballPhotoSize photo;
 
-    public LaLigaPhotoSize getPhoto() {
+    public FootballPhotoSize getPhoto() {
         return photo;
     }
 
-    public void setPhoto(LaLigaPhotoSize photo) {
+    public void setPhoto(FootballPhotoSize photo) {
         this.photo = photo;
     }
 }

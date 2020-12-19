@@ -1,6 +1,6 @@
 package com.laligastatsquiz.laligastatsquiz.beans;
 
-public class LaLigaShield {
+public class FootballShield {
     private String id;
     private String url;
 

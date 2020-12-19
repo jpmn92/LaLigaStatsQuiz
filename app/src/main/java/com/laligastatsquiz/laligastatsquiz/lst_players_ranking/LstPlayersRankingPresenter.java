@@ -2,7 +2,7 @@ package com.laligastatsquiz.laligastatsquiz.lst_players_ranking;
 
 import android.os.Bundle;
 
-import com.laligastatsquiz.laligastatsquiz.beans.LaLigaPlayer;
+import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.data.PlayerCompetition;
 
 import java.util.ArrayList;
