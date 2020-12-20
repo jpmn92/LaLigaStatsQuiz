@@ -15,19 +15,41 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
+
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtPregunta"
+            <LinearLayout
+                android:id="@+id/lnpregunta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:background="@color/colorPrimary"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/goles_anotados"
 
-                android:textColor="#FFFFFF"
-                android:textSize="30dp" />
+                android:weightSum="100">
+
+                <ImageView
+                    android:id="@+id/ivVidas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/vidas3"
+                    android:layout_weight="65"
+                    />
+
+                <TextView
+                    android:id="@+id/txtPregunta"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical"
+                    android:text="@string/goles_anotados"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30dp"
+                    android:visibility="visible"
+                    android:paddingLeft="40dp"
+                    android:layout_weight="35"/>
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -196,6 +218,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lngamead"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
@@ -456,11 +479,7 @@
                         android:layout_weight="8"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/ivVidas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/vidas3" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -474,14 +493,14 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_weight="92"
-                    android:orientation="vertical">
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
             </LinearLayout>
 
@@ -602,11 +621,11 @@
                     android:id="@+id/animation_view_1"
                     android:layout_width="500dp"
                     android:layout_height="500dp"
-                    app:lottie_autoPlay="true"
-                    android:layout_gravity="center"
-                    app:lottie_fileName="17378-soccer-loading.json"
                     android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="17378-soccer-loading.json"
                     app:lottie_loop="true" />
 
                 <TextView
@@ -614,34 +633,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/animation_view_1"
-                    android:textColor="@color/colorBlanco"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
                     android:layout_centerHorizontal="true"
                     android:paddingTop="10dp"
-                    android:text="Cargando..."/>
-<!--                <TextView-->
+                    android:text="Cargando..."
+                    android:textColor="@color/colorBlanco"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--                <TextView-->
 
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/txt1"-->
-<!--                    android:textColor="@color/colorSecondary_text"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:paddingTop="10dp"-->
-<!--                    android:text="Espera, estamos preparando todo..."/>-->
-
-
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/txt1"-->
+                <!--                    android:textColor="@color/colorSecondary_text"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    android:paddingTop="10dp"-->
+                <!--                    android:text="Espera, estamos preparando todo..."/>-->
 
 
             </RelativeLayout>
 
 
         </LinearLayout>
-
-
-
-
 
 
     </LinearLayout>

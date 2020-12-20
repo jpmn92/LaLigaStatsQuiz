@@ -104,7 +104,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 app:adSize="BANNER"
-                app:adUnitId="@string/banner_prueba" />
+                app:adUnitId="ca-app-pub-5187656956047852/8312138086" />
         </LinearLayout>
 
 

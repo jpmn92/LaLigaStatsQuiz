@@ -58,12 +58,16 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     private int contadorAciertos, vidas, points, tiempo, record, statId;
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
+    private AdView adViewGame;
+    private LinearLayout lnpregunta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         inicializarPublicidad();
+        inicializarPublicidadBanner((LinearLayout) findViewById(R.id.lngamead));
+
 
         Bundle params = new Bundle();
         lstPlayersRankingPresenter = new LstPlayersRankingPresenter(this);
@@ -72,10 +76,9 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         this.getIntent().putExtra("statId", statId);
 //        liga = traducirLiga(this.getIntent().getStringExtra("liga"));
 
-        if(!this.getIntent().getStringExtra("season").equalsIgnoreCase(getResources().getString(R.string.misc))) {
+        if (!this.getIntent().getStringExtra("season").equalsIgnoreCase(getResources().getString(R.string.misc))) {
             season = this.getIntent().getStringExtra("season");
-        }
-        else{
+        } else {
             season = "";
         }
 
@@ -113,11 +116,11 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             }
         });
 
-        if(!Constantes.DEVELOPER_MODE){
+        if (!Constantes.DEVELOPER_MODE) {
             mAdView = findViewById(R.id.adViewGame);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
-            mAdView.setAdListener(new AdListener(){
+            mAdView.setAdListener(new AdListener() {
                 @Override
                 public void onAdClosed() {
                     mAdView.loadAd(new AdRequest.Builder().build());
@@ -125,6 +128,20 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             });
         }
 
+    }
+
+    private void inicializarPublicidadBanner(View view) {
+        MobileAds.initialize(this);
+        adViewGame = view.findViewById(R.id.adViewGame);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        System.out.println(adViewGame.getAdUnitId());
+        adViewGame.loadAd(adRequest);
+        adViewGame.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                adViewGame.loadAd(new AdRequest.Builder().build());
+            }
+        });
     }
 
     private void initComponents() {
@@ -158,6 +175,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         linLoad = findViewById(R.id.linLoad);
+        lnpregunta = findViewById(R.id.lnpregunta);
 
 //        loadGif = (ImageView) findViewById(R.id.loadGif);
 //        Glide.with(this).asGif().load(CARGA_GIF).into(loadGif);
@@ -186,7 +204,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if (stat.equalsIgnoreCase("goals")) {
             valueP1 = player1.getGoals();
         }
-        do{
+        do {
             do {
                 randomP2 = (int) (Math.random() * (playerCompetitionArrayList.size()));
                 player2 = playerCompetitionArrayList.get(randomP2);
@@ -263,7 +281,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
             Glide.with(this).load("https://fmdataba.com/images/p/" + String.valueOf(player1.getIdfm()) + ".png").transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer1);
             Glide.with(this).load(String.valueOf(player1.getUrlTeamPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivTeam1);
             Glide.with(this).load(String.valueOf(player1.getUrlCompetitionPhoto())).transition(DrawableTransitionOptions.withCrossFade()).into(ivCompetition1);
-         }
+        }
 
         if (player2.getUrlPlayerPhoto() != null) {
             Glide.with(this).load(String.valueOf(player2.getUrlPlayerPhoto())).transition(DrawableTransitionOptions.withCrossFade()).override(1024, 1113).into(ivPlayer2);
@@ -286,7 +304,7 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         if (myCountDownTimer != null) {
             myCountDownTimer.cancel();
         }
-        if(crono){
+        if (crono) {
             myCountDownTimer.start();
         }
     }
@@ -406,7 +424,28 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
         setPlayerCompetitionArrayList(playerCompetitions);
         linLoad.setVisibility(View.GONE);
         selectPlayers();
+        setQuestionPanel();
 
+    }
+
+    private void setQuestionPanel() {
+
+        String f = liga;
+        String j = "";
+        switch (liga) {
+            case "9":
+
+                lnpregunta.setBackgroundColor(Color.parseColor("#171d4f"));
+
+                break;
+
+            case "20":
+
+                lnpregunta.setBackgroundColor(Color.parseColor("#F6AE1D"));
+
+                break;
+
+        }
     }
 
     @Override
