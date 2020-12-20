@@ -548,11 +548,11 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Successfull", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Successfull", Toast.LENGTH_SHORT).show();
                     config.activateFetched();
 
                 } else {
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
 
                 }
                 String seasonsFB = FirebaseRemoteConfig.getInstance().getString(key);// empty string
