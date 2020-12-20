@@ -112,10 +112,11 @@
     <string name="tab_aboutUs">SOBRE NOSOTROS</string>
 
     <!--    Textos help-->
-    <string name="help_paragraph">En el menú principal puedes escoger los parámetros de juego que desees, entre los que se encuentran los 3 siguientes:</string>
-    <string name="help_season">1 - Temporada</string>
-    <string name="help_league">2 - Liga: Liga Santander / Liga Smartbank / Primera división feminina</string>
-    <string name="help_stat">3 - Estadística</string>
+    <string name="help_paragraph">En el menú principal puedes escoger los parámetros de juego que desees, entre los que se encuentran los 4 siguientes:</string>
+    <string name="help_competition">1 - Tipo Competición: Ligas Europeas, Clubes Internacionales o Selecciones Internacionales</string>
+    <string name="help_league">2 - Liga: Se habilitarán las competiciones en función de lo seleccionado en competición</string>
+    <string name="help_season">3 - Temporada: Se habilitarán todas las temporadas disponibles con los parámetros introducidos</string>
+    <string name="help_stat">4 - Estadística</string>
     <string name="help_paragraph2">Una vez inicias el juego, tendrás que pulsar sobre el jugador que mejor estadística tenga en la temporada correspondiente.  La estadística y temporada se indican en la parte superior de la pantalla</string>
     <string name="help_paragraph3">Tienes tres vidas, si eliges al jugador incorrecto, perderás una vida. Si eliges correctamente diez veces seguidas, puedes obtener una nueva vida, con un máximo de tres</string>
     <string name="help_forMoreInfo">Para más información puede visitar:</string>

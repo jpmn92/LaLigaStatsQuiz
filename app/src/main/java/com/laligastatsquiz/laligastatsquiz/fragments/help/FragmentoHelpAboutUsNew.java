@@ -1,5 +1,6 @@
 package com.laligastatsquiz.laligastatsquiz.fragments.help;
 
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ public class FragmentoHelpAboutUsNew extends Fragment {
 
     private static FragmentoHelpAboutUsNew fragmentoHelpAboutUsNew;
 
+    private String version;
     private Element versionElement;
 
     public FragmentoHelpAboutUsNew() {
@@ -41,11 +43,32 @@ public class FragmentoHelpAboutUsNew extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        versionElement = new Element();
-        versionElement.setTitle("Version 1.2.3");
+
+        checkVersion();
+
 
 
     }
+
+    private void checkVersion() {
+
+        //comprobaciones de version
+        PackageInfo packageInfo;
+
+        try {
+
+            packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            version = packageInfo.versionName; //version actual instalada
+
+            versionElement = new Element();
+            versionElement.setTitle("Version "+version);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
