@@ -170,7 +170,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
         spinnerLiga.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                cambiarImagenPrincipal();
                 Competicion competicionSeleccionada = (Competicion) spinnerLiga.getSelectedItem();
                 if (competicionSeleccionada.getId() != 0) {
                     spinnerTemporada.setEnabled(true);
@@ -576,8 +576,13 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
     private void populateSpinnerSeasons() {
 
         ArrayList<String> seasons = getSeasonsGlobal();
+        if(seasons.size() > 0){
+            adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, seasons);
+        }
+        else{
+            adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, getResources().getStringArray(R.array.TEMPORADAS));
+        }
 
-        adapterSeason = new ArrayAdapter<String>(getContext(), R.layout.list_spinner, seasons);
         adapterSeason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTemporada.setAdapter(adapterSeason);
 
