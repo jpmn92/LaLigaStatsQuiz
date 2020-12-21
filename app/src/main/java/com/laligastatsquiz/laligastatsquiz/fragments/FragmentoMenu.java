@@ -208,7 +208,7 @@ public class FragmentoMenu extends Fragment implements View.OnClickListener {
                     spinnerLiga.setAdapter(adapterCompeticionesClubInternacional);
                     spinnerTemporada.setAdapter(adapterSeason);
                     spinnerTemporada.setEnabled(true);
-                    spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length - 1);
+                    //spinnerTemporada.setSelection(getResources().getStringArray(R.array.TEMPORADAS).length - 1);
                 }
 
                 if (i == 2) {

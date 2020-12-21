@@ -14,13 +14,20 @@ import android.widget.GridView;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.google.common.reflect.TypeToken;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.gson.Gson;
 import com.laligastatsquiz.laligastatsquiz.R;
 import com.laligastatsquiz.laligastatsquiz.adaptador.AdapterAvatar;
 import com.laligastatsquiz.laligastatsquiz.beans.FootballPlayer;
 import com.laligastatsquiz.laligastatsquiz.fragments.FragmentoAccount;
 import com.laligastatsquiz.laligastatsquiz.fragments.auth.FragmentoRegister;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SelectorImagenActivity extends DialogFragment {
 
@@ -31,6 +38,8 @@ public class SelectorImagenActivity extends DialogFragment {
     private EditText txtSearchAvatar;
     private ArrayList<FootballPlayer> laLigaPlayers;
     private ArrayList<FootballPlayer> avatares;
+    FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+    String avataresRemote;
 
     public SelectorImagenActivity(FragmentoAccount fragmentoAccount){
         this.fragmentoAccount = fragmentoAccount;
@@ -58,13 +67,33 @@ public class SelectorImagenActivity extends DialogFragment {
         avatares = new ArrayList<>();
         grid = view.findViewById(R.id.grid);
 
+        avataresRemote = remoteConfig.getString("avatares");
+
         if(fragmentoAccount != null){
-            laLigaPlayers.addAll(fragmentoAccount.getFootballPlayers());
-            avatares.addAll(fragmentoAccount.getFootballPlayers());
+            if(avataresRemote.equalsIgnoreCase("")) {
+                laLigaPlayers.addAll(fragmentoAccount.getFootballPlayers());
+                avatares.addAll(fragmentoAccount.getFootballPlayers());
+            }
+            else{
+                Type listType = new TypeToken<List<FootballPlayer>>() {
+                }.getType();
+                ArrayList<FootballPlayer> avataresRemoteList = new Gson().fromJson(avataresRemote, listType);
+                laLigaPlayers.addAll(avataresRemoteList);
+                avatares.addAll(avataresRemoteList);
+            }
         }
         else if (fragmentoRegister != null){
-            laLigaPlayers.addAll(fragmentoRegister.getLaLigaPlayers());
-            avatares.addAll(fragmentoRegister.getLaLigaPlayers());
+            if(avataresRemote.equalsIgnoreCase("")){
+                laLigaPlayers.addAll(fragmentoRegister.getLaLigaPlayers());
+                avatares.addAll(fragmentoRegister.getLaLigaPlayers());
+            }
+            else{
+                Type listType = new TypeToken<List<FootballPlayer>>() {
+                }.getType();
+                ArrayList<FootballPlayer> avataresRemoteList = new Gson().fromJson(avataresRemote, listType);
+                laLigaPlayers.addAll(avataresRemoteList);
+                avatares.addAll(avataresRemoteList);
+            }
         }
 
         txtSearchAvatar = view.findViewById(R.id.txtSearchAvatar);
