@@ -65,8 +65,10 @@ public class GameActivity extends Activity implements View.OnClickListener, LstP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        inicializarPublicidad();
-        inicializarPublicidadBanner((LinearLayout) findViewById(R.id.lngamead));
+        if(!Constantes.DEVELOPER_MODE){
+            inicializarPublicidad();
+            inicializarPublicidadBanner((LinearLayout) findViewById(R.id.lngamead));
+        }
 
 
         Bundle params = new Bundle();
