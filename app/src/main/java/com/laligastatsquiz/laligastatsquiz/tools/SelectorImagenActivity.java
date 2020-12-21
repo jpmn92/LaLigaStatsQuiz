@@ -75,11 +75,7 @@ public class SelectorImagenActivity extends DialogFragment {
                 avatares.addAll(fragmentoAccount.getFootballPlayers());
             }
             else{
-                Type listType = new TypeToken<List<FootballPlayer>>() {
-                }.getType();
-                ArrayList<FootballPlayer> avataresRemoteList = new Gson().fromJson(avataresRemote, listType);
-                laLigaPlayers.addAll(avataresRemoteList);
-                avatares.addAll(avataresRemoteList);
+                avataresRemotos();
             }
         }
         else if (fragmentoRegister != null){
@@ -88,11 +84,8 @@ public class SelectorImagenActivity extends DialogFragment {
                 avatares.addAll(fragmentoRegister.getLaLigaPlayers());
             }
             else{
-                Type listType = new TypeToken<List<FootballPlayer>>() {
-                }.getType();
-                ArrayList<FootballPlayer> avataresRemoteList = new Gson().fromJson(avataresRemote, listType);
-                laLigaPlayers.addAll(avataresRemoteList);
-                avatares.addAll(avataresRemoteList);
+                avataresRemotos();
+
             }
         }
 
@@ -119,6 +112,14 @@ public class SelectorImagenActivity extends DialogFragment {
         loadAvatars();
 
         return builder.create();
+    }
+
+    private void avataresRemotos() {
+        Type listType = new TypeToken<List<FootballPlayer>>() {
+        }.getType();
+        ArrayList<FootballPlayer> avataresRemoteList = new Gson().fromJson(avataresRemote, listType);
+        laLigaPlayers.addAll(avataresRemoteList);
+        avatares.addAll(avataresRemoteList);
     }
 
     private void loadAvatars() {
